@@ -12,7 +12,7 @@ const EVENTS = [
 ];
 const CITIES = ['Bristol', 'Leeds', 'Manchester', 'Brighton', 'York', 'Bath', 'Norwich', 'Cardiff', 'Sheffield', 'Oxford', 'Exeter', 'Nottingham'];
 
-const colsFor = (w) => (w < 640 ? 8 : w < 1000 ? 12 : 16);
+const colsFor = (w) => (w < 640 ? 10 : w < 1000 ? 12 : 16);
 
 /**
  * The live hero: a grid of tiles (columns = moves, grouped by stage) that the brand dot builds,
@@ -38,7 +38,7 @@ export function createHero({ reduce }) {
 
   function build() {
     COLS = colsFor(innerWidth);
-    ROWS = innerWidth < 640 ? 4 : 5;
+    ROWS = 5;
     grid.style.setProperty('--cols', COLS);
     legend.style.setProperty('--cols', COLS);
     grid.innerHTML = '';
@@ -134,10 +134,12 @@ export function createHero({ reduce }) {
     const t = document.createElement('div');
     t.className = 'toast';
     t.style.setProperty('--c', getComputedStyle(el).getPropertyValue('--c'));
-    t.style.left = `${clamp(r.left - sr.left + r.width / 2, 120, sr.width - 120)}px`;
     t.style.top = `${r.top - sr.top - 10}px`;
     t.innerHTML = `<i></i><b>${ev}</b><small>${CITIES[Math.floor(Math.random() * CITIES.length)]} · just now</small>`;
     stage.appendChild(t);
+    // Keep the whole toast inside the stage, centred over its tile where there is room.
+    const half = Math.min(t.offsetWidth, sr.width) / 2;
+    t.style.left = `${clamp(r.left - sr.left + r.width / 2, half, sr.width - half)}px`;
     setTimeout(() => { t.classList.add('out'); setTimeout(() => t.remove(), 420); }, 2300);
     if (ev === 'Keys released') { const kEl = $('keys'); kEl.textContent = +kEl.textContent + 1; }
   }

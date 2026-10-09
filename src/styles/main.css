@@ -249,8 +249,18 @@ h2 .period{width:.14em;height:.14em}
 }
 @media (max-width:640px){
   .actions .ghost,.actions .track{display:none}
+  .ctas .btn{flex:1 1 100%;justify-content:center}
   .grid,.legend{gap:4px}
-  .legend div{font-size:10px;letter-spacing:.02em} .legend div span{display:none}
+  /* Stage labels alternate between two rows so every name gets room to breathe. */
+  .legend{margin-top:12px}
+  .legend div{position:relative;flex-direction:column;gap:3px;overflow:visible;text-overflow:clip;font-size:10.5px;letter-spacing:.04em;padding-top:9px}
+  .legend div span{font-size:9.5px}
+  .legend div:nth-child(even){padding-top:46px}
+  .legend div:nth-child(even)::before{content:"";position:absolute;left:0;top:0;height:40px;border-left:1px solid var(--line);transition:border-color .3s}
+  .legend div.on:nth-child(even)::before{border-color:var(--accent)}
+  .stage{padding-bottom:20px}
+  .toast{display:grid;grid-template-columns:auto auto;column-gap:8px;row-gap:2px;padding:8px 12px 8px 10px;font-size:13px}
+  .toast small{grid-column:2;font-size:11px}
 }
 @media (prefers-reduced-motion: reduce){ .t,.toast,.pulse{transition:none!important;animation:none!important} }
 
