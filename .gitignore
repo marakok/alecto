@@ -6,3 +6,20 @@ dist/
 .env.*
 !.env.example
 .vite/
+
+# Bun is the package manager; keep only bun.lock
+package-lock.json
+yarn.lock
+pnpm-lock.yaml
+
+# Hosting / tooling output
+.vercel/
+.netlify/
+.cache/
+coverage/
+
+# Editors
+.idea/
+.vscode/*
+!.vscode/extensions.json
+*.swp
