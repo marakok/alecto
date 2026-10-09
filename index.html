@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alecto · Move home without the drama</title>
+  <meta name="description" content="Property conveyancing without the stress. One dedicated conveyancer, a fixed quote and a live view of every step, from offer accepted to keys in hand.">
+  <meta name="theme-color" content="#FBFAF8" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0C0C0F" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&display=swap">
+  <script>
+    /* Before first paint: apply a saved theme, and decide whether to play the intro loader
+       (once per browser session, or always with ?intro in the URL). */
+    (function () {
+      var d = document.documentElement;
+      try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      var force = /[?&]intro\b/.test(location.search), seen = false;
+      try { seen = sessionStorage.getItem('alecto-intro-seen') === '1'; } catch (e) {}
+      if (!reduce && (force || !seen)) d.classList.add('intro');
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+</head>
+<body>
+<div id="loader" aria-hidden="true">
+  <div class="lbox">
+    <div class="pile" id="pile"></div>
+    <div class="lcap">Preparing your move · <b id="lpct">0</b>%</div>
+  </div>
+</div>
+<div id="ldot" aria-hidden="true"></div>
+
+<a class="skip" href="#main">Skip to content</a>
+
+<header class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="/" aria-label="Alecto home">alecto<i id="navdot"></i></a>
+    <div class="links"><a href="#how">How it works</a><a href="#why">Why Alecto</a><a href="#reviews">Reviews</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn ghost track" href="#">Track my move</a>
+      <a class="btn primary" href="#">Get a quote</a>
+    </div>
+  </nav>
+</header>
+
+<main id="main">
+<div class="wrap">
+  <section class="hero">
+    <div class="copy">
+      <div class="live-pill"><span class="pulse"></span><span>Live</span><span><b id="moving">126</b> moves in progress</span><span class="k" aria-hidden="true">·</span><span class="k"><b id="keys">14</b> keys today</span></div>
+      <h1>Move home <span class="soft">without</span> <span class="nowrap">the drama<span class="period" id="period"></span></span></h1>
+      <p class="sub">One dedicated conveyancer, a fixed quote and a live view of every step. From offer accepted to keys in hand.</p>
+      <div class="ctas"><a class="btn accent" href="#">Get a quote in 2 minutes</a><a class="btn ghost" href="#how">See how it works</a></div>
+    </div>
+
+    <div class="stage" id="stage">
+      <div class="grid" id="grid"></div>
+      <div class="legend" id="legend"></div>
+    </div>
+  </section>
+
+  <!-- Product -->
+  <section class="sec" id="product">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Your dashboard</p><h2>Your move, live<span class="period"></span></h2></div>
+      <p class="lede">Every update, document and next step in one place. You always know where you stand, so you never have to chase.</p>
+    </div>
+    <div class="panel">
+      <div class="app">
+        <div class="appbar">
+          <span class="logo">alecto<i></i></span>
+          <span class="tab on">My move</span><span class="tab">Documents</span><span class="tab">Messages</span><span class="tab">Payments</span>
+          <span class="av">SR</span>
+        </div>
+        <div class="appbody">
+          <div class="col">
+            <div class="card">
+              <div class="case-top">
+                <div><span class="kicker">Purchase · Freehold</span><h3>14 Elm Road, Bristol</h3></div>
+                <span class="status"><i></i>On track</span>
+              </div>
+              <div class="steps">
+                <div class="done"><span><b>01</b><span class="l">Instruct</span></span></div>
+                <div class="cur"><span><b>02</b><span class="l">Investigate</span></span></div>
+                <div><span><b>03</b><span class="l">Exchange</span></span></div>
+                <div><span><b>04</b><span class="l">Complete</span></span></div>
+                <div><span><b>05</b><span class="l">Wrap up</span></span></div>
+              </div>
+            </div>
+            <div class="card updates">
+              <div class="list-head">Latest updates <a href="#">View all</a></div>
+              <div class="row"><span class="ic"><i></i></span><div><strong>Local authority searches returned</strong><p>No issues found. Hannah has reviewed the results.</p></div><time>Today 09:12</time></div>
+              <div class="row old"><span class="ic"><i></i></span><div><strong>Enquiries sent to the seller's solicitor</strong><p>Six questions about the boundary and the boiler.</p></div><time>Tue 15:40</time></div>
+              <div class="row old"><span class="ic"><i></i></span><div><strong>Mortgage offer received</strong><p>Your lender issued the offer. Nothing for you to do.</p></div><time>Mon 11:02</time></div>
+            </div>
+          </div>
+          <div class="col">
+            <div class="card">
+              <div class="who"><span class="face">HR</span><div><strong>Hannah Reid</strong><small>Your conveyancer</small></div></div>
+              <a class="btn ghost block" href="#">Message Hannah</a>
+              <p class="note">Usually replies within 2 hours</p>
+            </div>
+            <div class="card todo">
+              <strong>Your to-do</strong>
+              <label><span class="box on"><svg width="11" height="11" viewBox="0 0 12 12" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="square"><path d="M2.5 6.2l2.3 2.3 4.7-5"/></svg></span><span class="struck">Verify your identity</span></label>
+              <label><span class="box"></span>Upload proof of funds</label>
+              <label><span class="box"></span>Sign the contract pack</label>
+            </div>
+            <div class="card eta">
+              <span class="kicker">Estimated completion</span>
+              <span class="big">12 December</span>
+              <p>Next milestone: exchange in about 3 weeks</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Stats -->
+  <div class="stats">
+    <div><b>2,000+</b><span>homeowners moved with Alecto</span></div>
+    <div><b>£600m</b><span>of property transactions handled</span></div>
+    <div><b>1</b><span>conveyancer from offer to keys</span></div>
+    <div><b>5 wks</b><span>to complete, even with a broken chain</span></div>
+  </div>
+
+  <!-- Why -->
+  <section class="sec" id="why">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Why Alecto</p><h2>Conveyancing, done differently<span class="period"></span></h2></div>
+      <p class="lede">We rebuilt the slow, opaque parts of buying and selling a home around you. A real person, real updates and real momentum.</p>
+    </div>
+    <div class="cards">
+      <article class="fcard">
+        <div class="vis">
+          <div class="who"><span class="face sm">HR</span><strong class="who-sm">Hannah · your conveyancer</strong></div>
+          <div class="bubble">Hi Sam, your searches are back and all clear. Next up: enquiries.</div>
+        </div>
+        <div class="txt"><h3>One dedicated conveyancer</h3><p>The same qualified conveyancer handles your case from start to finish. No call centres and no repeating yourself.</p></div>
+      </article>
+      <article class="fcard">
+        <div class="vis">
+          <div class="chip"><span class="ic"><i></i></span><div>Searches returned<small>No issues found · just now</small></div></div>
+          <div class="chip"><span class="ic"><i></i></span><div>Enquiries answered<small>5 of 6 resolved · 2h ago</small></div></div>
+        </div>
+        <div class="txt"><h3>Always in the loop</h3><p>Plain-English updates the moment something changes, so you know what is happening and what comes next.</p></div>
+      </article>
+      <article class="fcard">
+        <div class="vis">
+          <div class="meter"><div class="top">Exchange <span>78%</span></div><div class="bar"><i></i></div><span class="fixed"><i></i>Lease issue flagged and fixed</span></div>
+        </div>
+        <div class="txt"><h3>Driving you forwards</h3><p>We own the progress. Problems get spotted early and solved before they turn into delays.</p></div>
+      </article>
+    </div>
+  </section>
+</div>
+
+<!-- How it works -->
+<section class="band" id="how">
+  <div class="wrap sec">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>How it works</p><h2>From offer accepted to keys in hand<span class="period"></span></h2></div>
+      <p class="lede">Five clear stages. You can follow every one of them live in your dashboard.</p>
+    </div>
+    <div class="hsteps">
+      <div class="hstep"><div class="stack"></div><b>01</b><h3>Instruct</h3><p>Share your details, sign the terms and verify your identity online in minutes.</p></div>
+      <div class="hstep"><div class="stack"></div><b>02</b><h3>Investigate</h3><p>We review the legal title, raise enquiries with the other side and resolve issues.</p></div>
+      <div class="hstep"><div class="stack"></div><b>03</b><h3>Exchange</h3><p>Contracts are exchanged, you are legally committed and a completion date is set.</p></div>
+      <div class="hstep"><div class="stack"></div><b>04</b><h3>Complete</h3><p>Funds are transferred and the keys are released. The home is yours.</p></div>
+      <div class="hstep"><div class="stack"></div><b>05</b><h3>Wrap up</h3><p>We file Stamp Duty, update the Land Registry and send your final documents.</p></div>
+    </div>
+  </div>
+</section>
+
+<div class="wrap">
+  <!-- Reviews -->
+  <section class="sec" id="reviews">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Reviews</p><h2>Moved without the drama<span class="period"></span></h2></div>
+    </div>
+    <div class="reviews">
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Clear updates at every stage and always quick to reply. We completed our leasehold purchase in under 8 weeks.”</blockquote></div><figcaption class="by"><span class="face">LM</span><div>Verified client<small>Leasehold purchase</small></div></figcaption></figure>
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Our chain broke twice and they still got us to completion in 5 weeks. Calm and organised the whole way.”</blockquote></div><figcaption class="by"><span class="face">JT</span><div>Verified client<small>Sale and purchase</small></div></figcaption></figure>
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“I never had to chase. I always knew what was happening and what I needed to do next.”</blockquote></div><figcaption class="by"><span class="face">AK</span><div>Verified client<small>First-time buyer</small></div></figcaption></figure>
+    </div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec faq" id="faq">
+    <div class="faq-side">
+      <p class="eyebrow"><i></i>FAQ</p>
+      <h2>Questions, answered<span class="period"></span></h2>
+      <p class="lede">Can't find what you need? Your conveyancer is one message away.</p>
+      <a class="btn ghost" href="#">Contact us</a>
+    </div>
+    <div>
+      <details open><summary>How much does conveyancing with Alecto cost?<span class="pm"></span></summary><p>You get a fixed, transparent quote up front. No hidden extras, and you see what each fee is for before you instruct us.</p></details>
+      <details><summary>Do you handle remortgages?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>Can you act on Buy-to-Let purchases?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>What about properties affected by the Building Safety Act?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>How long will my move take?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>How do I track my case?<span class="pm"></span></summary><p>Sign in to your dashboard at any time to see your stage, latest updates and anything we need from you.</p></details>
+    </div>
+  </section>
+
+  <!-- CTA -->
+  <section class="cta">
+    <h2>Ready to move without the drama<span class="period"></span></h2>
+    <p>Get a clear, fixed quote in two minutes. No obligation.</p>
+    <div class="ctas"><a class="btn accent" href="#">Get a quote</a><a class="btn ghost" href="#">Talk to a conveyancer</a></div>
+    <div class="skyline" id="skyline" aria-hidden="true"></div>
+  </section>
+</div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="/">alecto<i></i></a><p>Property conveyancing without the stress.</p></div>
+      <div class="fcols">
+        <div><h4>Company</h4><a href="#">Company</a><a href="#">Blog</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+        <div><h4>Support</h4><a href="#">Contact</a><a href="#">Complaints</a><a href="#">Track my move</a></div>
+        <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie preferences</a></div>
+      </div>
+    </div>
+    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351. Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd · Live activity is illustrative</span></div>
+  </div>
+</footer>
+
+<script type="module" src="/src/js/main.js"></script>
+</body>
+</html>

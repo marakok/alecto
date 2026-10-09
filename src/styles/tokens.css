@@ -1,0 +1,29 @@
+/* Alecto brand tokens. Mirrors the "Alecto / Brand" variable collection in Figma (Light + Dark modes). */
+@property --a { syntax: '<number>'; inherits: false; initial-value: 0; }
+@property --lift { syntax: '<number>'; inherits: false; initial-value: 0; }
+
+:root{
+  --bg:#FBFAF8; --fg:#141416; --muted:#6B6B70; --line:#E4E2DD; --surface:#FFFFFF;
+  --accent:#5E6AD0; --tile-empty:#F0EFF2; --guide:rgba(20,20,22,.05);
+  --gloss:rgba(255,255,255,.62); --rim:rgba(255,255,255,.55); --glow:0;
+  --btn-bg:#141416; --btn-fg:#FFFFFF; --toast:rgba(255,255,255,.86);
+  --live:#2F9E6B;
+  --soft:#EEEFFB; --accent-ink:#4A54B8; --ok:#2F9E6B; --ok-soft:#E6F5EE;
+  --inv-bg:#141416; --inv-fg:#FFFFFF; --inv-muted:#B9B8B3; --inv-line:rgba(255,255,255,.16);
+  --display:"Inter", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono:"Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark){ :root:not([data-theme="light"]){
+  --bg:#0C0C0F; --fg:#F4F3F0; --muted:#9A9AA2; --line:#2A2A30; --surface:#16161A;
+  --accent:#7C86E8; --tile-empty:#15151B; --guide:rgba(255,255,255,.045);
+  --gloss:rgba(255,255,255,.22); --rim:rgba(255,255,255,.12); --glow:1;
+  --btn-bg:#F4F3F0; --btn-fg:#141416; --toast:rgba(28,28,34,.86); --live:#4CC08A;
+  --soft:#1E2040; --accent-ink:#A9B0F5; --ok:#4CC08A; --ok-soft:#12291F;
+  --inv-bg:#1B1B21; --inv-fg:#F4F3F0; --inv-muted:#9A9AA2; --inv-line:rgba(255,255,255,.12); color-scheme:dark; } }
+:root[data-theme="dark"]{
+  --bg:#0C0C0F; --fg:#F4F3F0; --muted:#9A9AA2; --line:#2A2A30; --surface:#16161A;
+  --accent:#7C86E8; --tile-empty:#15151B; --guide:rgba(255,255,255,.045);
+  --gloss:rgba(255,255,255,.22); --rim:rgba(255,255,255,.12); --glow:1;
+  --btn-bg:#F4F3F0; --btn-fg:#141416; --toast:rgba(28,28,34,.86); --live:#4CC08A;
+  --soft:#1E2040; --accent-ink:#A9B0F5; --ok:#4CC08A; --ok-soft:#12291F;
+  --inv-bg:#1B1B21; --inv-fg:#F4F3F0; --inv-muted:#9A9AA2; --inv-line:rgba(255,255,255,.12); color-scheme:dark; }
