@@ -43,6 +43,7 @@ export function createHero({ reduce }) {
     legend.style.setProperty('--cols', COLS);
     grid.innerHTML = '';
     tiles = [];
+    cur = [];
     for (let r = 0; r < ROWS; r++) {
       for (let c = 0; c < COLS; c++) {
         const d = document.createElement('div');
@@ -165,26 +166,69 @@ export function createHero({ reduce }) {
     setTimeout(() => { liveTimer = setInterval(tick, 2400); }, delay);
   }
 
-  // Tiles lift under the cursor.
+  // Hover: tiles near the cursor rise, tilt towards it, fill with colour and glow.
+  // Values ease towards their target every frame, so the field follows the cursor smoothly.
+  const RADIUS = 220;
   let centers = [];
+  let size = 0;
+  let cur = [];
   let raf = 0;
   let px = -1e4;
   let py = -1e4;
+  let hot = null;
   const measure = () => {
     centers = tiles.map((t) => { const r = t.getBoundingClientRect(); return [r.left + r.width / 2, r.top + r.height / 2 + scrollY]; });
+    size = tiles[0]?.getBoundingClientRect().width || 60;
+    if (cur.length !== tiles.length) cur = tiles.map(() => ({ l: 0, rx: 0, ry: 0, gx: 0, gy: 0 }));
   };
-  const lift = () => {
+  const step = () => {
     raf = 0;
     const y = py + scrollY;
+    let moving = false;
+    let nearest = null;
+    let nd = Infinity;
     tiles.forEach((t, i) => {
-      const d = Math.hypot(centers[i][0] - px, centers[i][1] - y);
-      t.style.setProperty('--lift', Math.max(0, 1 - d / 170).toFixed(3));
+      const vx = px - centers[i][0];
+      const vy = y - centers[i][1];
+      const d = Math.hypot(vx, vy);
+      let k = Math.max(0, 1 - d / RADIUS);
+      k = k * k * (3 - 2 * k); // smooth falloff
+      const goal = { l: k, rx: (-vy / RADIUS) * 18 * k, ry: (vx / RADIUS) * 18 * k, gx: clamp(vx / size, -1, 1) * 40 * k, gy: clamp(vy / size, -1, 1) * 40 * k };
+      const c = cur[i];
+      for (const key in goal) {
+        const delta = goal[key] - c[key];
+        if (Math.abs(delta) > 0.002) { c[key] += delta * 0.18; moving = true; } else c[key] = goal[key];
+      }
+      t.style.setProperty('--lift', c.l.toFixed(3));
+      t.style.setProperty('--rx', c.rx.toFixed(2));
+      t.style.setProperty('--ry', c.ry.toFixed(2));
+      t.style.setProperty('--gx', c.gx.toFixed(1));
+      t.style.setProperty('--gy', c.gy.toFixed(1));
+      t.style.zIndex = c.l > 0.55 ? '2' : '';
+      if (d < nd) { nd = d; nearest = t; }
+    });
+    const next = nd < size * 0.75 ? nearest : null;
+    if (next !== hot) { hot?.classList.remove('hot'); next?.classList.add('hot'); hot = next; }
+    if (moving) raf = requestAnimationFrame(step);
+  };
+  const kick = () => { if (!raf) raf = requestAnimationFrame(step); };
+
+  // Click: a ripple of square outlines spreads out from the tile you pressed.
+  const ripple = (e) => {
+    const y = e.clientY + scrollY;
+    tiles.forEach((t, i) => {
+      const d = Math.hypot(centers[i][0] - e.clientX, centers[i][1] - y);
+      if (d > RADIUS * 1.6) return;
+      setTimeout(() => { t.classList.remove('flash'); void t.offsetWidth; t.classList.add('flash'); }, d * 1.4);
     });
   };
+
   if (!reduce) {
-    stage.addEventListener('pointerenter', measure);
-    stage.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; if (!raf) raf = requestAnimationFrame(lift); });
-    stage.addEventListener('pointerleave', () => { px = py = -1e4; if (!raf) raf = requestAnimationFrame(lift); });
+    stage.addEventListener('pointerenter', (e) => { measure(); px = e.clientX; py = e.clientY; kick(); });
+    stage.addEventListener('pointermove', (e) => { px = e.clientX; py = e.clientY; kick(); });
+    stage.addEventListener('pointerleave', () => { px = py = -1e4; kick(); });
+    stage.addEventListener('pointerdown', ripple);
+    addEventListener('scroll', () => { if (px > -1e4) { measure(); kick(); } }, { passive: true });
   }
 
   build();
