@@ -1,9 +1,26 @@
 # Alecto web
 
-Marketing site for Alecto Conveyancing (Voorstel 2: "Live").
+Marketing site concepts for Alecto Conveyancing.
+
+| Concept | URL | Idea |
+| --- | --- | --- |
+| 1 · Live | `/` | Many squares: a live tile skyline that builds per stage, intro loader, scroll motion |
+| 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
-Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark frames).
+Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark frames) for concept 1.
+
+## Concept 2: One square, one journey
+
+`concept-2/index.html`, `src/concept-2/`. The only colour on the page is one accent square (the actor).
+It starts as the full stop of the headline and, as you scroll through a pinned six-chapter story, becomes
+the ticked checkbox (Instruct), a reading marker (Investigate), the seal between two contracts (Exchange),
+the head of a key (Complete), the lit window of the house (Moving day) and finally the logo dot (Wrap up).
+
+The actor is a fixed element that moves between anchor elements (`data-k`) inside the drawings; anchors
+are measured every frame so it stays glued to them. Without JS or with reduced motion the chapters stack
+normally and every drawing shows its own static square. Concept 2 reuses the shared scroll motion
+without the square cursor, so there is only ever one square on screen.
 
 ## Run it
 
@@ -33,6 +50,9 @@ src/js/decor.js         stage stacks (How it works) and the CTA skyline
 src/js/motion.js        scroll motion (Lenis smooth scroll, reveals, counters, scroll-linked panel)
 src/js/theme.js         light / dark toggle
 src/js/palette.js       brand gradient + small helpers
+concept-2/index.html    concept 2 page
+src/concept-2/          concept 2 styles and the travelling-square script
+vite.config.js          builds both pages
 ```
 
 ## Design rules
