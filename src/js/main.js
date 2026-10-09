@@ -3,16 +3,20 @@ import { initTheme } from './theme.js';
 import { runLoader } from './loader.js';
 import { createHero } from './hero.js';
 import { initStageStacks, initSkyline } from './decor.js';
+import { initMotion } from './motion.js';
 
 const reduce = prefersReducedMotion();
 
 initTheme(document.getElementById('theme'));
 initStageStacks();
 initSkyline(document.getElementById('skyline'));
+const lenis = initMotion({ reduce });
+if (document.documentElement.classList.contains('intro')) lenis?.stop();
 
 const hero = createHero({ reduce });
 
 runLoader({ period: document.getElementById('period') }).then(() => {
+  lenis?.start();
   if (!hero) return;
   setTimeout(hero.intro, 550);
   hero.startLive(3400);
