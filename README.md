@@ -7,11 +7,13 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 
 ## Run it
 
+Uses [Bun](https://bun.sh) as package manager and runtime (Vite runs on Bun via `bunx --bun`).
+
 ```bash
-npm install
-npm run dev       # local dev server with hot reload
-npm run build     # static build into dist/
-npm run preview   # serve the build locally
+bun install
+bun run dev       # local dev server with hot reload
+bun run build     # static build into dist/
+bun run preview   # serve the build locally
 ```
 
 `dist/` is a static site and can go to any host (Vercel, Netlify, Cloudflare Pages, S3).
