@@ -11,7 +11,7 @@ import { clamp } from './palette.js';
  *  - stats count up, the hero copy drifts away, the footer wordmark builds letter by letter
  * Everything is skipped with prefers-reduced-motion; without JavaScript all content is simply visible.
  */
-export function initMotion({ reduce }) {
+export function initMotion({ reduce, cursor = true }) {
   const root = document.documentElement;
   initHeader();
   initProgress();
@@ -29,7 +29,7 @@ export function initMotion({ reduce }) {
   observe();
   initCounters();
   initScrollLinked();
-  initCursor();
+  if (cursor) initCursor();
   return lenis;
 }
 
