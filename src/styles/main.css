@@ -66,6 +66,8 @@ h1 .soft{color:var(--muted)}
 .legend{display:grid;grid-template-columns:repeat(var(--cols,16),1fr);gap:5px;margin-top:14px}
 .legend div{border-top:1px solid var(--line);padding-top:10px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s,border-color .3s}
 .legend div span{color:var(--fg);opacity:.45}
+.legend div em{font-style:normal;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.legend-key{display:none}
 .legend div.on{color:var(--fg);border-color:var(--accent)}
 .legend div.on span{color:var(--accent);opacity:1}
 
@@ -257,13 +259,13 @@ h2 .period{width:.14em;height:.14em}
   .actions .ghost,.actions .track{display:none}
   .ctas .btn{flex:1 1 100%;justify-content:center}
   .grid,.legend{gap:4px}
-  /* Stage labels alternate between two rows so every name gets room to breathe. */
+  /* The bars carry only the numbers, in order; the names sit in a key below. */
   .legend{margin-top:12px}
-  .legend div{position:relative;flex-direction:column;gap:3px;overflow:visible;text-overflow:clip;font-size:10.5px;letter-spacing:.04em;padding-top:9px}
-  .legend div span{font-size:9.5px}
-  .legend div:nth-child(even){padding-top:46px}
-  .legend div:nth-child(even)::before{content:"";position:absolute;left:0;top:0;height:40px;border-left:1px solid var(--line);transition:border-color .3s}
-  .legend div.on:nth-child(even)::before{border-color:var(--accent)}
+  .legend div{font-size:11px;padding-top:9px} .legend div em{display:none}
+  .legend-key{display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 0;padding:0;list-style:none;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .legend-key li{display:flex;gap:6px;transition:color .3s}
+  .legend-key li span{opacity:.6}
+  .legend-key li.on{color:var(--fg)} .legend-key li.on span{color:var(--accent);opacity:1}
   .stage{padding-bottom:20px}
   .toast{display:grid;grid-template-columns:auto auto;column-gap:8px;row-gap:2px;padding:8px 12px 8px 10px;font-size:13px}
   .toast small{grid-column:2;font-size:11px}
