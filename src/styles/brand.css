@@ -1,0 +1,49 @@
+/* Brand element: two squares as moving boxes.
+   A larger box with a smaller one tilted on top of it, each with a strip of tape. Used big and faint
+   in the background (hero, CTA) and tiny as a mark (news bar). JS sets --s (-1..1) from the scroll
+   position, so the boxes shift and tilt a little as you move down the page: they're "moving".
+
+   Markup: <span class="boxes" data-boxes aria-hidden="true"><i></i><i></i></span> */
+
+.boxes {
+  --s: 0; --box-line: var(--line); --box-fill: var(--bg); --w: 520px;
+  position: absolute; display: block; width: var(--w); aspect-ratio: 1; pointer-events: none;
+}
+.boxes i { position: absolute; display: block; aspect-ratio: 1; border: 1.5px solid var(--box-line); background: var(--box-fill); will-change: transform; }
+.boxes i::after { /* tape over the flaps */
+  content: ""; position: absolute; left: 50%; top: -1.5px; width: 15%; height: 32%; transform: translateX(-50%);
+  border: 1.5px solid var(--box-line); border-top: 0;
+}
+.boxes i:nth-child(1) { left: 0; bottom: 0; width: 70%; transform: translateY(calc(var(--s) * -24px)) rotate(calc(-6deg + var(--s) * 3deg)); }
+.boxes i:nth-child(2) { right: 2%; top: 2%; width: 46%; transform: translate(calc(var(--s) * -18px), calc(var(--s) * -56px)) rotate(calc(13deg + var(--s) * -9deg)); }
+
+/* Accent variant: the top box carries the brand colour. */
+.boxes.accent i:nth-child(2) { --box-line: var(--accent); background: color-mix(in srgb, var(--accent) 10%, var(--bg)); }
+
+/* On inverted panels (the CTA). */
+.cta .boxes { --box-line: var(--inv-line); --box-fill: var(--inv-bg); }
+.cta .boxes.accent i:nth-child(2) { --box-line: var(--accent); background: color-mix(in srgb, var(--accent) 16%, var(--inv-bg)); }
+
+/* Mark: tiny, filled, no tape. */
+.boxes.mini { position: relative; --w: 18px; flex: none; }
+.boxes.mini i { border: 0; }
+.boxes.mini i::after { display: none; }
+.boxes.mini i:nth-child(1) { background: currentColor; }
+.boxes.mini i:nth-child(2) { background: var(--accent); }
+
+/* ---------- news bar ---------- */
+.announce {
+  position: relative; z-index: 31; display: flex; align-items: center; justify-content: center; gap: 12px;
+  padding: 10px clamp(16px, 4vw, 48px); background: var(--inv-bg); color: var(--inv-fg);
+  font-size: 14px; line-height: 1.35; text-decoration: none;
+}
+.announce-tag { flex: none; font: 500 11px var(--mono); letter-spacing: .08em; text-transform: uppercase; padding: 3px 7px; border: 1px solid var(--inv-line); color: var(--inv-muted); }
+.announce-text { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.announce-cta { flex: none; display: inline-flex; gap: 6px; font-weight: 600; text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--inv-line); }
+.announce-cta span { transition: transform .25s var(--ease-out, ease); }
+.announce:hover .announce-cta span { transform: translateX(3px); }
+.announce:focus-visible { outline: 2px solid var(--accent); outline-offset: -4px; }
+@media (max-width: 640px) {
+  .announce { justify-content: flex-start; font-size: 13px; }
+  .announce-cta b { display: none; } /* keep just the arrow */
+}

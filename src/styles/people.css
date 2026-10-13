@@ -1,0 +1,63 @@
+/* People: the human side of Alecto, shared by concepts 2 and 4.
+   Portraits are photo slots: a soft tint with a head-and-shoulders silhouette until Alecto supplies
+   real photos. To use a photo, put an <img> inside .portrait (it covers the placeholder). */
+
+/* ---------- portrait ---------- */
+.portrait {
+  --p: .2; --sil: color-mix(in oklab, var(--accent-ink) 26%, transparent);
+  position: relative; display: block; flex: none; overflow: hidden; width: 72px; aspect-ratio: 1; isolation: isolate;
+}
+.portrait::before { /* tint; shifts along the brand gradient per person */
+  content: ""; position: absolute; inset: 0; z-index: -2;
+  background: linear-gradient(140deg, var(--soft), color-mix(in oklab, var(--accent) 34%, var(--soft)));
+  filter: hue-rotate(calc((var(--p) - .2) * 140deg));
+}
+.portrait::after { /* head and shoulders */
+  content: ""; position: absolute; inset: 0; z-index: -1;
+  background:
+    radial-gradient(circle at 50% 41%, var(--sil) 0 16.5%, transparent 17%),
+    radial-gradient(ellipse 35% 33% at 50% 103%, var(--sil) 0 99%, transparent 100%);
+}
+.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+.portrait.sm { width: 36px; }
+.portrait.md { width: 52px; }
+.portrait.lg { width: 100%; }
+.portrait em {
+  position: absolute; left: 10px; bottom: 10px; font: 500 10.5px var(--mono); font-style: normal; letter-spacing: .08em;
+  text-transform: uppercase; color: var(--accent-ink); opacity: .6;
+}
+
+/* ---------- your conveyancer says hello ---------- */
+.person {
+  display: flex; gap: 18px; align-items: flex-start; padding: 20px 22px 18px; max-width: 460px;
+  background: var(--surface); border: 1px solid var(--line); box-shadow: 0 24px 50px -30px rgba(20, 20, 40, .35);
+}
+.person-body { display: grid; gap: 8px; min-width: 0; }
+.person-quote { margin: 0; font-size: 16.5px; line-height: 1.5; color: var(--fg); }
+.person-sign { margin: -2px 0 0; font: 600 30px/1 "Caveat", cursive; color: var(--accent); transform: rotate(-3deg); transform-origin: 0 50%; }
+.person-meta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font: 400 12.5px var(--mono); color: var(--muted); }
+.person-meta b { color: var(--fg); font-weight: 500; }
+.online { display: inline-flex; align-items: center; gap: 6px; color: var(--ok); }
+.online i { width: 7px; height: 7px; background: var(--live); animation: beat 2s infinite; }
+
+/* ---------- team ---------- */
+.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mate { margin: 0; display: grid; gap: 16px; align-content: start; }
+.mate figcaption { display: grid; gap: 4px; }
+.mate b { font-weight: 600; font-size: 18px; letter-spacing: -.02em; }
+.mate small { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
+.mate p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; font-size: 15px; }
+
+/* ---------- reviews with real people ---------- */
+.by .portrait { width: 52px; }
+.by small { font-weight: 400; }
+
+@media (max-width: 900px) {
+  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+}
+@media (max-width: 560px) {
+  .person { padding: 16px; gap: 14px; }
+  .person .portrait { width: 56px; }
+  .person-quote { font-size: 15.5px; }
+}
+@media (prefers-reduced-motion: reduce) { .online i { animation: none !important; } }

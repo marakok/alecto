@@ -24,6 +24,21 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 - **Placeholders:** names, words and portraits are illustrative. Swap the initials `<span>` inside `.portrait` for an
   `<img>` when Alecto supplies photos.
 
+## Feedback round 2 (concept 2 leading, concept 4 calmer)
+
+What sets Alecto apart: a real person helps you at every step. Concept 2 now shows that:
+
+- **Brand element, "moving boxes":** two tilted squares, a big box with a smaller one on top, each with a strip of
+  tape. They sit large in the background (hero, CTA) and small as a mark (news bar), and shift and tilt as you
+  scroll (`src/styles/brand.css`, `src/js/boxes.js`). Markup: `<span class="boxes" data-boxes><i></i><i></i></span>`.
+- **Human touch:** Hannah introduces herself in the hero, says what *she* does for you in every chapter of the
+  journey, the team has its own section, and reviews have names and portraits. All dummy for now; portraits are
+  photo slots with a silhouette (`src/styles/people.css`, shared with concept 4).
+- **News bar** at the top with a (dummy) link to the press release.
+
+Concept 4 is calmer: blocks fade up instead of tiling in, and the squares settle gently from above instead of flying,
+spinning and glowing (`calm: true` in `src/js/build.js`). Hannah is "Hannah Reid" everywhere, matching concept 1.
+
 ## Concept 3: Square by square
 
 `concept-3/index.html`, `src/concept-3/`, with the build engine in `src/js/build.js` (shared with concept 4). There is no loader: the page builds itself.

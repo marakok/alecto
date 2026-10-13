@@ -1,39 +1,6 @@
 /* Concept 4: Your person, step by step.
-   Loads on top of concept 3's build.css. Adds the human layer: the conveyancer card in the hero,
-   her messages during the build, and the team. Portraits are placeholders (initials on a soft
-   brand tint) until Alecto supplies real photos: swap the <span> for an <img> inside .portrait. */
-
-/* ---------- portrait placeholder ---------- */
-.portrait {
-  --p: .2; position: relative; display: grid; place-items: center; flex: none; overflow: hidden;
-  width: 72px; aspect-ratio: 1; isolation: isolate;
-  font: 700 26px var(--display); letter-spacing: -.04em; color: var(--accent-ink);
-}
-.portrait::before { /* tint shifts along the brand gradient per person */
-  content: ""; position: absolute; inset: 0; z-index: -1;
-  background: linear-gradient(140deg, var(--soft), color-mix(in oklab, var(--accent) 38%, var(--soft)));
-  filter: hue-rotate(calc((var(--p) - .2) * 140deg));
-}
-.portrait img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
-.portrait.sm { width: 36px; font-size: 13px; }
-.portrait.lg { width: 100%; font-size: clamp(44px, 6vw, 72px); }
-.portrait em {
-  position: absolute; left: 10px; bottom: 10px; font: 500 10.5px var(--mono); font-style: normal; letter-spacing: .08em;
-  text-transform: uppercase; color: var(--accent-ink); opacity: .6;
-}
-
-/* ---------- hero: your conveyancer says hello ---------- */
-.person {
-  display: flex; gap: 18px; align-items: flex-start; padding: 20px 22px 18px; max-width: 460px;
-  background: var(--surface); border: 1px solid var(--line); box-shadow: 0 24px 50px -30px rgba(20, 20, 40, .35);
-}
-.person-body { display: grid; gap: 8px; min-width: 0; }
-.person-quote { margin: 0; font-size: 16.5px; line-height: 1.5; color: var(--fg); }
-.person-sign { margin: -2px 0 0; font: 600 30px/1 "Caveat", cursive; color: var(--accent); transform: rotate(-3deg); transform-origin: 0 50%; }
-.person-meta { margin: 0; display: flex; flex-wrap: wrap; align-items: center; gap: 4px 8px; font: 400 12.5px var(--mono); color: var(--muted); }
-.person-meta b { color: var(--fg); font-weight: 500; }
-.online { display: inline-flex; align-items: center; gap: 6px; color: var(--ok); }
-.online i { width: 7px; height: 7px; background: var(--live); animation: beat 2s infinite; }
+   Loads on top of concept 3's build.css and the shared people.css (portraits, the conveyancer card,
+   the team). Adds the hero layout and her message thread during the build. */
 
 @media (min-width: 1000px) {
   .c4 .c3-hero { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); column-gap: 48px; }
@@ -67,16 +34,7 @@
 html.bl .c4 .btext { gap: 22px; }
 html.bl .c4 .bchap h3 { font-size: clamp(30px, 3.6vw, 52px); }
 
-/* ---------- team ---------- */
-.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
-.mate { margin: 0; display: grid; gap: 16px; align-content: start; }
-.mate figcaption { display: grid; gap: 4px; }
-.mate b { font-weight: 600; font-size: 18px; letter-spacing: -.02em; }
-.mate small { font: 500 12px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--accent); }
-.mate p { margin: 6px 0 0; color: var(--muted); line-height: 1.5; font-size: 15px; }
-
 @media (max-width: 900px) {
-  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
   /* Pinned build on small screens: house, the chapter title and Hannah's latest messages. */
   html.bl .c4 .bscene { width: min(100%, 40svh); }
   html.bl .c4 .bchap p:last-child { display: none; }
@@ -89,11 +47,6 @@ html.bl .c4 .bchap h3 { font-size: clamp(30px, 3.6vw, 52px); }
   html.bl .c4 .msg.old { display: none; }
   .msg { font-size: 14px; padding: 9px 12px; }
 }
-@media (max-width: 560px) {
-  .person { padding: 16px; gap: 14px; }
-  .person .portrait { width: 56px; font-size: 20px; }
-  .person-quote { font-size: 15.5px; }
-}
 @media (prefers-reduced-motion: reduce) {
-  .msg.pop, .msg.typing, .msg.typing i, .online i { animation: none !important; }
+  .msg.pop, .msg.typing, .msg.typing i { animation: none !important; }
 }

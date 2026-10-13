@@ -11,6 +11,8 @@ html.bl [data-build] { visibility: hidden; animation: build-safety 0s 4s forward
 html.bl.pbjs [data-build] { animation: none; }
 html.bl [data-build].built { visibility: visible; }
 @keyframes build-safety { to { visibility: visible; } }
+html.bl [data-build].calm-in { animation: calm-in 1s cubic-bezier(.2, .7, .2, 1) both; }
+@keyframes calm-in { from { opacity: 0; transform: translateY(14px); } }
 .build-cover { position: absolute; z-index: 15; pointer-events: none; }
 
 /* ---------- hero ---------- */
@@ -80,6 +82,8 @@ html.bl #seed { visibility: hidden; } /* the scene's first square stands in for 
 .sq.land::after { content: ""; position: absolute; inset: -3px; border: 2px solid var(--c); animation: land .9s ease-out forwards; pointer-events: none; }
 @keyframes land { 0% { opacity: 1; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.6); } }
 .sq.seed { z-index: 2; }
+/* Calm (concept 4): no in-flight glow, softer finish. */
+.bscene.calm .sq { box-shadow: inset 0 0 0 1px var(--rim), 0 calc(var(--f) * 8px) calc(var(--f) * 16px) calc(var(--f) * -6px) rgba(20, 20, 40, .25); }
 html.bl .sq.seed { animation: seed-in .5s 1.15s both; } /* appears as the headline finishes building */
 @keyframes seed-in { from { opacity: 0; } }
 
