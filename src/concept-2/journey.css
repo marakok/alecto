@@ -140,11 +140,11 @@ html.jl .jmeta {
   box-shadow: 0 40px 80px -40px rgba(20, 20, 40, .45);
 }
 .pbox img {
-  position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover; object-position: 36% 50%;
+  position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover; object-position: 30% 50%;
   transform: rotate(calc(5deg - var(--s) * 3deg)) translateY(calc(var(--s) * 18px)); /* undo the tilt: the photo stays level */
 }
 .pbox::after { /* packing tape across the top flap */
-  content: ""; position: absolute; left: 50%; top: 0; width: 15%; height: 30%; transform: translateX(-50%); z-index: 1;
+  content: ""; position: absolute; left: 76%; top: 0; width: 15%; height: 30%; transform: translateX(-50%); z-index: 1;
   background: color-mix(in srgb, var(--bg) 42%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
   border: 1px solid color-mix(in srgb, var(--bg) 60%, transparent); border-top: 0;
 }
@@ -155,7 +155,7 @@ html.jl .jmeta {
 }
 .pbox-top::after { content: ""; position: absolute; left: 50%; top: -1.5px; width: 15%; height: 32%; transform: translateX(-50%); border: 1.5px solid var(--accent); border-top: 0; }
 /* Hannah's card overlaps the lower left of the photo, inside the visual's own box. */
-.hero-visual .person { position: relative; z-index: 3; width: 84%; max-width: 380px; margin-top: -22%; padding: 14px 16px; gap: 12px; }
+.hero-visual .person { position: relative; z-index: 3; width: 80%; max-width: 360px; margin: -12% 0 0 auto; padding: 14px 16px; gap: 12px; }
 .hero-visual .person .portrait { width: 48px; }
 .hero-visual .person-quote { font-size: 14.5px; }
 .hero-visual .person-sign { font-size: 26px; }
@@ -163,7 +163,7 @@ html.jl .jmeta {
 /* Hannah's face, cropped from the same photo. */
 .portrait.face-crop::before, .portrait.face-crop::after { display: none; }
 .portrait.face-crop {
-  background: url("https://images.unsplash.com/photo-1714647212104-996bbbb6adca?auto=format&fit=crop&w=900&q=80") 21% 25% / 520% auto no-repeat var(--tile-empty);
+  background: url("https://images.unsplash.com/photo-1698047682091-782b1e5c6536?auto=format&fit=crop&w=900&q=80") 40% 19% / 520% auto no-repeat var(--tile-empty);
 }
 
 @media (min-width: 760px) {

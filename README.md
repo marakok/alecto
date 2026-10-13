@@ -36,9 +36,9 @@ What sets Alecto apart: a real person helps you at every step. Concept 2 now sho
   photo slots with a silhouette (`src/styles/people.css`, shared with concept 4).
 - **News bar** at the top with a (dummy) link to the press release.
 - **Hero photo through the brand element:** on the right of the hero, the big moving box is a window onto a photo of
-  Hannah helping a couple. The box tilts with scroll while the photo stays level; the small accent box sits on its
+  Hannah welcoming a client. The box tilts with scroll while the photo stays level; the small accent box sits on its
   corner, and Hannah's card (with her face cropped from the same photo) overlaps it. Dummy stock photo:
-  [Vitaly Gariev on Unsplash](https://unsplash.com/photos/TB2UuDIQOR0) (Unsplash License), hotlinked from
+  [Resume Genius on Unsplash](https://unsplash.com/photos/IESB4iFVuzA) (Unsplash License), hotlinked from
   images.unsplash.com. Replace with a real, self-hosted photo of the Alecto team before launch.
 
 Concept 4 is calmer: blocks fade up instead of tiling in, and the squares settle gently from above instead of flying,
