@@ -128,16 +128,20 @@ html.jl .jmeta {
 /* ---------- hero visual: a photo seen through the moving boxes ---------- */
 /* The big box is a window: it tilts with the brand element while the photo inside stays level
    and drifts slightly (parallax). The small accent box sits on its corner. --s comes from boxes.js. */
-.hero-visual { position: relative; width: min(100%, 500px); justify-self: end; padding: 5% 4% 0 0; }
-.photo-boxes { --s: 0; position: relative; }
+.hero-visual {
+  /* Sized by width and by screen height, so photo and card always fit beside the headline. */
+  --vis: min(100%, 500px, calc(100svh - 240px));
+  position: relative; width: var(--vis); justify-self: end; padding: 7% 7% 0 0;
+}
+.photo-boxes { --s: 0; position: relative; width: 86%; margin-left: auto; }
 .pbox {
   margin: 0; position: relative; aspect-ratio: 1; overflow: hidden; background: var(--tile-empty);
-  transform: translateY(calc(var(--s) * -18px)) rotate(calc(-5deg + var(--s) * 3deg));
+  transform: translateY(calc(var(--s) * -14px)) rotate(calc(-5deg + var(--s) * 3deg));
   box-shadow: 0 40px 80px -40px rgba(20, 20, 40, .45);
 }
 .pbox img {
   position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover; object-position: 36% 50%;
-  transform: rotate(calc(5deg - var(--s) * 3deg)) translateY(calc(var(--s) * 22px)); /* undo the tilt: the photo stays level */
+  transform: rotate(calc(5deg - var(--s) * 3deg)) translateY(calc(var(--s) * 18px)); /* undo the tilt: the photo stays level */
 }
 .pbox::after { /* packing tape across the top flap */
   content: ""; position: absolute; left: 50%; top: 0; width: 15%; height: 30%; transform: translateX(-50%); z-index: 1;
@@ -145,12 +149,16 @@ html.jl .jmeta {
   border: 1px solid color-mix(in srgb, var(--bg) 60%, transparent); border-top: 0;
 }
 .pbox-top {
-  position: absolute; right: -6%; top: -9%; width: 38%; aspect-ratio: 1; z-index: 2;
+  position: absolute; right: -9%; top: -11%; width: 36%; aspect-ratio: 1; z-index: 2;
   border: 1.5px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg));
-  transform: translate(calc(var(--s) * -14px), calc(var(--s) * -48px)) rotate(calc(12deg + var(--s) * -9deg));
+  transform: translate(calc(var(--s) * -12px), calc(var(--s) * -40px)) rotate(calc(12deg + var(--s) * -9deg));
 }
 .pbox-top::after { content: ""; position: absolute; left: 50%; top: -1.5px; width: 15%; height: 32%; transform: translateX(-50%); border: 1.5px solid var(--accent); border-top: 0; }
-.hero-visual .person { position: relative; z-index: 3; margin: -18% 0 0 -10%; max-width: 400px; }
+/* Hannah's card overlaps the lower left of the photo, inside the visual's own box. */
+.hero-visual .person { position: relative; z-index: 3; width: 84%; max-width: 380px; margin-top: -22%; padding: 14px 16px; gap: 12px; }
+.hero-visual .person .portrait { width: 48px; }
+.hero-visual .person-quote { font-size: 14.5px; }
+.hero-visual .person-sign { font-size: 26px; }
 
 /* Hannah's face, cropped from the same photo. */
 .portrait.face-crop::before, .portrait.face-crop::after { display: none; }
@@ -158,16 +166,15 @@ html.jl .jmeta {
   background: url("https://images.unsplash.com/photo-1714647212104-996bbbb6adca?auto=format&fit=crop&w=900&q=80") 21% 25% / 520% auto no-repeat var(--tile-empty);
 }
 
-@media (min-width: 1000px) {
-  .c2-hero { grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr); column-gap: clamp(32px, 4vw, 64px); }
+@media (min-width: 760px) {
+  .c2-hero { grid-template-columns: minmax(0, 1fr) auto; column-gap: clamp(24px, 4vw, 64px); align-items: center; padding-top: clamp(40px, 6vw, 88px); }
   .c2-hero > .kick, .c2-hero > h1, .c2-hero > .c2-hero-foot, .c2-hero > .scroll-hint { grid-column: 1; }
-  .c2-hero > .hero-visual { grid-column: 2; grid-row: 1 / span 4; align-self: start; }
-  .c2-hero h1 { font-size: clamp(54px, 8.4vw, 136px); }
+  .c2-hero > .hero-visual { grid-column: 2; grid-row: 1 / span 4; width: min(40vw, 500px, calc(100svh - 240px)); }
+  .c2-hero h1 { font-size: clamp(50px, 8.2vw, 136px); }
   .c2-hero-foot { flex-direction: column; align-items: flex-start; }
 }
-@media (max-width: 999px) {
-  .hero-visual { justify-self: center; width: min(100%, 460px); padding: 10% 8% 0 2%; }
-  .hero-visual .person { margin: -14% 0 0 -2%; }
+@media (max-width: 759px) {
+  .hero-visual { justify-self: center; width: min(100%, 440px); padding: 9% 9% 0 2%; }
 }
 
 /* ---------- after the journey ---------- */

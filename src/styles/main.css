@@ -239,7 +239,7 @@ h2 .period{width:.14em;height:.14em}
 .fcols a:hover{color:var(--accent)}
 .legal{display:flex;flex-wrap:wrap;justify-content:space-between;gap:16px;padding-block:24px 40px;border-top:1px solid var(--line);font:400 12.5px/1.6 var(--mono);color:var(--muted)}
 
-@media (max-width:980px){ .links{display:none} }
+@media (max-width:1100px){ .links{display:none} }
 @media (max-width:900px){
   .appbody{grid-template-columns:1fr} .appbar .tab{display:none}
   .cards,.reviews{grid-template-columns:1fr}
