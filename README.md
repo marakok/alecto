@@ -7,13 +7,26 @@ Marketing site concepts for Alecto Conveyancing.
 | 1 · Live | `/` | Many squares: a live tile skyline that builds per stage, intro loader, scroll motion |
 | 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
 | 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
+| 4 · Your person | `/concept-4/` | Concept 3's build-up with the human side up front: your conveyancer introduces herself, messages you at every stage, and the team gets a face |
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
 Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark frames) for concept 1.
 
+## Concept 4: Your person, step by step
+
+`concept-4/index.html`, `src/concept-4/`. Built on concept 3 (it loads `src/concept-3/build.css` and the shared
+`src/js/build.js`), after client feedback: keep the build-up, bring the human touch forward.
+
+- **Hero:** a card where the conveyancer introduces herself, with a handwritten signature (Caveat) and "Online now".
+- **Build:** while the house builds, she messages you at every stage (typing indicator, then her message, sometimes
+  your reply). Messages live in `MESSAGES` in `src/concept-4/main.js`.
+- **Your team:** four people with portrait, role and one personal line.
+- **Placeholders:** names, words and portraits are illustrative. Swap the initials `<span>` inside `.portrait` for an
+  `<img>` when Alecto supplies photos.
+
 ## Concept 3: Square by square
 
-`concept-3/index.html`, `src/concept-3/`. There is no loader: the page builds itself.
+`concept-3/index.html`, `src/concept-3/`, with the build engine in `src/js/build.js` (shared with concept 4). There is no loader: the page builds itself.
 
 - **Page build:** every block marked `data-build` (optional value: delay in ms) is covered by page-coloured
   tiles that lift in a diagonal sweep, each flashing a brand colour. The hero builds on load, the rest as it
