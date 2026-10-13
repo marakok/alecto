@@ -44,15 +44,21 @@ h1 .soft{color:var(--muted)}
 
 /* stage */
 .stage{position:relative;margin-top:clamp(40px,6vw,72px);padding-bottom:28px}
-.grid{--cols:16;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:5px;position:relative}
-.t{aspect-ratio:1;border-radius:0;position:relative;
-  background:color-mix(in oklab,var(--c) calc(var(--a)*100%),var(--tile-empty));
-  transform:translateY(calc(var(--lift)*-7px)) scale(calc(1 + var(--lift)*.03));
-  box-shadow:inset 0 0 0 1px var(--rim), 0 calc(var(--a)*14px) calc(var(--a)*30px) calc(var(--a)*-14px) color-mix(in srgb,var(--c) calc(var(--a)*(55% + var(--glow)*35%)),transparent);
-  transition:--a .7s cubic-bezier(.3,.7,.2,1), --lift .25s ease, box-shadow .7s}
+.grid{--cols:16;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:5px;position:relative;perspective:900px}
+/* --a: fill (data), --lift: hover proximity 0..1, --rx/--ry: tilt towards the cursor, --gx/--gy: where the gloss sits */
+.t{aspect-ratio:1;border-radius:0;position:relative;will-change:transform;
+  background:color-mix(in oklab,var(--c) calc(max(var(--a), var(--lift)*.72)*100%),var(--tile-empty));
+  transform:translateY(calc(var(--lift)*-12px)) rotateX(calc(var(--rx,0)*1deg)) rotateY(calc(var(--ry,0)*1deg)) scale(calc(1 + var(--lift)*.07));
+  box-shadow:inset 0 0 0 1px var(--rim),
+    0 calc(var(--a)*14px + var(--lift)*22px) calc(var(--a)*30px + var(--lift)*34px) calc(var(--a)*-14px - var(--lift)*8px)
+    color-mix(in srgb,var(--c) calc(var(--a)*(55% + var(--glow)*35%) + var(--lift)*45%),transparent);
+  transition:--a .7s cubic-bezier(.3,.7,.2,1), outline-color .3s, outline-offset .3s;
+  outline:1.5px solid transparent;outline-offset:6px}
 .t::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(120% 90% at 22% 12%,var(--gloss),transparent 58%),linear-gradient(to top,rgba(0,0,0,.06),transparent 45%);
-  opacity:calc(.25 + var(--a)*.75)}
+  background:radial-gradient(120% 90% at calc(22% + var(--gx,0)*1%) calc(12% + var(--gy,0)*1%),var(--gloss),transparent 58%),linear-gradient(to top,rgba(0,0,0,.06),transparent 45%);
+  opacity:calc(.25 + max(var(--a), var(--lift))*.75)}
+/* the tile right under the cursor gets a square focus ring, like the logo dot */
+.t.hot{outline-color:var(--c);outline-offset:3px;z-index:3}
 .t.flash::after{content:"";position:absolute;inset:-3px;border-radius:0;border:2px solid var(--c);animation:flash 1.4s ease-out forwards;pointer-events:none}
 @keyframes flash{0%{opacity:1;transform:scale(.92)}100%{opacity:0;transform:scale(1.18)}}
 .fly{position:fixed;z-index:20;background:var(--accent);pointer-events:none;will-change:left,top,width,height}
@@ -60,6 +66,8 @@ h1 .soft{color:var(--muted)}
 .legend{display:grid;grid-template-columns:repeat(var(--cols,16),1fr);gap:5px;margin-top:14px}
 .legend div{border-top:1px solid var(--line);padding-top:10px;font:500 12px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted);display:flex;gap:8px;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;transition:color .3s,border-color .3s}
 .legend div span{color:var(--fg);opacity:.45}
+.legend div em{font-style:normal;min-width:0;overflow:hidden;text-overflow:ellipsis}
+.legend-key{display:none}
 .legend div.on{color:var(--fg);border-color:var(--accent)}
 .legend div.on span{color:var(--accent);opacity:1}
 
@@ -251,13 +259,13 @@ h2 .period{width:.14em;height:.14em}
   .actions .ghost,.actions .track{display:none}
   .ctas .btn{flex:1 1 100%;justify-content:center}
   .grid,.legend{gap:4px}
-  /* Stage labels alternate between two rows so every name gets room to breathe. */
+  /* The bars carry only the numbers, in order; the names sit in a key below. */
   .legend{margin-top:12px}
-  .legend div{position:relative;flex-direction:column;gap:3px;overflow:visible;text-overflow:clip;font-size:10.5px;letter-spacing:.04em;padding-top:9px}
-  .legend div span{font-size:9.5px}
-  .legend div:nth-child(even){padding-top:46px}
-  .legend div:nth-child(even)::before{content:"";position:absolute;left:0;top:0;height:40px;border-left:1px solid var(--line);transition:border-color .3s}
-  .legend div.on:nth-child(even)::before{border-color:var(--accent)}
+  .legend div{font-size:11px;padding-top:9px} .legend div em{display:none}
+  .legend-key{display:flex;flex-wrap:wrap;gap:8px 16px;margin:16px 0 0;padding:0;list-style:none;font:500 11px var(--mono);letter-spacing:.06em;text-transform:uppercase;color:var(--muted)}
+  .legend-key li{display:flex;gap:6px;transition:color .3s}
+  .legend-key li span{opacity:.6}
+  .legend-key li.on{color:var(--fg)} .legend-key li.on span{color:var(--accent);opacity:1}
   .stage{padding-bottom:20px}
   .toast{display:grid;grid-template-columns:auto auto;column-gap:8px;row-gap:2px;padding:8px 12px 8px 10px;font-size:13px}
   .toast small{grid-column:2;font-size:11px}
