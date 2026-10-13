@@ -44,15 +44,21 @@ h1 .soft{color:var(--muted)}
 
 /* stage */
 .stage{position:relative;margin-top:clamp(40px,6vw,72px);padding-bottom:28px}
-.grid{--cols:16;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:5px;position:relative}
-.t{aspect-ratio:1;border-radius:0;position:relative;
-  background:color-mix(in oklab,var(--c) calc(var(--a)*100%),var(--tile-empty));
-  transform:translateY(calc(var(--lift)*-7px)) scale(calc(1 + var(--lift)*.03));
-  box-shadow:inset 0 0 0 1px var(--rim), 0 calc(var(--a)*14px) calc(var(--a)*30px) calc(var(--a)*-14px) color-mix(in srgb,var(--c) calc(var(--a)*(55% + var(--glow)*35%)),transparent);
-  transition:--a .7s cubic-bezier(.3,.7,.2,1), --lift .25s ease, box-shadow .7s}
+.grid{--cols:16;display:grid;grid-template-columns:repeat(var(--cols),1fr);gap:5px;position:relative;perspective:900px}
+/* --a: fill (data), --lift: hover proximity 0..1, --rx/--ry: tilt towards the cursor, --gx/--gy: where the gloss sits */
+.t{aspect-ratio:1;border-radius:0;position:relative;will-change:transform;
+  background:color-mix(in oklab,var(--c) calc(max(var(--a), var(--lift)*.72)*100%),var(--tile-empty));
+  transform:translateY(calc(var(--lift)*-12px)) rotateX(calc(var(--rx,0)*1deg)) rotateY(calc(var(--ry,0)*1deg)) scale(calc(1 + var(--lift)*.07));
+  box-shadow:inset 0 0 0 1px var(--rim),
+    0 calc(var(--a)*14px + var(--lift)*22px) calc(var(--a)*30px + var(--lift)*34px) calc(var(--a)*-14px - var(--lift)*8px)
+    color-mix(in srgb,var(--c) calc(var(--a)*(55% + var(--glow)*35%) + var(--lift)*45%),transparent);
+  transition:--a .7s cubic-bezier(.3,.7,.2,1), outline-color .3s, outline-offset .3s;
+  outline:1.5px solid transparent;outline-offset:6px}
 .t::before{content:"";position:absolute;inset:0;border-radius:inherit;pointer-events:none;
-  background:radial-gradient(120% 90% at 22% 12%,var(--gloss),transparent 58%),linear-gradient(to top,rgba(0,0,0,.06),transparent 45%);
-  opacity:calc(.25 + var(--a)*.75)}
+  background:radial-gradient(120% 90% at calc(22% + var(--gx,0)*1%) calc(12% + var(--gy,0)*1%),var(--gloss),transparent 58%),linear-gradient(to top,rgba(0,0,0,.06),transparent 45%);
+  opacity:calc(.25 + max(var(--a), var(--lift))*.75)}
+/* the tile right under the cursor gets a square focus ring, like the logo dot */
+.t.hot{outline-color:var(--c);outline-offset:3px;z-index:3}
 .t.flash::after{content:"";position:absolute;inset:-3px;border-radius:0;border:2px solid var(--c);animation:flash 1.4s ease-out forwards;pointer-events:none}
 @keyframes flash{0%{opacity:1;transform:scale(.92)}100%{opacity:0;transform:scale(1.18)}}
 .fly{position:fixed;z-index:20;background:var(--accent);pointer-events:none;will-change:left,top,width,height}
