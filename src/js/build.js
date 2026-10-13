@@ -5,7 +5,8 @@ import { mix, rand, clamp } from './palette.js';
  *  - initPageBuild: blocks marked [data-build] appear tile by tile (hero on load, the rest on scroll).
  *  - initHouse: a pinned, scroll-scrubbed scene where ~170 squares fly in to build a house, one stage
  *    per chapter. The headline full stop (#seed) is the first square. onStage(i) fires when the chapter changes.
- * Both take { live }: false draws everything finished (reduced motion).
+ * Both take { live }: false draws everything finished (reduced motion), and { calm }: true for a quieter
+ * version (blocks fade up instead of tiling in; squares drift down gently instead of flying and spinning).
  */
 
 /* ---------- the house ---------- */
@@ -29,7 +30,7 @@ function blueprint() {
   return cells;
 }
 
-export function initHouse({ live, onStage } = {}) {
+export function initHouse({ live, calm = false, onStage } = {}) {
   const scene = document.getElementById('scene');
   const build = document.getElementById('build');
   const seed = document.getElementById('seed');
@@ -41,6 +42,7 @@ export function initHouse({ live, onStage } = {}) {
   const STAGES = 5;
   const END = STAGES + 0.7; // extra scroll after the last stage: lights on, hold
 
+  scene.classList.toggle('calm', calm);
   const cells = blueprint();
   const squares = cells.map((cell, i) => {
     const el = document.createElement('i');
@@ -51,10 +53,14 @@ export function initHouse({ live, onStage } = {}) {
     }
     scene.appendChild(el);
     // Each square gets its own flight: where it comes from, how it curves, how much it spins.
-    const angle = rand(0, Math.PI * 2);
+    // Calm: squares come from above, close by, and settle like boxes being stacked.
+    const angle = calm ? rand(-Math.PI * 0.8, -Math.PI * 0.2) : rand(0, Math.PI * 2);
     return {
       el, cell, seed: i === 0,
-      angle, dist: rand(0.75, 1.3), bend: rand(-0.45, 0.45), spin: rand(-300, 300),
+      angle,
+      dist: calm ? rand(0.4, 0.65) : rand(0.75, 1.3),
+      bend: calm ? rand(-0.1, 0.1) : rand(-0.45, 0.45),
+      spin: calm ? rand(-18, 18) : rand(-300, 300),
       t: -1, landed: false,
     };
   });
@@ -65,7 +71,7 @@ export function initHouse({ live, onStage } = {}) {
     group.forEach((q, j) => {
       const start = s + 0.06 + (j / Math.max(1, group.length)) * 0.56;
       q.start = start;
-      q.end = start + 0.32;
+      q.end = start + (calm ? 0.45 : 0.32);
     });
   }
 
@@ -105,16 +111,16 @@ export function initHouse({ live, onStage } = {}) {
     const u = 1 - e;
     const x = u * u * fx + 2 * u * e * cx + e * e * tx;
     const y = u * u * fy + 2 * u * e * cy + e * e * ty;
-    const s = fs + (1 - fs) * easeOutBack(t);
+    const s = fs + (1 - fs) * (calm ? easeInOut(t) : easeOutBack(t));
     const rot = q.spin * Math.pow(1 - t, 2);
     q.el.style.transform = `translate(${x.toFixed(1)}px,${y.toFixed(1)}px) rotate(${rot.toFixed(1)}deg) scale(${s.toFixed(3)})`;
-    q.el.style.opacity = q.seed ? 1 : Math.min(1, t * 3.5).toFixed(3);
+    q.el.style.opacity = q.seed ? 1 : Math.min(1, t * (calm ? 2 : 3.5)).toFixed(3);
     q.el.style.setProperty('--f', Math.sin(Math.PI * t).toFixed(3)); // in-flight glow
   }
 
   const scatter = (q) => {
     const R = size * q.dist;
-    return [size / 2 + Math.cos(q.angle) * R - cell / 2, size / 2 + Math.sin(q.angle) * R - cell / 2, 0.3];
+    return [size / 2 + Math.cos(q.angle) * R - cell / 2, size / 2 + Math.sin(q.angle) * R - cell / 2, calm ? 0.75 : 0.3];
   };
 
   let active = -1;
@@ -148,7 +154,7 @@ export function initHouse({ live, onStage } = {}) {
         return;
       }
       place(q, t, from || scatter(q));
-      if (t >= 1 && was < 1 && was >= 0 && !q.landed) {
+      if (t >= 1 && was < 1 && was >= 0 && !q.landed && !calm) {
         q.landed = true;
         q.el.classList.remove('land'); void q.el.offsetWidth; q.el.classList.add('land');
       }
@@ -179,22 +185,29 @@ export function initHouse({ live, onStage } = {}) {
 
 /* ---------- the page builds itself, tile by tile ---------- */
 
-export function initPageBuild({ live }) {
+export function initPageBuild({ live, calm = false }) {
   const blocks = [...document.querySelectorAll('[data-build]')];
   if (!live) { blocks.forEach((b) => b.classList.add('built')); return; }
+  const reveal = calm ? fadeIn : buildIn;
 
   const io = new IntersectionObserver((entries) => {
     entries.forEach((e) => {
       if (!e.isIntersecting) return;
       io.unobserve(e.target);
-      buildIn(e.target, +(e.target.dataset.build || 0));
+      reveal(e.target, +(e.target.dataset.build || 0));
     });
   }, { rootMargin: '0px 0px -8% 0px', threshold: 0.12 });
   // What is on screen at load builds straight away (the hero); the rest builds as it scrolls in.
   blocks.forEach((b) => {
-    if (b.getBoundingClientRect().top < innerHeight) buildIn(b, +(b.dataset.build || 0));
+    if (b.getBoundingClientRect().top < innerHeight) reveal(b, +(b.dataset.build || 0));
     else io.observe(b);
   });
+}
+
+/** Calm reveal: the block simply fades up into place. */
+function fadeIn(el, delay = 0) {
+  el.style.animationDelay = `${delay}ms`;
+  el.classList.add('built', 'calm-in');
 }
 
 /**

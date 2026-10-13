@@ -5,7 +5,7 @@ import { initPageBuild, initHouse } from '../js/build.js';
 
 /**
  * Concept 4: Your person, step by step.
- * Concept 3's build-up (the page assembles itself, a house is built square by square as you scroll),
+ * Concept 3's build-up, in a calmer key (blocks fade up, squares settle gently as you scroll),
  * with the human side up front: the conveyancer introduces herself in the hero, messages you at every
  * stage of the build, and the team who handle the move get their own section.
  * People, names and messages are illustrative; replace them with the real Alecto team.
@@ -28,8 +28,8 @@ initMotion({ reduce, cursor: false, reveals: false });
 
 const live = root.classList.contains('bl') && !reduce;
 const chat = createChat(document.getElementById('chat'), live);
-Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, 400))]).then(() => initPageBuild({ live }));
-initHouse({ live, onStage: chat.show });
+Promise.race([document.fonts?.ready, new Promise((r) => setTimeout(r, 400))]).then(() => initPageBuild({ live, calm: true }));
+initHouse({ live, calm: true, onStage: chat.show });
 
 /**
  * A small message thread. Moving forward a stage, Hannah "types" and then her message lands;

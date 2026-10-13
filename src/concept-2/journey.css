@@ -40,7 +40,7 @@ html.jl #k0 { visibility: hidden; }
 .ceyebrow { margin: 0 0 18px; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
 .ceyebrow b { color: var(--fg); font-weight: 500; margin-right: 8px; }
 .ctext h3 { margin: 0 0 20px; font-size: clamp(40px, 5.6vw, 76px); line-height: 1; letter-spacing: -.055em; font-weight: 700; text-wrap: balance; }
-.ctext > p:last-child { margin: 0; max-width: 28em; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: var(--muted); }
+.ctext > p:last-of-type { margin: 0; max-width: 28em; font-size: clamp(17px, 1.5vw, 20px); line-height: 1.55; color: var(--muted); }
 .done-list { list-style: none; margin: 0; padding: 0; display: grid; gap: 12px; font-size: 18px; }
 .done-list li { display: flex; align-items: center; gap: 14px; }
 .done-list li::before { content: ""; width: 12px; height: 12px; flex: none; background: var(--fg); }
@@ -107,6 +107,31 @@ html.jl .jmeta {
 .jtrack { width: 160px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
 .jtrack i { position: absolute; inset: 0; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; }
 
+/* ---------- people (feedback round 2: a real person at every step) ---------- */
+/* Portraits stay monochrome here: the accent square remains the only colour. */
+.c2 .portrait { --sil: color-mix(in srgb, var(--fg) 16%, transparent); }
+.c2 .portrait::before { filter: none; background: var(--tile-empty); }
+.c2 .portrait em { color: var(--muted); }
+
+/* Each chapter: what your conveyancer does for you at this step. */
+.helper { display: flex; gap: 12px; align-items: flex-start; margin-top: 26px; padding-top: 18px; border-top: 1px solid var(--line); max-width: 30em; }
+.helper p { margin: 0; font-size: 15.5px; line-height: 1.5; color: var(--fg); }
+.helper b { display: block; margin-bottom: 4px; font: 500 11.5px var(--mono); letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
+
+/* ---------- brand boxes ---------- */
+.c2 main { overflow-x: clip; }
+.c2-hero { isolation: isolate; }
+.hero-boxes { --w: min(34vw, 460px); --box-line: color-mix(in srgb, var(--fg) 20%, transparent); right: 1%; top: 7%; z-index: -1; }
+.c2-cta { position: relative; isolation: isolate; }
+.cta-boxes { --w: min(30vw, 320px); right: 0; bottom: 8%; z-index: -1; }
+
+@media (min-width: 1000px) {
+  .c2-hero { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); column-gap: 48px; }
+  .c2-hero > .kick, .c2-hero > .c2-hero-foot, .c2-hero > .scroll-hint { grid-column: 1 / -1; }
+  .c2-hero > h1 { grid-column: 1; }
+  .c2-hero > .person { grid-column: 2; grid-row: 2; align-self: end; margin-bottom: 12px; }
+}
+
 /* ---------- after the journey ---------- */
 .c2 .stats { margin-top: clamp(48px, 8vw, 96px); }
 .c2-cta { padding-bottom: clamp(48px, 8vw, 96px); }
@@ -120,4 +145,8 @@ html.jl .jmeta {
   }
   html.jl .art { width: min(100%, 46vh); }
   .ctext h3 { margin-bottom: 12px; }
+  .hero-boxes { --w: 58vw; right: -14vw; top: 132px; opacity: .75; }
+  .cta-boxes { --w: 46vw; right: -10vw; bottom: auto; top: 0; opacity: .7; }
+  .helper { margin-top: 16px; padding-top: 12px; }
+  html.jl .helper p { font-size: 14px; }
 }
