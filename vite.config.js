@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
-// Three pages: concept 1 at "/", concept 2 at "/concept-2/" and concept 3 at "/concept-3/".
+// One page per concept: "/" and "/concept-2/" to "/concept-4/".
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -9,6 +9,7 @@ export default defineConfig({
         main: resolve(import.meta.dirname, 'index.html'),
         concept2: resolve(import.meta.dirname, 'concept-2/index.html'),
         concept3: resolve(import.meta.dirname, 'concept-3/index.html'),
+        concept4: resolve(import.meta.dirname, 'concept-4/index.html'),
       },
     },
   },
