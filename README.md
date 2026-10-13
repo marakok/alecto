@@ -35,6 +35,11 @@ What sets Alecto apart: a real person helps you at every step. Concept 2 now sho
   journey, the team has its own section, and reviews have names and portraits. All dummy for now; portraits are
   photo slots with a silhouette (`src/styles/people.css`, shared with concept 4).
 - **News bar** at the top with a (dummy) link to the press release.
+- **Hero photo through the brand element:** on the right of the hero, the big moving box is a window onto a photo of
+  Hannah helping a couple. The box tilts with scroll while the photo stays level; the small accent box sits on its
+  corner, and Hannah's card (with her face cropped from the same photo) overlaps it. Dummy stock photo:
+  [Vitaly Gariev on Unsplash](https://unsplash.com/photos/TB2UuDIQOR0) (Unsplash License), hotlinked from
+  images.unsplash.com. Replace with a real, self-hosted photo of the Alecto team before launch.
 
 Concept 4 is calmer: blocks fade up instead of tiling in, and the squares settle gently from above instead of flying,
 spinning and glowing (`calm: true` in `src/js/build.js`). Hannah is "Hannah Reid" everywhere, matching concept 1.

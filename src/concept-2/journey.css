@@ -121,15 +121,53 @@ html.jl .jmeta {
 /* ---------- brand boxes ---------- */
 .c2 main { overflow-x: clip; }
 .c2-hero { isolation: isolate; }
-.hero-boxes { --w: min(34vw, 460px); --box-line: color-mix(in srgb, var(--fg) 20%, transparent); right: 1%; top: 7%; z-index: -1; }
 .c2-cta { position: relative; isolation: isolate; }
 .cta-boxes { --w: min(30vw, 320px); right: 0; bottom: 8%; z-index: -1; }
 
+
+/* ---------- hero visual: a photo seen through the moving boxes ---------- */
+/* The big box is a window: it tilts with the brand element while the photo inside stays level
+   and drifts slightly (parallax). The small accent box sits on its corner. --s comes from boxes.js. */
+.hero-visual { position: relative; width: min(100%, 500px); justify-self: end; padding: 5% 4% 0 0; }
+.photo-boxes { --s: 0; position: relative; }
+.pbox {
+  margin: 0; position: relative; aspect-ratio: 1; overflow: hidden; background: var(--tile-empty);
+  transform: translateY(calc(var(--s) * -18px)) rotate(calc(-5deg + var(--s) * 3deg));
+  box-shadow: 0 40px 80px -40px rgba(20, 20, 40, .45);
+}
+.pbox img {
+  position: absolute; inset: -8%; width: 116%; height: 116%; object-fit: cover; object-position: 36% 50%;
+  transform: rotate(calc(5deg - var(--s) * 3deg)) translateY(calc(var(--s) * 22px)); /* undo the tilt: the photo stays level */
+}
+.pbox::after { /* packing tape across the top flap */
+  content: ""; position: absolute; left: 50%; top: 0; width: 15%; height: 30%; transform: translateX(-50%); z-index: 1;
+  background: color-mix(in srgb, var(--bg) 42%, transparent); -webkit-backdrop-filter: blur(3px); backdrop-filter: blur(3px);
+  border: 1px solid color-mix(in srgb, var(--bg) 60%, transparent); border-top: 0;
+}
+.pbox-top {
+  position: absolute; right: -6%; top: -9%; width: 38%; aspect-ratio: 1; z-index: 2;
+  border: 1.5px solid var(--accent); background: color-mix(in srgb, var(--accent) 12%, var(--bg));
+  transform: translate(calc(var(--s) * -14px), calc(var(--s) * -48px)) rotate(calc(12deg + var(--s) * -9deg));
+}
+.pbox-top::after { content: ""; position: absolute; left: 50%; top: -1.5px; width: 15%; height: 32%; transform: translateX(-50%); border: 1.5px solid var(--accent); border-top: 0; }
+.hero-visual .person { position: relative; z-index: 3; margin: -18% 0 0 -10%; max-width: 400px; }
+
+/* Hannah's face, cropped from the same photo. */
+.portrait.face-crop::before, .portrait.face-crop::after { display: none; }
+.portrait.face-crop {
+  background: url("https://images.unsplash.com/photo-1714647212104-996bbbb6adca?auto=format&fit=crop&w=900&q=80") 21% 25% / 520% auto no-repeat var(--tile-empty);
+}
+
 @media (min-width: 1000px) {
-  .c2-hero { grid-template-columns: minmax(0, 1fr) minmax(320px, 420px); column-gap: 48px; }
-  .c2-hero > .kick, .c2-hero > .c2-hero-foot, .c2-hero > .scroll-hint { grid-column: 1 / -1; }
-  .c2-hero > h1 { grid-column: 1; }
-  .c2-hero > .person { grid-column: 2; grid-row: 2; align-self: end; margin-bottom: 12px; }
+  .c2-hero { grid-template-columns: minmax(0, 1fr) minmax(360px, .82fr); column-gap: clamp(32px, 4vw, 64px); }
+  .c2-hero > .kick, .c2-hero > h1, .c2-hero > .c2-hero-foot, .c2-hero > .scroll-hint { grid-column: 1; }
+  .c2-hero > .hero-visual { grid-column: 2; grid-row: 1 / span 4; align-self: start; }
+  .c2-hero h1 { font-size: clamp(54px, 8.4vw, 136px); }
+  .c2-hero-foot { flex-direction: column; align-items: flex-start; }
+}
+@media (max-width: 999px) {
+  .hero-visual { justify-self: center; width: min(100%, 460px); padding: 10% 8% 0 2%; }
+  .hero-visual .person { margin: -14% 0 0 -2%; }
 }
 
 /* ---------- after the journey ---------- */
@@ -145,8 +183,7 @@ html.jl .jmeta {
   }
   html.jl .art { width: min(100%, 46vh); }
   .ctext h3 { margin-bottom: 12px; }
-  .hero-boxes { --w: 58vw; right: -14vw; top: 132px; opacity: .75; }
-  .cta-boxes { --w: 46vw; right: -10vw; bottom: auto; top: 0; opacity: .7; }
+    .cta-boxes { --w: 46vw; right: -10vw; bottom: auto; top: 0; opacity: .7; }
   .helper { margin-top: 16px; padding-top: 12px; }
   html.jl .helper p { font-size: 14px; }
 }
