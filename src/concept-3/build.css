@@ -1,0 +1,113 @@
+/* Concept 3: Square by square.
+   No loader. The page builds itself: blocks marked [data-build] appear tile by tile, and the pinned
+   build section assembles a house from ~170 brand squares as you scroll.
+   html.bl (build-live) is set in <head> when motion is allowed. Without it everything is simply
+   visible: the house is drawn complete and the five chapters stack in normal flow. */
+
+.c3 .period { width: .15em; height: .15em; }
+
+/* ---------- page build ---------- */
+html.bl [data-build] { visibility: hidden; animation: build-safety 0s 4s forwards; }
+html.bl.pbjs [data-build] { animation: none; }
+html.bl [data-build].built { visibility: visible; }
+@keyframes build-safety { to { visibility: visible; } }
+.build-cover { position: absolute; z-index: 15; pointer-events: none; }
+
+/* ---------- hero ---------- */
+.c3-hero { padding-block: clamp(56px, 10vw, 140px) clamp(40px, 6vw, 80px); display: grid; gap: clamp(28px, 4vw, 48px); position: relative; }
+.kick { margin: 0; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.c3-hero h1 {
+  margin: 0; font-weight: 700; font-size: clamp(54px, 10.4vw, 164px); line-height: .94; letter-spacing: -.062em;
+  text-wrap: balance; max-width: 11ch;
+}
+.c3-hero-foot { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: flex-end; gap: 28px; }
+.c3-hero-foot .sub { max-width: 30em; }
+.scroll-hint { display: flex; align-items: center; gap: 14px; font: 500 12px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.scroll-hint i { display: block; width: 64px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
+.scroll-hint i::after { content: ""; position: absolute; inset: 0; background: var(--fg); transform: translateX(-100%); animation: hint 2.2s cubic-bezier(.6, 0, .3, 1) infinite; }
+@keyframes hint { 60%, 100% { transform: translateX(100%); } }
+html.bl #seed { visibility: hidden; } /* the scene's first square stands in for it */
+
+/* ---------- build section: static fallback ---------- */
+.build { position: relative; border-top: 1px solid var(--line); overflow-x: clip; }
+.bpin {
+  max-width: 1280px; margin: 0 auto; padding: clamp(48px, 7vw, 96px) clamp(16px, 4vw, 48px);
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: clamp(28px, 5vw, 80px); align-items: center;
+}
+.btext { display: grid; gap: 28px; align-content: center; min-width: 0; }
+.bmeta { display: flex; flex-wrap: wrap; align-items: center; gap: 12px 16px; font: 500 12px var(--mono); letter-spacing: .08em; color: var(--muted); font-variant-numeric: tabular-nums; }
+.btrack { width: 120px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
+.btrack i { position: absolute; inset: 0; background: var(--accent); transform: scaleX(1); transform-origin: 0 50%; }
+.bplaced { text-transform: uppercase; }
+.bplaced b { color: var(--fg); font-weight: 500; }
+.bchaps { display: grid; gap: 36px; }
+.ceyebrow { margin: 0 0 16px; font: 500 13px var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.ceyebrow b { color: var(--accent); font-weight: 500; margin-right: 8px; }
+.bchap h3 { margin: 0 0 14px; font-weight: 700; font-size: clamp(32px, 4.2vw, 60px); line-height: 1; letter-spacing: -.05em; }
+.bchap p:last-child { margin: 0; max-width: 30em; font-size: clamp(16px, 1.4vw, 19px); line-height: 1.55; color: var(--muted); }
+
+/* ---------- the scene ---------- */
+.bscene { position: relative; width: min(100%, 620px); aspect-ratio: 1; justify-self: center; --sq: 30px; --done: 1; }
+.bglow {
+  position: absolute; inset: 8% 4% 0; pointer-events: none; opacity: var(--done);
+  background: radial-gradient(50% 45% at 50% 62%, color-mix(in srgb, #FFC36B calc(12% + var(--glow) * 18%), transparent), transparent 70%),
+              radial-gradient(60% 50% at 50% 55%, color-mix(in srgb, var(--accent) 22%, transparent), transparent 72%);
+  filter: blur(8px);
+}
+.bground { position: absolute; left: -6%; right: -6%; top: 100%; height: 1px; background: var(--line); }
+.bground::after {
+  content: ""; position: absolute; left: 10%; right: 10%; top: 0; height: 26px; transform: scaleX(calc(.4 + var(--done) * .6));
+  background: radial-gradient(50% 100% at 50% 0, color-mix(in srgb, var(--fg) 14%, transparent), transparent 70%);
+}
+
+.sq {
+  position: absolute; left: 0; top: 0; width: var(--sq); height: var(--sq); --c: var(--accent); --f: 0;
+  background: var(--c); will-change: transform, opacity; pointer-events: none;
+  box-shadow: inset 0 0 0 1px var(--rim), 0 0 calc(var(--f) * 26px) calc(var(--f) * 2px) color-mix(in srgb, var(--c) calc(var(--f) * 80%), transparent);
+}
+.sq::before { /* gloss, same as the concept 1 tiles */
+  content: ""; position: absolute; inset: 0; pointer-events: none;
+  background: radial-gradient(120% 90% at 22% 12%, var(--gloss), transparent 58%), linear-gradient(to top, rgba(0, 0, 0, .07), transparent 45%);
+}
+.sq.window { --c: #FFD27A; }
+.sq.door { --c: #FFE9B8; } /* the door stands open: warm light pours out */
+.sq.knob { --c: var(--accent); }
+.sq.chimney { filter: saturate(.85); }
+/* Lights on: once the door is in, the windows glow and gently breathe. */
+.bscene.home .sq.door { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 0 calc(6px + var(--glow) * 20px) calc(var(--glow) * 4px) color-mix(in srgb, #FFC36B calc(25% + var(--glow) * 35%), transparent); }
+.bscene.home .sq.window { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 0 calc(6px + var(--glow) * 16px) calc(var(--glow) * 2px) color-mix(in srgb, #FFC36B calc(30% + var(--glow) * 40%), transparent); animation: breathe 3.2s ease-in-out infinite; }
+@keyframes breathe { 50% { filter: brightness(1.1); } }
+.sq.land::after { content: ""; position: absolute; inset: -3px; border: 2px solid var(--c); animation: land .9s ease-out forwards; pointer-events: none; }
+@keyframes land { 0% { opacity: 1; transform: scale(.9); } 100% { opacity: 0; transform: scale(1.6); } }
+.sq.seed { z-index: 2; }
+html.bl .sq.seed { animation: seed-in .5s 1.15s both; } /* appears as the headline finishes building */
+@keyframes seed-in { from { opacity: 0; } }
+
+/* ---------- build section: live (pinned, scrubbed by scroll) ---------- */
+html.bl .build { height: 640vh; height: 640svh; }
+html.bl .bpin { position: sticky; top: 0; height: 100vh; height: 100svh; padding-block: 88px 40px; }
+html.bl .btrack i { transform: scaleX(0); }
+html.bl .bchaps { display: grid; gap: 0; }
+html.bl .bchap { grid-area: 1 / 1; opacity: 0; transform: translateY(18px); transition: opacity .5s ease, transform .6s cubic-bezier(.2, .8, .2, 1); pointer-events: none; }
+html.bl .bchap.on { opacity: 1; transform: none; pointer-events: auto; }
+html.bl .bscene { width: min(100%, 620px, calc(100svh - 170px)); }
+
+/* ---------- after the build ---------- */
+.c3 .stats { margin-top: clamp(48px, 8vw, 96px); }
+.c3-cta { padding-bottom: clamp(48px, 8vw, 96px); }
+
+@media (max-width: 900px) {
+  .bpin { grid-template-columns: 1fr; }
+  .bscene { order: -1; width: min(100%, 460px); }
+  html.bl .bpin { grid-template-rows: auto 1fr; align-content: start; align-items: start; padding-block: 76px 20px; row-gap: 22px; }
+  html.bl .bscene { width: min(100%, 52svh); }
+  .btext { gap: 16px; }
+  .bchap h3 { font-size: clamp(28px, 7.4vw, 44px); margin-bottom: 10px; }
+  .bchap p:last-child { font-size: 15.5px; }
+  .ceyebrow { margin-bottom: 10px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sq, .sq::after, .bscene.home .sq.door { box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5), 0 0 calc(6px + var(--glow) * 20px) calc(var(--glow) * 4px) color-mix(in srgb, #FFC36B calc(25% + var(--glow) * 35%), transparent); }
+.bscene.home .sq.window { animation: none !important; }
+}
