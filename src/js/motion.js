@@ -10,8 +10,9 @@ import { clamp } from './palette.js';
  *  - the dashboard panel opens up and lifts as you scroll to it
  *  - stats count up, the hero copy drifts away, the footer wordmark builds letter by letter
  * Everything is skipped with prefers-reduced-motion; without JavaScript all content is simply visible.
+ * Pass reveals: false to keep smooth scrolling, header, progress and counters but skip the entrance reveals.
  */
-export function initMotion({ reduce, cursor = true }) {
+export function initMotion({ reduce, cursor = true, reveals = true }) {
   const root = document.documentElement;
   initHeader();
   initProgress();
@@ -23,10 +24,12 @@ export function initMotion({ reduce, cursor = true }) {
   const raf = (t) => { lenis.raf(t); requestAnimationFrame(raf); };
   requestAnimationFrame(raf);
 
-  splitText('h2', 'word');
-  splitText('.mega', 'char');
-  markReveals();
-  observe();
+  if (reveals) { // pages with their own entrance effect (concept 3) skip these
+    splitText('h2', 'word');
+    splitText('.mega', 'char');
+    markReveals();
+    observe();
+  }
   initCounters();
   initScrollLinked();
   if (cursor) initCursor();

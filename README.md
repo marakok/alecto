@@ -6,9 +6,23 @@ Marketing site concepts for Alecto Conveyancing.
 | --- | --- | --- |
 | 1 · Live | `/` | Many squares: a live tile skyline that builds per stage, intro loader, scroll motion |
 | 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
+| 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
 Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark frames) for concept 1.
+
+## Concept 3: Square by square
+
+`concept-3/index.html`, `src/concept-3/`. There is no loader: the page builds itself.
+
+- **Page build:** every block marked `data-build` (optional value: delay in ms) is covered by page-coloured
+  tiles that lift in a diagonal sweep, each flashing a brand colour. The hero builds on load, the rest as it
+  scrolls in.
+- **The house:** a pinned section scrubbed by scroll. The headline full stop lifts off and becomes the first
+  foundation square, then ~170 squares fly in on curved, spinning paths to build a 15 × 16 pixel house, one
+  stage per chapter: foundation (Instruct), walls (Investigate), roof (Exchange), lit windows and chimney
+  (Complete), and an open, glowing front door (Keys). Scrolling back takes it apart again.
+- With `prefers-reduced-motion` (no `html.bl`), the house is drawn complete and the chapters stack in normal flow.
 
 ## Concept 2: One square, one journey
 
