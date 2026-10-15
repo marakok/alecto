@@ -1,19 +1,18 @@
 import { initTheme } from '../js/theme.js';
 import { initMotion } from '../js/motion.js';
 import { clamp, prefersReducedMotion } from '../js/palette.js';
-import { initBoxes } from '../js/boxes.js';
 
 /**
  * Concept 2: One square, one journey.
  * A single fixed square (the actor) travels between anchor elements as you scroll:
  * headline full stop → checkbox → reading marker → seal → key → lit window → logo dot.
- * Anchors are measured live every frame, so the actor stays glued to them while they move.
+ * The step cards pin in place and swap one by one as you scroll. Anchors are measured live every
+ * frame, so the actor stays glued to them while they move.
  */
 
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
-initBoxes({ reduce });
 
 const live = document.documentElement.classList.contains('jl') && !reduce;
 if (live) initJourney();
@@ -21,17 +20,18 @@ if (live) initJourney();
 function initJourney() {
   const actor = document.getElementById('actor');
   const journey = document.getElementById('journey');
-  const texts = [...journey.querySelectorAll('.ctext')];
+  const track = document.getElementById('track'); // the tall box the step cards pin inside
+  const steps = [...journey.querySelectorAll('.step')];
   const arts = [...journey.querySelectorAll('.art')];
   const count = document.getElementById('jcount');
   const bar = document.getElementById('jbar');
-  const N = texts.length;
+  const N = steps.length;
   const pad = (n) => String(n).padStart(2, '0');
 
   // Line drawings: normalise every stroke so it can draw itself with one dash.
   journey.querySelectorAll('.ink, .faint').forEach((el) => el.setAttribute('pathLength', '1'));
 
-  // Keyframes: an anchor and where it sits on the journey, in chapters (0.5 = middle of chapter 1).
+  // Keyframes: an anchor and where it sits on the journey, in steps (0.5 = middle of step 1).
   const q = (k) => journey.querySelector(`[data-k="${k}"]`);
   const KEYS = [
     { el: document.getElementById('k0'), u: null, spin: 0 }, // hero headline, at scroll 0
@@ -44,17 +44,18 @@ function initJourney() {
     { el: q('window'), u: 4.5, spin: 1 },
     { el: q('logo'), u: 5.5, spin: 1 },
   ];
-  const DWELL = 0.14; // fraction of a chapter the square rests on each anchor
+  const DWELL = 0.14; // fraction of a step the square rests on each anchor
 
   let J = 0;
   let seg = 1;
   const measure = () => {
-    J = journey.getBoundingClientRect().top + scrollY;
-    seg = (journey.offsetHeight - innerHeight) / N;
+    J = track.getBoundingClientRect().top + scrollY;
+    seg = (track.offsetHeight - innerHeight) / N;
   };
   measure();
   addEventListener('resize', measure);
   addEventListener('load', measure);
+  new ResizeObserver(measure).observe(document.body);
 
   const S = (k) => (KEYS[k].u === null ? 0 : J + KEYS[k].u * seg);
   const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -68,13 +69,13 @@ function initJourney() {
   let active = -1;
   const frame = () => {
     const y = scrollY;
-    const pj = (y - J) / seg; // journey progress in chapters
+    const pj = (y - J) / seg; // journey progress in steps
 
-    // Which chapter is on stage.
+    // Which step is on stage.
     const ch = clamp(Math.floor(pj), 0, N - 1);
     if (ch !== active) {
       active = ch;
-      texts.forEach((t, i) => t.classList.toggle('on', i === ch));
+      steps.forEach((s, i) => s.classList.toggle('on', i === ch));
       arts.forEach((a, i) => a.classList.toggle('on', i === ch));
       count.textContent = `${pad(ch + 1)} / ${pad(N)}`;
     }

@@ -5,12 +5,12 @@
   <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Alecto · Concept 2 · One square</title>
   <meta name="description" content="Property conveyancing without the stress. One dedicated conveyancer, a fixed quote and a live view of every step, from offer accepted to keys in hand.">
-  <meta name="theme-color" content="#FBFAF8" media="(prefers-color-scheme: light)">
-  <meta name="theme-color" content="#0C0C0F" media="(prefers-color-scheme: dark)">
+  <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)">
   <link rel="icon" href="/favicon.svg" type="image/svg+xml">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Geist+Mono:wght@400;500&family=Caveat:wght@600&display=swap">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
     /* Before first paint: apply a saved theme, and decide whether to play the intro loader
        (once per browser session, or always with ?intro in the URL). */
@@ -25,7 +25,6 @@
   <link rel="stylesheet" href="/src/styles/main.css">
   <link rel="stylesheet" href="/src/styles/motion.css">
   <link rel="stylesheet" href="/src/styles/brand.css">
-  <link rel="stylesheet" href="/src/styles/people.css">
   <link rel="stylesheet" href="/src/concept-2/journey.css">
 </head>
 <body class="c2">
@@ -59,212 +58,234 @@
 
 <main id="main">
   <section class="c2-hero wrap">
-    <span class="boxes hero-boxes accent" data-boxes aria-hidden="true"><i></i><i></i></span>
-    <p class="kick">Property conveyancing · England &amp; Wales</p>
-    <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
-    <div class="c2-hero-foot">
-      <p class="sub">One dedicated conveyancer, a fixed quote and a live view of every step. Follow the square to see how a move with Alecto works.</p>
+    <div class="hero-copy">
+      <p class="kick">Property conveyancing · England &amp; Wales</p>
+      <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
+      <p class="sub">One named conveyancer who explains your options, from offer accepted to moving day.</p>
       <div class="ctas"><a class="btn primary" href="#">Get a quote</a><a class="btn ghost" href="#journey">How it works</a></div>
+      <!-- Illustrative person: replace the name, words and portrait with a real Alecto conveyancer. -->
+      <aside class="hello" aria-label="Your conveyancer">
+        <span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span>
+        <div>
+          <p class="mono">Hannah Reid, your conveyancer</p>
+          <p class="hello-quote">“I’ll look after your move myself, from offer accepted to keys in hand.”</p>
+          <p class="online mono"><i></i>Online now</p>
+        </div>
+      </aside>
     </div>
-    <!-- Illustrative person: replace the name, words and portrait with a real Alecto conveyancer. -->
-    <aside class="person" aria-label="Your conveyancer">
-      <div class="portrait"></div>
-      <div class="person-body">
-        <p class="person-quote">“Hi, I’m Hannah. I’ll look after your move myself, from offer accepted to keys in hand. Follow the square: I’m with you at every step.”</p>
-        <p class="person-sign" aria-hidden="true">Hannah</p>
-        <p class="person-meta"><b>Hannah Reid</b> · Your conveyancer <span class="online"><i></i>Online now</span></p>
+    <!-- Dummy photos: replace with real Alecto moves. -->
+    <figure class="collage" aria-hidden="true">
+      <span class="outline-box"></span>
+      <img class="m1" src="/concept-2/move-1.jpg" alt="">
+      <img class="m2" src="/concept-2/move-2.jpg" alt="">
+      <span class="pblock"></span>
+      <img class="m3" src="/concept-2/move-3.jpg" alt="">
+      <img class="m4" src="/concept-2/move-4.jpg" alt="">
+      <figcaption class="mono">Real moves, real people</figcaption>
+    </figure>
+  </section>
+
+  <section class="proofs" aria-label="Why Alecto">
+    <div class="wrap">
+      <div class="proof-row">
+        <div><i></i><h3>One named conveyancer</h3><p>The same person, from offer accepted to keys in hand.</p></div>
+        <div><i></i><h3>Plain English</h3><p>What’s happening, what it means, what’s next.</p></div>
+        <div><i></i><h3>Your call</h3><p>We explain the options first. You decide.</p></div>
       </div>
-    </aside>
-    <div class="scroll-hint" aria-hidden="true"><span>Follow the square</span><i></i></div>
-  </section>
-
-  <section class="journey" id="journey" aria-label="How a move with Alecto works">
-    <div class="pin">
-      <div class="jmeta" aria-hidden="true"><span id="jcount">01 / 06</span><span class="jtrack"><i id="jbar"></i></span></div>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>01</b> Instruct</p>
-          <h3>It starts with a tick.</h3>
-          <p>Offer accepted. Tell us about the move, verify your identity online and sign your terms. Ten minutes, no paperwork in the post.</p>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“I’ll call you the same day to welcome you and walk you through what happens next.”</p></div>
-        </div>
-        <div class="art" data-art="instruct">
-          <svg viewBox="0 0 400 400" role="img" aria-label="A form with three checkboxes being ticked">
-            <rect class="ink" x="80" y="40" width="240" height="320"/>
-            <line class="ink bold" x1="110" y1="78" x2="250" y2="78"/>
-            <line class="faint" x1="110" y1="98" x2="200" y2="98"/>
-            <text x="110" y="142">INSTRUCTION FORM</text>
-            <rect class="ink" x="110" y="171" width="18" height="18"/><text class="lbl" x="142" y="185">Offer accepted</text>
-            <rect class="ink" x="110" y="216" width="18" height="18"/><text class="lbl" x="142" y="230">ID verified</text>
-            <rect class="tick" data-tick="0.45" x="114" y="220" width="10" height="10"/>
-            <rect class="ink" x="110" y="261" width="18" height="18"/><text class="lbl" x="142" y="275">Terms signed</text>
-            <rect class="tick" data-tick="0.7" x="114" y="265" width="10" height="10"/>
-            <line class="faint" x1="110" y1="330" x2="220" y2="330"/><text x="110" y="346">SIGNATURE</text>
-            <rect class="anchor" data-k="instruct" x="110" y="171" width="18" height="18"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>02</b> Investigate</p>
-          <h3>We read every line.</h3>
-          <p>Your conveyancer reviews the title, runs the searches and asks the awkward questions early, so nothing surprises you later.</p>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“I read every page myself and explain anything unusual in plain English.”</p></div>
-        </div>
-        <div class="art" data-art="investigate">
-          <svg viewBox="0 0 400 400" role="img" aria-label="A title register being read line by line">
-            <rect class="ink" x="80" y="40" width="240" height="320"/>
-            <text x="110" y="80">TITLE REGISTER</text>
-            <text class="lbl" x="110" y="100">14 Elm Road, Bristol</text>
-            <line class="faint rl" data-read="read1" x1="110" y1="140" x2="290" y2="140"/>
-            <line class="faint rl" data-read="read1" x1="110" y1="160" x2="270" y2="160"/>
-            <line class="faint rl" data-read="read1" x1="110" y1="180" x2="284" y2="180"/>
-            <line class="faint rl" data-read="read2" x1="110" y1="210" x2="290" y2="210"/>
-            <line class="faint rl" data-read="read2" x1="110" y1="230" x2="240" y2="230"/>
-            <line class="faint rl" data-read="read2" x1="110" y1="250" x2="276" y2="250"/>
-            <line class="faint rl" data-read="read3" x1="110" y1="280" x2="290" y2="280"/>
-            <line class="faint rl" data-read="read3" x1="110" y1="300" x2="262" y2="300"/>
-            <line class="faint rl" data-read="read3" x1="110" y1="320" x2="210" y2="320"/>
-            <rect class="anchor" data-k="read1" x="90" y="134" width="12" height="12"/>
-            <rect class="anchor ghost" data-k="read2" x="90" y="204" width="12" height="12"/>
-            <rect class="anchor ghost" data-k="read3" x="90" y="274" width="12" height="12"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>03</b> Exchange</p>
-          <h3>Signed, sealed, committed.</h3>
-          <p>Contracts are exchanged and your completion date is set. From this moment, the move is real.</p>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“I’ll ring you the moment we exchange. Not an email: a call.”</p></div>
-        </div>
-        <div class="art" data-art="exchange">
-          <svg viewBox="0 0 400 400" role="img" aria-label="Two contracts joined by a seal">
-            <g transform="rotate(-5 140 200)">
-              <rect class="ink" x="60" y="70" width="160" height="240"/>
-              <text x="84" y="104">BUYER</text>
-              <line class="faint" x1="84" y1="130" x2="196" y2="130"/><line class="faint" x1="84" y1="150" x2="180" y2="150"/><line class="faint" x1="84" y1="170" x2="190" y2="170"/>
-              <line class="ink" x1="84" y1="270" x2="160" y2="270"/>
-            </g>
-            <g transform="rotate(5 260 210)">
-              <rect class="ink" x="180" y="80" width="160" height="240"/>
-              <text x="204" y="114">SELLER</text>
-              <line class="faint" x1="204" y1="140" x2="316" y2="140"/><line class="faint" x1="204" y1="160" x2="300" y2="160"/><line class="faint" x1="204" y1="180" x2="310" y2="180"/>
-              <line class="ink" x1="204" y1="280" x2="280" y2="280"/>
-            </g>
-            <rect class="anchor" data-k="seal" x="181" y="252" width="38" height="38"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>04</b> Complete</p>
-          <h3>Keys in hand.</h3>
-          <p>Funds are transferred, completion is confirmed and the keys are released. We tell you the moment it happens.</p>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“When the money lands and the keys are released, you’ll hear it from me first.”</p></div>
-        </div>
-        <div class="art" data-art="complete">
-          <svg viewBox="0 0 400 400" role="img" aria-label="A key">
-            <circle class="ink" cx="88" cy="200" r="26"/>
-            <rect class="ink" x="100" y="150" width="100" height="100"/>
-            <path class="ink" d="M200 192 H330 V208 H316 V226 H302 V208 H288 V220 H274 V208 H200"/>
-            <text x="100" y="292">KEYS RELEASED · 12:04</text>
-            <rect class="anchor" data-k="key" x="100" y="150" width="100" height="100"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>·</b> Moving day</p>
-          <h3>The lights come on.</h3>
-          <p>The boxes can wait. This part is yours. We were there for every step before it, with the same person from start to finish.</p>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“Enjoy your first evening. I’m still a message away if you need me.”</p></div>
-        </div>
-        <div class="art" data-art="home">
-          <svg viewBox="0 0 400 400" role="img" aria-label="A house with a lit window">
-            <defs><radialGradient id="glow"><stop offset="0" stop-color="var(--accent)" stop-opacity=".55"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient></defs>
-            <circle class="glow" cx="148" cy="232" r="90" fill="url(#glow)"/>
-            <path class="ink" d="M86 192 L200 92 L314 192"/>
-            <path class="ink" d="M262 146 V110 H282 V164"/>
-            <rect class="ink" x="100" y="180" width="200" height="164"/>
-            <rect class="ink" x="180" y="264" width="40" height="80"/>
-            <rect class="ink" x="232" y="212" width="40" height="40"/>
-            <line class="faint" x1="252" y1="212" x2="252" y2="252"/><line class="faint" x1="232" y1="232" x2="272" y2="232"/>
-            <line class="ink" x1="56" y1="344" x2="344" y2="344"/>
-            <rect class="anchor" data-k="window" x="128" y="212" width="40" height="40"/>
-          </svg>
-        </div>
-      </article>
-
-      <article class="chapter">
-        <div class="ctext">
-          <p class="ceyebrow"><b>05</b> Wrap up</p>
-          <h3>We tidy up after you.</h3>
-          <ul class="done-list">
-            <li>Stamp Duty return filed</li>
-            <li>Land Registry updated</li>
-            <li>Final documents sent</li>
-          </ul>
-          <div class="helper"><span class="portrait sm"></span><p><b>Hannah, your conveyancer</b>“I’ll file the last forms and send you everything, so it’s properly finished.”</p></div>
-        </div>
-        <div class="art art-word" data-art="wrap">
-          <div class="wordmark">alecto<span class="anchor" data-k="logo"></span></div>
-        </div>
-      </article>
+      <div class="facts">
+        <div><b>CLC regulated</b><span>Licence 14351</span></div>
+        <div><b>2,000+</b><span>homeowners moved with Alecto</span></div>
+        <div><b>£600m+</b><span>in property transactions</span></div>
+      </div>
     </div>
   </section>
 
+  <section class="sec wrap journey" id="journey" aria-label="How a move with Alecto works">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>How it works</p><h2>Six steps, one person<span class="period"></span></h2></div>
+      <p class="lede">Hannah explains your options before every decision. The moments marked “Your call” are yours.</p>
+    </div>
 
-<div class="wrap">
-  <!-- Stats -->
-  <div class="stats">
-    <div><b>2,000+</b><span>homeowners moved with Alecto</span></div>
-    <div><b>£600m</b><span>of property transactions handled</span></div>
-    <div><b>1</b><span>conveyancer from offer to keys</span></div>
-    <div><b>5 wks</b><span>to complete, even with a broken chain</span></div>
-  </div>
+    <div class="stage-track" id="track">
+    <div class="pin">
+    <div class="steps-list">
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>01</b> Instruct</p>
+            <h3>It starts with a tick<span class="period"></span></h3>
+            <p class="cbody">Offer accepted. Tell us about the move, verify your identity online and sign your terms. Ten minutes, no paperwork in the post.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll call you the same day to welcome you and walk you through what happens next.”</p></div>
+          </div>
+          <div class="art" data-art="instruct">
+            <svg viewBox="0 0 400 400" role="img" aria-label="A form with three checkboxes being ticked">
+              <rect class="ink" x="80" y="40" width="240" height="320"/>
+              <line class="ink bold" x1="110" y1="78" x2="250" y2="78"/>
+              <line class="faint" x1="110" y1="98" x2="200" y2="98"/>
+              <text x="110" y="142">INSTRUCTION FORM</text>
+              <rect class="ink" x="110" y="171" width="18" height="18"/><text class="lbl" x="142" y="185">Offer accepted</text>
+              <rect class="ink" x="110" y="216" width="18" height="18"/><text class="lbl" x="142" y="230">ID verified</text>
+              <rect class="tick" data-tick="0.45" x="114" y="220" width="10" height="10"/>
+              <rect class="ink" x="110" y="261" width="18" height="18"/><text class="lbl" x="142" y="275">Terms signed</text>
+              <rect class="tick" data-tick="0.7" x="114" y="265" width="10" height="10"/>
+              <line class="faint" x1="110" y1="330" x2="220" y2="330"/><text x="110" y="346">SIGNATURE</text>
+              <rect class="anchor" data-k="instruct" x="110" y="171" width="18" height="18"/>
+            </svg>
+          </div>
+        </div>
+        <p class="yourcall"><i></i><b class="mono">Your call</b><span>Accept your fixed quote and choose when we start.</span></p>
+      </article>
 
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>02</b> Investigate</p>
+            <h3>We read every line<span class="period"></span></h3>
+            <p class="cbody">Your conveyancer reviews the title, runs the searches and asks the awkward questions early, so nothing surprises you later.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I read every page myself and explain anything unusual in plain English.”</p></div>
+          </div>
+          <div class="art" data-art="investigate">
+            <svg viewBox="0 0 400 400" role="img" aria-label="A title register being read line by line">
+              <rect class="ink" x="80" y="40" width="240" height="320"/>
+              <text x="110" y="80">TITLE REGISTER</text>
+              <text class="lbl" x="110" y="100">14 Elm Road, Bristol</text>
+              <line class="faint rl" data-read="read1" x1="110" y1="140" x2="290" y2="140"/>
+              <line class="faint rl" data-read="read1" x1="110" y1="160" x2="270" y2="160"/>
+              <line class="faint rl" data-read="read1" x1="110" y1="180" x2="284" y2="180"/>
+              <line class="faint rl" data-read="read2" x1="110" y1="210" x2="290" y2="210"/>
+              <line class="faint rl" data-read="read2" x1="110" y1="230" x2="240" y2="230"/>
+              <line class="faint rl" data-read="read2" x1="110" y1="250" x2="276" y2="250"/>
+              <line class="faint rl" data-read="read3" x1="110" y1="280" x2="290" y2="280"/>
+              <line class="faint rl" data-read="read3" x1="110" y1="300" x2="262" y2="300"/>
+              <line class="faint rl" data-read="read3" x1="110" y1="320" x2="210" y2="320"/>
+              <rect class="anchor" data-k="read1" x="90" y="134" width="12" height="12"/>
+              <rect class="anchor ghost" data-k="read2" x="90" y="204" width="12" height="12"/>
+              <rect class="anchor ghost" data-k="read3" x="90" y="274" width="12" height="12"/>
+            </svg>
+          </div>
+        </div>
+        <p class="yourcall"><i></i><b class="mono">Your call</b><span>If the searches flag something, we lay out the options. You decide how to proceed.</span></p>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>03</b> Exchange</p>
+            <h3>Signed, sealed, committed<span class="period"></span></h3>
+            <p class="cbody">Contracts are exchanged and your completion date is set. From this moment, the move is real.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll ring you the moment we exchange. Not an email: a call.”</p></div>
+          </div>
+          <div class="art" data-art="exchange">
+            <svg viewBox="0 0 400 400" role="img" aria-label="Two contracts joined by a seal">
+              <g transform="rotate(-5 140 200)">
+                <rect class="ink" x="60" y="70" width="160" height="240"/>
+                <text x="84" y="104">BUYER</text>
+                <line class="faint" x1="84" y1="130" x2="196" y2="130"/><line class="faint" x1="84" y1="150" x2="180" y2="150"/><line class="faint" x1="84" y1="170" x2="190" y2="170"/>
+                <line class="ink" x1="84" y1="270" x2="160" y2="270"/>
+              </g>
+              <g transform="rotate(5 260 210)">
+                <rect class="ink" x="180" y="80" width="160" height="240"/>
+                <text x="204" y="114">SELLER</text>
+                <line class="faint" x1="204" y1="140" x2="316" y2="140"/><line class="faint" x1="204" y1="160" x2="300" y2="160"/><line class="faint" x1="204" y1="180" x2="310" y2="180"/>
+                <line class="ink" x1="204" y1="280" x2="280" y2="280"/>
+              </g>
+              <rect class="anchor" data-k="seal" x="181" y="252" width="38" height="38"/>
+            </svg>
+          </div>
+        </div>
+        <p class="yourcall"><i></i><b class="mono">Your call</b><span>You agree the completion date before we exchange.</span></p>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>04</b> Complete</p>
+            <h3>Keys in hand<span class="period"></span></h3>
+            <p class="cbody">Funds are transferred, completion is confirmed and the keys are released. We tell you the moment it happens.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“When the money lands and the keys are released, you’ll hear it from me first.”</p></div>
+          </div>
+          <div class="art" data-art="complete">
+            <svg viewBox="0 0 400 400" role="img" aria-label="A key">
+              <circle class="ink" cx="88" cy="200" r="26"/>
+              <rect class="ink" x="100" y="150" width="100" height="100"/>
+              <path class="ink" d="M200 192 H330 V208 H316 V226 H302 V208 H288 V220 H274 V208 H200"/>
+              <text x="100" y="292">KEYS RELEASED · 12:04</text>
+              <rect class="anchor" data-k="key" x="100" y="150" width="100" height="100"/>
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>05</b> Moving day</p>
+            <h3>The lights come on<span class="period"></span></h3>
+            <p class="cbody">The boxes can wait. This part is yours. We were there for every step before it, with the same person from start to finish.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“Enjoy your first evening. I’m still a message away if you need me.”</p></div>
+          </div>
+          <div class="art" data-art="home">
+            <svg viewBox="0 0 400 400" role="img" aria-label="A house with a lit window">
+              <defs><radialGradient id="glow"><stop offset="0" stop-color="var(--accent)" stop-opacity=".55"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient></defs>
+              <circle class="glow" cx="148" cy="232" r="90" fill="url(#glow)"/>
+              <path class="ink" d="M86 192 L200 92 L314 192"/>
+              <path class="ink" d="M262 146 V110 H282 V164"/>
+              <rect class="ink" x="100" y="180" width="200" height="164"/>
+              <rect class="ink" x="180" y="264" width="40" height="80"/>
+              <rect class="ink" x="232" y="212" width="40" height="40"/>
+              <line class="faint" x1="252" y1="212" x2="252" y2="252"/><line class="faint" x1="232" y1="232" x2="272" y2="232"/>
+              <line class="ink" x1="56" y1="344" x2="344" y2="344"/>
+              <rect class="anchor" data-k="window" x="128" y="212" width="40" height="40"/>
+            </svg>
+          </div>
+        </div>
+      </article>
+
+      <article class="step">
+        <div class="step-card">
+          <div class="ctext">
+            <p class="ceyebrow mono"><b>06</b> Wrap up</p>
+            <h3>We tidy up after you<span class="period"></span></h3>
+            <p class="cbody">Stamp Duty return filed, Land Registry updated, final documents sent.</p>
+            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll file the last forms and send you everything, so it’s properly finished.”</p></div>
+          </div>
+          <div class="art art-word" data-art="wrap">
+            <div class="wordmark">alecto<span class="anchor" data-k="logo"></span></div>
+          </div>
+        </div>
+      </article>
+    </div>
+    <div class="jmeta" aria-hidden="true"><span id="jcount">01 / 06</span><span class="jtrack"><i id="jbar"></i></span></div>
+    </div>
+    </div>
+  </section>
 
   <!-- Team: illustrative people (dummy). Replace names, roles, lines and portraits with the real Alecto team. -->
-  <section class="sec" id="team">
-    <div class="sec-head">
-      <div><p class="eyebrow"><i></i>Your team</p><h2>A real person at every step<span class="period"></span></h2></div>
-      <p class="lede">No call centre and no ticket numbers. One conveyancer who knows your file, and a small team behind them who know your name.</p>
-    </div>
-    <div class="team">
-      <figure class="mate">
-        <div class="portrait lg" style="--p:.18"><em>Photo</em></div>
-        <figcaption><b>Hannah Reid</b><small>Senior conveyancer</small><p>Has moved house six times herself, so she knows the nerves.</p></figcaption>
-      </figure>
-      <figure class="mate">
-        <div class="portrait lg" style="--p:.42"><em>Photo</em></div>
-        <figcaption><b>Tom Okafor</b><small>Conveyancer</small><p>Used to be an estate agent. Fluent in chain.</p></figcaption>
-      </figure>
-      <figure class="mate">
-        <div class="portrait lg" style="--p:.66"><em>Photo</em></div>
-        <figcaption><b>Priya Shah</b><small>Client care</small><p>Picks up the phone. Every time, by the third ring.</p></figcaption>
-      </figure>
-      <figure class="mate">
-        <div class="portrait lg" style="--p:.9"><em>Photo</em></div>
-        <figcaption><b>Owen Price</b><small>Post-completion</small><p>Files your Stamp Duty and Land Registry, quietly and on time.</p></figcaption>
-      </figure>
+  <section class="team-band" id="team">
+    <div class="sec wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow"><i></i>Your team</p><h2>A real person at every step<span class="period"></span></h2></div>
+        <p class="lede">No call centre and no ticket numbers. One conveyancer who knows your file, and a small team behind them who know your name.</p>
+      </div>
+      <div class="team">
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/hannah.png" alt=""></div><figcaption><b>Hannah Reid</b><small class="mono">Senior conveyancer</small><p>Has moved house six times herself, so she knows the nerves.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/tom.png" alt=""></div><figcaption><b>Tom Okafor</b><small class="mono">Conveyancer</small><p>Used to be an estate agent. Fluent in chain.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/owen.png" alt=""></div><figcaption><b>Owen Price</b><small class="mono">Post-completion</small><p>Files your Stamp Duty and Land Registry, quietly and on time.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/william.png" alt=""></div><figcaption><b>William</b><small class="mono">CEO</small><p>Built Alecto so you always know who has your file.</p></figcaption></figure>
+      </div>
     </div>
   </section>
 
-  <!-- Reviews: dummy names and portraits for now -->
+  <div class="wrap">
+  <!-- Reviews: dummy names for now -->
   <section class="sec" id="reviews">
     <div class="sec-head">
       <div><p class="eyebrow"><i></i>Reviews</p><h2>Moved without the drama<span class="period"></span></h2></div>
     </div>
     <div class="reviews">
-      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Clear updates at every stage and always quick to reply. We completed our leasehold purchase in under 8 weeks.”</blockquote></div><figcaption class="by"><span class="portrait md" style="--p:.3"></span><div>Laura Mills<small>Leasehold purchase · Bristol · Verified client</small></div></figcaption></figure>
-      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Our chain broke twice and they still got us to completion in 5 weeks. Calm and organised the whole way.”</blockquote></div><figcaption class="by"><span class="portrait md" style="--p:.55"></span><div>James Turner<small>Sale and purchase · Leeds · Verified client</small></div></figcaption></figure>
-      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“I never had to chase. I always knew what was happening and what I needed to do next.”</blockquote></div><figcaption class="by"><span class="portrait md" style="--p:.8"></span><div>Aisha Khan<small>First-time buyer · Manchester · Verified client</small></div></figcaption></figure>
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Clear updates at every stage and always quick to reply. We completed our leasehold purchase in under 8 weeks.”</blockquote></div><figcaption class="by"><span class="initials mono" aria-hidden="true">LM</span><div><span class="rname">Laura Mills<i></i></span><small class="mono">Leasehold purchase · Bristol<br>Verified client</small></div></figcaption></figure>
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Our chain broke twice and they still got us to completion in 5 weeks. Calm and organised the whole way.”</blockquote></div><figcaption class="by"><span class="initials mono" aria-hidden="true">JT</span><div><span class="rname">James Turner<i></i></span><small class="mono">Sale and purchase · Leeds<br>Verified client</small></div></figcaption></figure>
+      <figure class="review"><div><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“I never had to chase. I always knew what was happening and what I needed to do next.”</blockquote></div><figcaption class="by"><span class="initials mono" aria-hidden="true">AK</span><div><span class="rname">Aisha Khan<i></i></span><small class="mono">First-time buyer · Manchester<br>Verified client</small></div></figcaption></figure>
     </div>
   </section>
 
@@ -273,8 +294,8 @@
     <div class="faq-side">
       <p class="eyebrow"><i></i>FAQ</p>
       <h2>Questions, answered<span class="period"></span></h2>
-      <p class="lede">Can't find what you need? Your conveyancer is one message away.</p>
-      <a class="btn ghost" href="#">Contact us</a>
+      <p class="lede">Can’t find what you need? Your conveyancer is one message away.</p>
+      <a class="btn ghost" href="#">Message Hannah</a>
     </div>
     <div>
       <details open><summary>How much does conveyancing with Alecto cost?<span class="pm"></span></summary><p>You get a fixed, transparent quote up front. No hidden extras, and you see what each fee is for before you instruct us.</p></details>
@@ -286,14 +307,22 @@
     </div>
   </section>
 
-  <!-- CTA -->
+  <!-- CTA: dummy photos -->
   <section class="cta c2-cta">
-    <span class="boxes cta-boxes accent" data-boxes aria-hidden="true"><i></i><i></i></span>
-    <h2>Ready to move without the drama<span class="period"></span></h2>
-    <p>Get a clear, fixed quote in two minutes. No obligation.</p>
-    <div class="ctas"><a class="btn accent" href="#">Get a quote</a><a class="btn ghost" href="#">Book a call with Hannah</a></div>
+    <div class="cta-copy">
+      <h2>Ready to move without the drama<span class="period"></span></h2>
+      <p>Get a clear, fixed quote in two minutes. No obligation.</p>
+      <div class="ctas"><a class="btn accent" href="#">Get a quote</a><a class="btn ghost" href="#">Book a call with Hannah</a></div>
+    </div>
+    <div class="cta-art" aria-hidden="true">
+      <span class="outline-box"></span>
+      <img class="c-tower" src="/concept-2/cta-tower.jpg" alt="">
+      <img class="c-office" src="/concept-2/cta-office.jpg" alt="">
+      <img class="c-meeting" src="/concept-2/cta-meeting.jpg" alt="">
+      <span class="pblock"></span>
+    </div>
   </section>
-</div>
+  </div>
 </main>
 
 <footer class="site">
@@ -306,7 +335,7 @@
         <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie preferences</a></div>
       </div>
     </div>
-    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351. Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd · Live activity is illustrative</span></div>
+    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351.<br>Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd</span></div>
   </div>
 </footer>
 
