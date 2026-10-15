@@ -62,12 +62,53 @@
 .face-tile::before { content: ""; position: absolute; left: 17.9%; top: 35.7%; width: 64.3%; height: 64.3%; background: var(--accent); }
 .face-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
 
-.hello { display: flex; gap: 14px; align-items: center; width: 100%; padding-top: 20px; border-top: 1px solid var(--line); }
+.hello { position: relative; display: flex; gap: 14px; align-items: center; width: 100%; padding-top: 20px; }
+.hello::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); transform-origin: 0 50%; }
 .hello > div { display: grid; gap: 4px; }
 .hello p { margin: 0; }
 .hello-quote { font-size: 16px; line-height: 1.45; max-width: 400px; }
 .online { display: inline-flex; align-items: center; gap: 6px; color: var(--ok) !important; }
 .online i { width: 7px; height: 7px; background: var(--live); animation: beat 2s infinite; }
+
+/* Hero intro (html.jl = motion allowed). Everything waits, paused, until JS adds html.hero-go (the head
+   script also adds it after 3s as a safety net). Then: the kicker types in, the headline rises word by
+   word from a mask, the square drops in as the full stop, and the rest follows in order. */
+html.jl:not(.hero-go) .c2-hero h1:not([data-split]) { opacity: 0; }
+html.jl .c2-hero .hx { animation: hx-up .9s var(--ease-out) both paused; animation-delay: var(--t, 0ms); }
+html.jl.hero-go .c2-hero .hx,
+html.jl.hero-go .c2-hero .kick,
+html.jl.hero-go .c2-hero h1 .w > span,
+html.jl.hero-go .c2-hero h1 #k0,
+html.jl.hero-go .hello::before,
+html.jl.hero-go .hello .face-tile::before,
+html.jl.hero-go .hello .face-tile img,
+html.jl.hero-go .hello .online i { animation-play-state: running; }
+
+html.jl .c2-hero .kick { animation: hx-type .9s steps(40, end) both paused; }
+@keyframes hx-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+html.jl .c2-hero h1[data-split] .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .06em .14em; margin: 0 -.06em -.14em; }
+html.jl .c2-hero h1 .w > span { display: inline-block; animation: hx-rise 1.1s var(--ease-out) both paused; animation-delay: calc(180ms + var(--i) * 80ms); }
+@keyframes hx-rise { from { transform: translateY(110%) rotate(4deg); } }
+/* The full stop: the travelling square is glued to it, so the square drops in with it. */
+html.jl .c2-hero h1 #k0 { animation: hx-drop .75s cubic-bezier(.35, 1.7, .55, 1) both paused; animation-delay: calc(500ms + var(--n, 6) * 80ms); }
+@keyframes hx-drop { from { transform: translateY(-2.4em); } }
+
+html.jl .c2-hero .sub { --t: 700ms; }
+html.jl .c2-hero .ctas .btn:nth-child(1) { --t: 860ms; }
+html.jl .c2-hero .ctas .btn:nth-child(2) { --t: 940ms; }
+@keyframes hx-up { from { opacity: 0; transform: translateY(22px); } }
+
+/* Hannah: the rule draws across, her block rises, she pops up in front of it, then her words and the
+   green "online" dot. */
+html.jl .hello::before { animation: hx-rule 1s var(--ease-slot) both paused 1000ms; transform: scaleX(1); }
+@keyframes hx-rule { from { transform: scaleX(0); } }
+html.jl .hello .face-tile::before { animation: hx-block .7s var(--ease-out) both paused 1200ms; }
+@keyframes hx-block { from { transform: translateY(100%); } }
+html.jl .hello .face-tile img { animation: hx-pop .8s cubic-bezier(.35, 1.5, .55, 1) both paused 1350ms; transform-origin: 50% 100%; }
+@keyframes hx-pop { from { opacity: 0; transform: translateY(30%) scale(.8); } }
+html.jl .hello > div { --t: 1450ms; }
+html.jl .hello .online i { animation: hx-pop .5s cubic-bezier(.35, 1.7, .55, 1) both paused 2000ms, beat 2s 2.5s infinite; }
 
 /* Collage: positions from the 560 × 600 Figma frame, in percent so it scales.
    Each piece has a resting tilt (--r) and a depth (--d) for the pointer parallax. The transform is built
