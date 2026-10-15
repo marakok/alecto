@@ -7,7 +7,7 @@ import { initHeroIntro } from './hero-intro.js';
 /**
  * Concept 2: One square, one journey.
  * A single fixed square (the actor) travels between anchor elements as you scroll:
- * headline full stop → checkbox → reading marker → seal → key → lit window → logo dot.
+ * logo dot (on load) → headline full stop → checkbox → reading marker → seal → key → lit window → logo dot.
  * The step cards pin in place and swap one by one as you scroll. Anchors are measured live every
  * frame, so the actor stays glued to them while they move.
  */
@@ -15,14 +15,40 @@ import { initHeroIntro } from './hero-intro.js';
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
-initHeroIntro({ reduce });
+const intro = initHeroIntro({ reduce });
 initCollage({ reduce });
 
 const live = document.documentElement.classList.contains('jl') && !reduce;
-if (live) initJourney();
+if (live) initJourney(intro);
 
-function initJourney() {
+function initJourney(intro) {
   const actor = document.getElementById('actor');
+  const navdot = document.getElementById('navdot');
+
+  // On load the square is the logo dot. Once the headline has risen it falls onto the end of "drama",
+  // bounces, and the logo gets its dot back.
+  const DROP_MS = 1100;
+  let drop = 0; // when the fall starts (ms, performance.now), 0 = not yet known
+  let dropped = false;
+  navdot.classList.add('lent');
+  intro.then((info) => {
+    drop = info ? info.start + 380 + info.words * 80 : performance.now();
+  });
+  const land = () => {
+    dropped = true;
+    navdot.classList.remove('lent');
+    navdot.classList.add('ping');
+    navdot.addEventListener('animationend', () => navdot.classList.remove('ping'), { once: true });
+  };
+  // Gravity with two small bounces, 0..1.
+  const bounce = (t) => {
+    const n = 7.5625;
+    const d = 2.75;
+    if (t < 1 / d) return n * t * t;
+    if (t < 2 / d) return n * (t -= 1.5 / d) * t + 0.75;
+    if (t < 2.5 / d) return n * (t -= 2.25 / d) * t + 0.9375;
+    return n * (t -= 2.625 / d) * t + 0.984375;
+  };
   const journey = document.getElementById('journey');
   const track = document.getElementById('track'); // the tall box the step cards pin inside
   const steps = [...journey.querySelectorAll('.step')];
@@ -101,7 +127,18 @@ function initJourney() {
     let top;
     let size;
     let rot = 0;
-    if (k === KEYS.length - 1) {
+    if (k === 0 && !dropped) {
+      // On load: from the logo dot to the full stop.
+      const p = drop ? clamp((performance.now() - drop) / DROP_MS, 0, 1) : 0;
+      const n = rectOf(navdot);
+      const sx = ease(clamp(p * 1.6, 0, 1)); // across first, while it falls
+      const sy = bounce(p);
+      x = n.left + (a.left - n.left) * sx;
+      top = n.top + (a.top - n.top) * sy;
+      size = n.width + (a.width - n.width) * clamp(p * 1.4, 0, 1);
+      rot = 180 * ease(clamp(p * 1.25, 0, 1));
+      if (p >= 1 || y > S(1) * 0.5) land();
+    } else if (k === KEYS.length - 1) {
       ({ left: x, top } = a);
       size = a.width;
     } else {
@@ -118,6 +155,7 @@ function initJourney() {
     actor.style.width = `${size}px`;
     actor.style.height = `${size}px`;
     actor.style.transform = `translate(${x}px, ${top}px) rotate(${rot}deg)`;
+    actor.classList.add('placed');
     requestAnimationFrame(frame);
   };
   requestAnimationFrame(frame);
