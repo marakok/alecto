@@ -12,13 +12,14 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
-    /* Before first paint: apply a saved theme, and decide whether to play the intro loader
-       (once per browser session, or always with ?intro in the URL). */
+    /* Before first paint: apply a saved theme, and decide whether motion is allowed
+       (html.jl: the square travels and the hero plays its intro). */
     (function () {
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
       if (!reduce) d.classList.add('jl'); /* journey-live: the square travels */
+      if (!reduce) setTimeout(function () { d.classList.add('hero-go'); }, 3000); /* safety: show the hero even if the intro script never runs */
     })();
   </script>
   <link rel="stylesheet" href="/src/styles/tokens.css">
@@ -61,12 +62,12 @@
     <div class="hero-copy">
       <p class="kick">Property conveyancing · England &amp; Wales</p>
       <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
-      <p class="sub">One named conveyancer who explains your options, from offer accepted to moving day.</p>
-      <div class="ctas"><a class="btn primary" href="#">Get a quote</a><a class="btn ghost" href="#journey">How it works</a></div>
+      <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
+      <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
       <!-- Illustrative person: replace the name, words and portrait with a real Alecto conveyancer. -->
       <aside class="hello" aria-label="Your conveyancer">
         <span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span>
-        <div>
+        <div class="hx">
           <p class="mono">Hannah Reid, your conveyancer</p>
           <p class="hello-quote">“I’ll look after your move myself, from offer accepted to keys in hand.”</p>
           <p class="online mono"><i></i>Online now</p>
