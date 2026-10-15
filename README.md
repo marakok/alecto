@@ -54,15 +54,20 @@ spinning and glowing (`calm: true` in `src/js/build.js`). Hannah is "Hannah Reid
 
 ## Concept 2: One square, one journey
 
-`concept-2/index.html`, `src/concept-2/`. The only colour on the page is one accent square (the actor).
-It starts as the full stop of the headline and, as you scroll through a pinned six-chapter story, becomes
-the ticked checkbox (Instruct), a reading marker (Investigate), the seal between two contracts (Exchange),
-the head of a key (Complete), the lit window of the house (Moving day) and finally the logo dot (Wrap up).
+`concept-2/index.html`, `src/concept-2/`. Built from the Figma frame "Alecto · One square, human touched ·
+desktop 1440 · Light v11" (file "Alecto web", node 101:6): a hero with a photo collage, three proofs, six step
+cards with "Your call" moments, the team on periwinkle blocks, reviews, FAQ and a photo CTA on ink. Colour
+tokens for this page (light and dark) sit at the top of `src/concept-2/journey.css`. Photos and cut-outs are
+dummies in `public/concept-2/`.
+
+One accent square (the actor) starts as the full stop of the headline and, as you scroll through the six step
+cards (pinned on screen and swapping one by one, with a 01 / 06 counter), becomes the ticked checkbox (Instruct), a reading marker (Investigate), the seal between two contracts
+(Exchange), the head of a key (Complete), the lit window of the house (Moving day) and finally the logo dot
+(Wrap up).
 
 The actor is a fixed element that moves between anchor elements (`data-k`) inside the drawings; anchors
-are measured every frame so it stays glued to them. Without JS or with reduced motion the chapters stack
-normally and every drawing shows its own static square. Concept 2 reuses the shared scroll motion
-without the square cursor, so there is only ever one square on screen.
+are measured every frame so it stays glued to them. Without JS or with reduced motion the cards stack in
+normal flow and every drawing shows its own static square. Concept 2 reuses the shared scroll motion without the square cursor.
 
 ## Run it
 
