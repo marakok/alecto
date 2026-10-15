@@ -44,9 +44,11 @@
 .c2 .btn { font-size: 16px; letter-spacing: -.01em; padding: 13px 22px; }
 .c2 .btn.ghost { background: var(--surface); }
 .c2 .btn.accent { background: var(--accent); color: #141416; }
-.c2 .announce { font-size: 15px; padding-block: 12px; }
-.c2 .announce-tag { font: 500 12px/1.2 var(--mono); letter-spacing: .12em; border-color: var(--inv-muted); }
+.c2 .announce { font-size: 15px; padding-block: 12px; background: #8290E8; color: #141416; }
+.c2 .announce-tag { font: 500 12px/1.2 var(--mono); letter-spacing: .12em; color: #141416; border-color: rgba(20, 20, 22, .45); }
 .c2 .announce-cta { text-decoration-color: currentColor; }
+.c2 .announce .boxes.mini i:nth-child(2) { background: #FBFAF7; } /* the accent square would vanish on the accent bar */
+.c2 .announce:focus-visible { outline-color: #141416; }
 
 /* ---------- hero ---------- */
 .c2-hero { display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 560px); justify-content: space-between; align-items: center; gap: 48px; padding-block: 88px 96px; }
