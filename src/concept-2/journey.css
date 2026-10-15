@@ -78,7 +78,6 @@ html.jl .c2-hero .hx { animation: hx-up .9s var(--ease-out) both paused; animati
 html.jl.hero-go .c2-hero .hx,
 html.jl.hero-go .c2-hero .kick,
 html.jl.hero-go .c2-hero h1 .w > span,
-html.jl.hero-go .c2-hero h1 #k0,
 html.jl.hero-go .hello::before,
 html.jl.hero-go .hello .face-tile::before,
 html.jl.hero-go .hello .face-tile img,
@@ -90,9 +89,7 @@ html.jl .c2-hero .kick { animation: hx-type .9s steps(40, end) both paused; }
 html.jl .c2-hero h1[data-split] .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .06em .14em; margin: 0 -.06em -.14em; }
 html.jl .c2-hero h1 .w > span { display: inline-block; animation: hx-rise 1.1s var(--ease-out) both paused; animation-delay: calc(180ms + var(--i) * 80ms); }
 @keyframes hx-rise { from { transform: translateY(110%) rotate(4deg); } }
-/* The full stop: the travelling square is glued to it, so the square drops in with it. */
-html.jl .c2-hero h1 #k0 { animation: hx-drop .75s cubic-bezier(.35, 1.7, .55, 1) both paused; animation-delay: calc(500ms + var(--n, 6) * 80ms); }
-@keyframes hx-drop { from { transform: translateY(-2.4em); } }
+/* The full stop is the travelling square: on load it falls from the logo dot onto "drama" (main.js). */
 
 html.jl .c2-hero .sub { --t: 700ms; }
 html.jl .c2-hero .ctas .btn:nth-child(1) { --t: 860ms; }
@@ -175,6 +172,8 @@ html.jl .actor {
   background: var(--accent); pointer-events: none; will-change: transform, width, height;
 }
 html.jl #k0 { visibility: hidden; }
+html.jl .actor:not(.placed) { opacity: 0; } /* until the script has put it somewhere */
+html.jl .logo i.lent { visibility: hidden; } /* the logo dot is the square, on its way down */
 
 /* ---------- how it works: six step cards ---------- */
 .steps-list { display: grid; gap: 24px; }
