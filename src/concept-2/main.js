@@ -1,6 +1,7 @@
 import { initTheme } from '../js/theme.js';
 import { initMotion } from '../js/motion.js';
 import { clamp, prefersReducedMotion } from '../js/palette.js';
+import { initCollage } from './collage.js';
 
 /**
  * Concept 2: One square, one journey.
@@ -13,6 +14,7 @@ import { clamp, prefersReducedMotion } from '../js/palette.js';
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
+initCollage({ reduce });
 
 const live = document.documentElement.classList.contains('jl') && !reduce;
 if (live) initJourney();
