@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alecto · Phase 2 · Careers</title>
+  <meta name="description" content="Careers at Alecto: be the person someone remembers. Open conveyancing roles in Bristol and remote.">
+  <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/phase-2/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+  <script>
+    /* Before first paint (as on the homepage): apply a saved theme, pick the flavor (?v=a|b|c|d, portraits) and the page
+       load (?l=drop|curtain|count|wordmark, defaults to the flavor's own), and decide whether motion is
+       allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
+    (function () {
+      var d = document.documentElement;
+      try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
+      var q = new URLSearchParams(location.search);
+      var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
+      var LOADS = { a: 'drop', b: 'curtain', c: 'count', d: 'wordmark' };
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : LOADS[v];
+      d.setAttribute('data-v', v);
+      d.setAttribute('data-l', l);
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) d.classList.add('jl', 'veiled'); /* journey-live: the square travels */
+      /* safety: show the page even if the intro script never runs */
+      if (!reduce) setTimeout(function () { d.classList.add('hero-go'); d.classList.remove('veiled'); }, 5000);
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/motion.css">
+  <link rel="stylesheet" href="/src/styles/brand.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/journey.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/phase2.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/pages.css">
+</head>
+<body class="c2">
+<a class="skip" href="#main">Skip to content</a>
+<!-- The wordmark letters, true Switzer outlines from the brand kit (svg/alecto-paper.svg). The dot is an
+     HTML element next to them, so the travelling square can take its place. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="alecto-letters" fill="currentColor" d="M202-360C209-402 237-431 289-431C348-431 377-400 377-341L377-329C294-328 227-321 157-298C72-268 30-212 30-139C30-36 106 16 208 16C272 16 336-9 378-67C379-41 382-18 387 0L545 0C536-28 530-64 530-134L530-340C530-465 450-555 296-555C158-555 65-481 49-360ZM183-149C183-199 222-237 377-240L377-219C377-145 323-90 255-90C210-90 183-113 183-149ZM594 0L747 0L747-720L594-720ZM1312-177L1152-177C1136-128 1102-106 1052-106C986-106 946-152 938-238L1308-238L1308-272C1308-448 1207-555 1046-555C886-555 782-452 782-269C782-92 885 16 1052 16C1184 16 1284-53 1312-177ZM1046-433C1102-433 1138-396 1150-326L941-326C953-396 989-433 1046-433ZM1827-344C1808-485 1709-555 1584-555C1426-555 1324-452 1324-269C1324-93 1424 16 1585 16C1710 16 1807-49 1830-184L1677-184C1666-134 1634-108 1588-108C1518-108 1481-165 1481-269C1481-374 1516-431 1584-431C1628-431 1664-407 1674-344ZM1883-175C1883-50 1938 16 2053 16C2094 16 2128 10 2145 2L2145-113L2116-113C2050-113 2036-142 2036-194L2036-422L2146-422L2146-538L2036-538L2036-663L1883-663L1883-538L1817-538L1817-422L1883-422ZM2411 16C2571 16 2676-87 2676-269C2676-445 2574-555 2411-555C2251-555 2147-452 2147-269C2147-92 2248 16 2411 16ZM2411-108C2342-108 2304-165 2304-269C2304-374 2341-431 2411-431C2481-431 2519-373 2519-269C2519-164 2482-108 2411-108Z"/></defs></svg>
+<!-- Load screen: the square starts here, in the middle (loader.js). -->
+<div class="veil" aria-hidden="true">
+  <div class="veil-word"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="veil-dot"></i></div>
+  <span class="veil-count mono">0</span>
+</div>
+<!-- News bar: dummy headline and link. Replace with the real announcement and press release URL. -->
+<a class="announce" href="#">
+  <span class="boxes mini" aria-hidden="true"><i></i><i></i></span>
+  <span class="announce-tag">News</span>
+  <span class="announce-text">Alecto launches Move Live: every step of your move, with your own conveyancer</span>
+  <span class="announce-cta"><b>Read the press release</b><span aria-hidden="true">→</span></span>
+</a>
+
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="/phase-2/concept-2/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i id="navdot"></i></a>
+    <div class="links"><a href="/phase-2/concept-2/#journey">How it works</a><a href="/phase-2/concept-2/#reviews">Reviews</a><a href="/phase-2/concept-2/#faq">FAQ</a><a href="/phase-2/concept-2/company/">Company</a><a href="/phase-2/concept-2/careers/" aria-current="page">Careers</a></div>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn ghost track" href="#">Track my move</a>
+      <a class="btn primary" href="#">Get a quote</a>
+    </div>
+  </nav>
+</div>
+</header>
+
+<div class="actor" id="actor" aria-hidden="true"></div>
+
+<main id="main">
+  <!-- Careers. All roles, perks, steps and people below are dummy until Alecto supplies the real ones. -->
+  <section class="c2-hero page-hero jobs-hero wrap">
+    <div class="hero-copy">
+      <p class="crumb mono hx"><a href="/phase-2/concept-2/">Home</a><i></i>Careers</p>
+      <h1>Be the person someone <span class="nowrap">remembers<span class="period" id="k0"></span></span></h1>
+      <p class="sub hx">We hire conveyancers who pick up the phone. Fewer files, more time for every client, and a team that has your back.</p>
+      <div class="ctas"><a class="btn primary hx" href="#roles">See open roles</a><a class="btn ghost hx" href="#hiring">How we hire</a></div>
+    </div>
+    <aside class="roles-card hx" aria-label="Open roles">
+      <header><b>Open roles</b><span class="count">4</span></header>
+      <ul><li><a href="#roles"><b>Senior Conveyancer, Residential</b><span class="mono">Bristol or remote · Full time</span><span class="go" aria-hidden="true">→</span></a></li><li><a href="#roles"><b>Conveyancer, Residential</b><span class="mono">Bristol or remote · Full time</span><span class="go" aria-hidden="true">→</span></a></li><li><a href="#roles"><b>Trainee Conveyancer</b><span class="mono">Bristol · Full time</span><span class="go" aria-hidden="true">→</span></a></li><li><a href="#roles"><b>Post-completion Assistant</b><span class="mono">Bristol · Full time</span><span class="go" aria-hidden="true">→</span></a></li></ul>
+      <div class="from"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p>“Come and do conveyancing the way you always wanted to.”<b>Hannah Reid, Senior conveyancer</b></p></div>
+    </aside>
+  </section>
+
+  <div class="wrap">
+  <section class="sec" id="why">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Why Alecto</p><h2>Room to do it properly<span class="period"></span></h2></div>
+      <p class="lede">What working here looks like. (Dummy perks: Alecto to confirm.)</p>
+    </div>
+    <div class="perks">
+      <article class="perk"><i></i><h3>A caseload you can handle</h3><p>We cap files per conveyancer, so you have time to call people back.</p></article>
+      <article class="perk"><i></i><h3>Your clients, start to finish</h3><p>You own the file from instruction to wrap-up. No passing it down a line.</p></article>
+      <article class="perk"><i></i><h3>Software that chases</h3><p>Our case system sends the reminders and collects the documents. You do the law.</p></article>
+      <article class="perk"><i></i><h3>Train and qualify</h3><p>Paid study and time off for CLC or CILEx qualifications, with a mentor.</p></article>
+      <article class="perk"><i></i><h3>Hybrid, near Temple Meads</h3><p>Two days in the Bristol office, the rest wherever you work best.</p></article>
+      <article class="perk"><i></i><h3>Time off that’s off</h3><p>25 days plus bank holidays, and someone covers your files properly.</p></article>
+    </div>
+  </section>
+  </div>
+
+  <section class="day-band">
+    <div class="sec wrap day">
+      <div class="day-who">
+        <p class="eyebrow"><i></i>A day at Alecto</p>
+        <h2>Tuesday with Tom<span class="period"></span></h2>
+        <!-- Illustrative person (dummy). -->
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/tom.png" alt=""></div><figcaption><b>Tom Okafor</b><small class="mono">Conveyancer</small><p>Used to be an estate agent. Fluent in chain.</p></figcaption></figure>
+      </div>
+      <!-- Dummy day: replace with a real one from the team. -->
+      <ol>
+        <li><time>08:45</time><b>Coffee and the case board</b><p>Tom checks which of his moves changed overnight. The system has already chased two missing documents.</p></li>
+        <li class="you"><time>09:30</time><b>A welcome call</b><p>New clients, offer accepted yesterday. He explains what happens next and when they’ll hear from him.</p></li>
+        <li><time>11:00</time><b>Reading a title</b><p>A shared driveway on a semi in Bath. He writes the buyers a short note on what it means for them.</p></li>
+        <li><time>14:00</time><b>Exchange</b><p>A chain of four lines up. He rings each of his clients himself: not an email, a call.</p></li>
+        <li><time>16:30</time><b>Team catch-up</b><p>Fifteen minutes with Hannah and the team on anything odd. Then home on time.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="wrap">
+  <section class="sec" id="roles">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Open roles</p><h2>Join the team<span class="period"></span></h2></div>
+      <p class="lede">All roles are dummy placeholders for the prototype.</p>
+    </div>
+    <div class="roles">
+      <a class="role" href="#"><b>Senior Conveyancer, Residential</b><span class="meta"><span>Conveyancing</span><span>Bristol or remote</span><span>Full time</span></span><span class="go" aria-hidden="true">→</span></a>
+      <a class="role" href="#"><b>Conveyancer, Residential</b><span class="meta"><span>Conveyancing</span><span>Bristol or remote</span><span>Full time</span></span><span class="go" aria-hidden="true">→</span></a>
+      <a class="role" href="#"><b>Trainee Conveyancer</b><span class="meta"><span>Conveyancing</span><span>Bristol</span><span>Full time</span></span><span class="go" aria-hidden="true">→</span></a>
+      <a class="role" href="#"><b>Post-completion Assistant</b><span class="meta"><span>Post-completion</span><span>Bristol</span><span>Full time</span></span><span class="go" aria-hidden="true">→</span></a>
+      <a class="role open" href="#"><b>Don’t see your role? Write to us anyway.</b><span class="meta"><span>Any team</span><span>Bristol or remote</span></span><span class="go" aria-hidden="true">→</span></a>
+    </div>
+  </section>
+
+  <section class="sec" id="hiring">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>How we hire</p><h2>Four steps, two weeks<span class="period"></span></h2></div>
+      <p class="lede">Clear, quick and human, the way we treat our clients. (Dummy process.)</p>
+    </div>
+    <ol class="hire">
+      <li><b>Say hello</b><p>Send a CV or your LinkedIn and a few lines on why Alecto. No cover letter essays.</p></li>
+      <li><b>A call with Hannah</b><p>Thirty minutes to get to know each other and answer your questions.</p></li>
+      <li><b>A real file</b><p>An hour on an anonymised case with one of the team. We pay you for your time.</p></li>
+      <li><b>Meet the team</b><p>Coffee in the office or on video, and an answer within a week.</p></li>
+    </ol>
+    <p class="hire-note">Questions first? Email <b>careers@alecto.example</b> (dummy address).</p>
+  </section>
+
+  <!-- CTA: dummy photos -->
+  <section class="cta c2-cta">
+    <div class="cta-copy">
+      <h2>Not sure yet? Have a coffee with us<span class="period"></span></h2>
+      <p>Tell us what you’re looking for. We’ll tell you honestly if Alecto fits.</p>
+      <div class="ctas"><a class="btn accent" href="#roles">See open roles</a><a class="btn ghost" href="#">Email the team</a></div>
+    </div>
+    <div class="cta-art" aria-hidden="true">
+      <img class="c-tower" src="/concept-2/cta-tower.jpg" alt="">
+      <img class="c-office" src="/concept-2/cta-office.jpg" alt="">
+      <img class="c-meeting" src="/concept-2/cta-meeting.jpg" alt="">
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="/phase-2/concept-2/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i></i></a><p>Property conveyancing without the stress.</p></div>
+      <div class="fcols">
+        <div><h4>Company</h4><a href="/phase-2/concept-2/company/">About Alecto</a><a href="/phase-2/concept-2/careers/">Careers</a><a href="#">Blog</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+        <div><h4>Support</h4><a href="#">Contact</a><a href="#">Complaints</a><a href="#">Track my move</a></div>
+        <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie preferences</a></div>
+      </div>
+    </div>
+    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351.<br>Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd</span></div>
+  </div>
+</footer>
+
+<nav class="concepts" aria-label="Design concepts"><span>Concept</span><a href="/" title="Concept 1">1</a><a href="/concept-2/" title="Concept 2">2</a><a href="/concept-3/" title="Concept 3">3</a><a href="/concept-4/" title="Concept 4">4</a><span class="phase">Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · Concept 2a · Calm">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · Concept 2b · Your person">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · Concept 2c · Trust first">2c</a><a href="/phase-2/concept-2/?v=d" title="Phase 2 · Concept 2d · Real life">2d</a></nav>
+
+<script type="module" src="/src/phase-2/concept-2/page.js"></script>
+</body>
+</html>

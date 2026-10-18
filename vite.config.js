@@ -11,6 +11,8 @@ export default defineConfig({
         concept3: resolve(import.meta.dirname, 'concept-3/index.html'),
         concept4: resolve(import.meta.dirname, 'concept-4/index.html'),
         phase2concept2: resolve(import.meta.dirname, 'phase-2/concept-2/index.html'),
+        phase2company: resolve(import.meta.dirname, 'phase-2/concept-2/company/index.html'),
+        phase2careers: resolve(import.meta.dirname, 'phase-2/concept-2/careers/index.html'),
       },
     },
   },

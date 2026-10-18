@@ -1,0 +1,210 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alecto · Phase 2 · About Alecto</title>
+  <meta name="description" content="About Alecto: conveyancing with a person in it. One named conveyancer on every move, licensed by the Council for Licensed Conveyancers.">
+  <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/phase-2/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+  <script>
+    /* Before first paint (as on the homepage): apply a saved theme, pick the flavor (?v=a|b|c|d, portraits) and the page
+       load (?l=drop|curtain|count|wordmark, defaults to the flavor's own), and decide whether motion is
+       allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
+    (function () {
+      var d = document.documentElement;
+      try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
+      var q = new URLSearchParams(location.search);
+      var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
+      var LOADS = { a: 'drop', b: 'curtain', c: 'count', d: 'wordmark' };
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : LOADS[v];
+      d.setAttribute('data-v', v);
+      d.setAttribute('data-l', l);
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) d.classList.add('jl', 'veiled'); /* journey-live: the square travels */
+      /* safety: show the page even if the intro script never runs */
+      if (!reduce) setTimeout(function () { d.classList.add('hero-go'); d.classList.remove('veiled'); }, 5000);
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/motion.css">
+  <link rel="stylesheet" href="/src/styles/brand.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/journey.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/phase2.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/pages.css">
+</head>
+<body class="c2">
+<a class="skip" href="#main">Skip to content</a>
+<!-- The wordmark letters, true Switzer outlines from the brand kit (svg/alecto-paper.svg). The dot is an
+     HTML element next to them, so the travelling square can take its place. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="alecto-letters" fill="currentColor" d="M202-360C209-402 237-431 289-431C348-431 377-400 377-341L377-329C294-328 227-321 157-298C72-268 30-212 30-139C30-36 106 16 208 16C272 16 336-9 378-67C379-41 382-18 387 0L545 0C536-28 530-64 530-134L530-340C530-465 450-555 296-555C158-555 65-481 49-360ZM183-149C183-199 222-237 377-240L377-219C377-145 323-90 255-90C210-90 183-113 183-149ZM594 0L747 0L747-720L594-720ZM1312-177L1152-177C1136-128 1102-106 1052-106C986-106 946-152 938-238L1308-238L1308-272C1308-448 1207-555 1046-555C886-555 782-452 782-269C782-92 885 16 1052 16C1184 16 1284-53 1312-177ZM1046-433C1102-433 1138-396 1150-326L941-326C953-396 989-433 1046-433ZM1827-344C1808-485 1709-555 1584-555C1426-555 1324-452 1324-269C1324-93 1424 16 1585 16C1710 16 1807-49 1830-184L1677-184C1666-134 1634-108 1588-108C1518-108 1481-165 1481-269C1481-374 1516-431 1584-431C1628-431 1664-407 1674-344ZM1883-175C1883-50 1938 16 2053 16C2094 16 2128 10 2145 2L2145-113L2116-113C2050-113 2036-142 2036-194L2036-422L2146-422L2146-538L2036-538L2036-663L1883-663L1883-538L1817-538L1817-422L1883-422ZM2411 16C2571 16 2676-87 2676-269C2676-445 2574-555 2411-555C2251-555 2147-452 2147-269C2147-92 2248 16 2411 16ZM2411-108C2342-108 2304-165 2304-269C2304-374 2341-431 2411-431C2481-431 2519-373 2519-269C2519-164 2482-108 2411-108Z"/></defs></svg>
+<!-- Load screen: the square starts here, in the middle (loader.js). -->
+<div class="veil" aria-hidden="true">
+  <div class="veil-word"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="veil-dot"></i></div>
+  <span class="veil-count mono">0</span>
+</div>
+<!-- News bar: dummy headline and link. Replace with the real announcement and press release URL. -->
+<a class="announce" href="#">
+  <span class="boxes mini" aria-hidden="true"><i></i><i></i></span>
+  <span class="announce-tag">News</span>
+  <span class="announce-text">Alecto launches Move Live: every step of your move, with your own conveyancer</span>
+  <span class="announce-cta"><b>Read the press release</b><span aria-hidden="true">→</span></span>
+</a>
+
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="/phase-2/concept-2/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i id="navdot"></i></a>
+    <div class="links"><a href="/phase-2/concept-2/#journey">How it works</a><a href="/phase-2/concept-2/#reviews">Reviews</a><a href="/phase-2/concept-2/#faq">FAQ</a><a href="/phase-2/concept-2/company/" aria-current="page">Company</a><a href="/phase-2/concept-2/careers/">Careers</a></div>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn ghost track" href="#">Track my move</a>
+      <a class="btn primary" href="#">Get a quote</a>
+    </div>
+  </nav>
+</div>
+</header>
+
+<div class="actor" id="actor" aria-hidden="true"></div>
+
+<main id="main">
+  <!-- About Alecto. All copy, numbers and people below are dummy until Alecto supplies the real story. -->
+  <section class="c2-hero page-hero about-hero wrap">
+    <div class="hero-copy">
+      <p class="crumb mono hx"><a href="/phase-2/concept-2/">Home</a><i></i>About Alecto</p>
+      <h1>Conveyancing with a person <span class="nowrap">in it<span class="period" id="k0"></span></span></h1>
+      <p class="sub hx">Buying a home shouldn’t mean chasing a stranger for updates. So every Alecto move gets one named conveyancer, from offer accepted to keys in hand.</p>
+      <div class="ctas"><a class="btn primary hx" href="#story">Our story</a><a class="btn ghost hx" href="/phase-2/concept-2/careers/">We’re hiring</a></div>
+    </div>
+    <!-- Dummy office photos: replace with the real Alecto office and team. -->
+    <figure class="about-photos hx">
+      <img class="p1" src="/concept-2/cta-meeting.jpg" alt="The Alecto team in a meeting">
+      <img class="p2" src="/concept-2/cta-office.jpg" alt="" aria-hidden="true">
+      <p class="clc stamp"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
+    </figure>
+  </section>
+
+  <!-- Dummy numbers: confirm with Alecto. -->
+  <section class="numbers" aria-label="Alecto in numbers">
+    <div class="wrap">
+      <dl>
+        <div><dt>homeowners moved with Alecto</dt><dd>2,000+</dd></div>
+        <div><dt>in property transactions</dt><dd>£600m+</dd></div>
+        <div><dt>conveyancer on every file, start to finish</dt><dd>1</dd></div>
+        <div><dt>licence with the Council for Licensed Conveyancers</dt><dd>14351</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <section class="sec wrap story" id="story">
+    <div class="story-head">
+      <p class="eyebrow"><i></i>Our story</p>
+      <h2>Why we started<span class="period"></span></h2>
+    </div>
+    <!-- Dummy story and quote: replace with William's own words. -->
+    <div class="story-body">
+      <p>Most people move home a handful of times in their life. Every time, the legal part is where it goes quiet: forms, searches, a case handler you never meet.</p>
+      <p>Alecto turns that around. You get one named conveyancer who reads your file, explains your options in plain English and rings you when something happens. Behind them sits a small team and software that does the chasing, so they have time for you.</p>
+      <p>We are licensed and regulated by the Council for Licensed Conveyancers, and we work across England and Wales.</p>
+      <figure class="founder">
+        <div class="mate-tile"><img src="/concept-2/william.png" alt=""></div>
+        <div>
+          <blockquote>“I built Alecto so that you always know who has your file, and they always know your name.”</blockquote>
+          <figcaption><b>William</b><small class="mono">Founder &amp; CEO</small></figcaption>
+        </div>
+      </figure>
+    </div>
+  </section>
+
+  <div class="wrap">
+  <section class="sec" id="values">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>What we stand for</p><h2>Four promises<span class="period"></span></h2></div>
+      <p class="lede">The same four promises on every move, from a first flat to a family home. (Dummy wording.)</p>
+    </div>
+    <div class="values">
+      <article class="value"><header><i></i><span class="mono">01</span></header><h3>One person, start to finish</h3><p>Your conveyancer is named on day one and stays with you to the keys. No hand-offs, no ticket numbers.</p></article>
+      <article class="value"><header><i></i><span class="mono">02</span></header><h3>Plain English</h3><p>What’s happening, what it means and what’s next, without the jargon. If something is unusual, we say so.</p></article>
+      <article class="value"><header><i></i><span class="mono">03</span></header><h3>Your call</h3><p>We lay out the options before every decision. The moments that matter are yours to decide.</p></article>
+      <article class="value"><header><i></i><span class="mono">04</span></header><h3>Finished properly</h3><p>Stamp Duty filed, Land Registry updated, documents sent. We only close the file when it’s really done.</p></article>
+    </div>
+  </section>
+  </div>
+
+  <!-- Team: illustrative people (dummy). Replace names, roles, lines and portraits with the real Alecto team. -->
+  <section class="team-band" id="team">
+    <div class="sec wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow"><i></i>The team</p><h2>Small on purpose<span class="period"></span></h2></div>
+        <p class="lede">Every conveyancer keeps a caseload they can actually look after. These are some of the people you’ll talk to.</p>
+      </div>
+      <div class="team">
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/hannah.png" alt=""></div><figcaption><b>Hannah Reid</b><small class="mono">Senior conveyancer</small><p>Has moved house six times herself, so she knows the nerves.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/tom.png" alt=""></div><figcaption><b>Tom Okafor</b><small class="mono">Conveyancer</small><p>Used to be an estate agent. Fluent in chain.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/owen.png" alt=""></div><figcaption><b>Owen Price</b><small class="mono">Post-completion</small><p>Files your Stamp Duty and Land Registry, quietly and on time.</p></figcaption></figure>
+        <figure class="mate"><div class="mate-tile"><img src="/concept-2/william.png" alt=""></div><figcaption><b>William</b><small class="mono">Founder &amp; CEO</small><p>Built Alecto so you always know who has your file.</p></figcaption></figure>
+      </div>
+    </div>
+  </section>
+
+  <div class="wrap">
+  <!-- Regulation: dummy wording. Alecto to confirm insurance, client account and complaints details. -->
+  <section class="sec" id="regulated">
+    <div class="regulated">
+      <div class="regulated-head">
+        <p class="eyebrow"><i></i>Regulated</p>
+        <h2>Licensed, insured, accountable<span class="period"></span></h2>
+        <p class="clc badge"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
+      </div>
+      <ul>
+        <li><b>Licensed by the CLC</b><span>Alecto Conveyancing Ltd is authorised and regulated by the Council for Licensed Conveyancers, licence 14351.</span></li>
+        <li><b>Your money, protected</b><span>Client money is held in a separate client account. Details to be supplied by Alecto.</span></li>
+        <li><b>Insured</b><span>We hold professional indemnity insurance. Details to be supplied by Alecto.</span></li>
+        <li><b>A complaints process that listens</b><span>If something goes wrong, tell your conveyancer or our complaints lead. <a href="#">Read the complaints procedure</a>.</span></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- CTA: dummy photos -->
+  <section class="cta c2-cta">
+    <div class="cta-copy">
+      <h2>Want to be someone’s person<span class="period"></span></h2>
+      <p>We’re hiring conveyancers who pick up the phone.</p>
+      <div class="ctas"><a class="btn accent" href="/phase-2/concept-2/careers/">See open roles</a><a class="btn ghost" href="#">Get a quote</a></div>
+    </div>
+    <div class="cta-art" aria-hidden="true">
+      <img class="c-tower" src="/concept-2/cta-tower.jpg" alt="">
+      <img class="c-office" src="/concept-2/cta-office.jpg" alt="">
+      <img class="c-meeting" src="/concept-2/cta-meeting.jpg" alt="">
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="/phase-2/concept-2/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i></i></a><p>Property conveyancing without the stress.</p></div>
+      <div class="fcols">
+        <div><h4>Company</h4><a href="/phase-2/concept-2/company/">About Alecto</a><a href="/phase-2/concept-2/careers/">Careers</a><a href="#">Blog</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+        <div><h4>Support</h4><a href="#">Contact</a><a href="#">Complaints</a><a href="#">Track my move</a></div>
+        <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie preferences</a></div>
+      </div>
+    </div>
+    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351.<br>Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd</span></div>
+  </div>
+</footer>
+
+<nav class="concepts" aria-label="Design concepts"><span>Concept</span><a href="/" title="Concept 1">1</a><a href="/concept-2/" title="Concept 2">2</a><a href="/concept-3/" title="Concept 3">3</a><a href="/concept-4/" title="Concept 4">4</a><span class="phase">Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · Concept 2a · Calm">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · Concept 2b · Your person">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · Concept 2c · Trust first">2c</a><a href="/phase-2/concept-2/?v=d" title="Phase 2 · Concept 2d · Real life">2d</a></nav>
+
+<script type="module" src="/src/phase-2/concept-2/page.js"></script>
+</body>
+</html>
