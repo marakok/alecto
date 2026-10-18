@@ -8,6 +8,8 @@ Marketing site concepts for Alecto Conveyancing.
 | 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
 | 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
 | 4 · Your person | `/concept-4/` | Concept 3's build-up with the human side up front: your conveyancer introduces herself, messages you at every stage, and the team gets a face |
+| Phase 2 · 2a–2d | `/phase-2/concept-2/?v=a` … `?v=d` | Concept 2 in four flavors: hero, page load and portraits vary, the one square stays |
+
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
 Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark frames) for concept 1.
@@ -23,6 +25,38 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 - **Your team:** four people with portrait, role and one personal line.
 - **Placeholders:** names, words and portraits are illustrative. Swap the initials `<span>` inside `.portrait` for an
   `<img>` when Alecto supplies photos.
+
+## Phase 2
+
+A second layer of concepts, shown as its own group ("Phase 2") on the concept switcher. Phase 2 pages live under
+`phase-2/` with their code under `src/phase-2/`, so the phase 1 concepts stay as they were.
+
+### Concept 2, four flavors
+
+`phase-2/concept-2/index.html`, `src/phase-2/concept-2/`. Concept 2 with the one square journey unchanged, and on top:
+
+- **Brand kit v1.0** (the "Alecto Design System" zip): periwinkle `#5E6AD2` on light, `#8290E8` only on dark (it
+  was `#8290E8` everywhere, which reads paler). The logo uses the kit's true Switzer letters (an inline SVG), with the
+  dot as an element so the square can take its place. The dot's corners are rounded (`rx 9` on 150, so 6%); every
+  square follows (`--dot-r`), and buttons, cards and photos get a small radius (`--ui-r`, 4px). Favicon from the kit.
+- **Calmer:** no "Property conveyancing · England & Wales" kicker, an ink news bar, no extra periwinkle blocks in
+  the photos.
+- **CLC regulated, up front:** in every hero, a different way per flavor.
+- **Reviews with photos** of the people (stock dummies from `public/concept-2/`; swap for real clients' photos,
+  with their permission).
+- **No big periwinkle block behind the portraits:** each flavor tries another backdrop.
+- **Page load:** the square starts alone in the middle of a blank screen and ends as the headline's full stop
+  (`loader.js`).
+
+| Flavor | Hero | Page load (`?l=`) | Portraits |
+| --- | --- | --- | --- |
+| 2a · Calm | Concept 2's hero, decluttered; CLC as a stamp on the photos | `drop`: pops up, page fades in, hops onto "drama" | warm neutral |
+| 2b · Your person | Hannah is the picture, her promise on a card; CLC under the buttons | `curtain`: grows to fill the screen, shrinks onto "drama" | ink |
+| 2c · Trust first | One centred column, a big CLC badge in the kicker's place, a straight photo strip | `count`: counts to 100 in four quarter turns, then hops | fine line |
+| 2d · Real life | One full-bleed moving photo with the headline on it; CLC and Hannah in a bar | `wordmark`: the wordmark slides out of the square, it goes to the logo, then falls | light periwinkle wash |
+
+Mix and match: `?v=` picks the hero and portraits, `?l=` overrides the page load, for example
+`/phase-2/concept-2/?v=c&l=curtain`. The 2d photo is 520px wide; it needs a high-res photo before it is shown large.
 
 ## Feedback round 2 (concept 2 leading, concept 4 calmer)
 

@@ -1,0 +1,148 @@
+import { initTheme } from '../../js/theme.js';
+import { initMotion } from '../../js/motion.js';
+import { clamp, prefersReducedMotion } from '../../js/palette.js';
+import { initCollage } from './collage.js';
+import { prepareHero } from './hero-intro.js';
+import { createIntro } from './loader.js';
+
+/**
+ * Phase 2 · Concept 2: One square, one journey, in four flavors.
+ * The flavor (?v=a|b|c|d) swaps the hero and the team portraits; the page load (?l=) is one of four ways
+ * for the square to arrive (loader.js). From the headline on, it is concept 2: a single fixed square (the
+ * actor) travels between anchor elements as you scroll:
+ * headline full stop → checkbox → reading marker → seal → key → lit window → logo dot.
+ * The step cards pin in place and swap one by one as you scroll. Anchors are measured live every
+ * frame, so the actor stays glued to them while they move.
+ */
+
+// Keep only the chosen flavor's hero (they share the headline's id), and mark it in the switcher.
+const root = document.documentElement;
+const flavor = root.dataset.v;
+document.querySelectorAll('.c2-hero[data-v]').forEach((h) => { if (h.dataset.v !== flavor) h.remove(); });
+document.querySelectorAll('.concepts a').forEach((a) => {
+  if (a.getAttribute('href') === `/phase-2/concept-2/?v=${flavor}`) a.setAttribute('aria-current', 'page');
+});
+
+const reduce = prefersReducedMotion();
+initTheme(document.getElementById('theme'));
+initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
+const prepared = prepareHero({ reduce });
+initCollage({ reduce });
+
+const live = root.classList.contains('jl') && !reduce;
+if (live) initJourney();
+
+function initJourney() {
+  const actor = document.getElementById('actor');
+  const navdot = document.getElementById('navdot');
+  actor.classList.add('intro'); // above the load screen until it lands
+  const intro = createIntro({
+    mode: root.dataset.l, prepared, navdot,
+    onDone: () => { actor.classList.remove('intro'); actor.style.background = ''; },
+  });
+  const journey = document.getElementById('journey');
+  const track = document.getElementById('track'); // the tall box the step cards pin inside
+  const steps = [...journey.querySelectorAll('.step')];
+  const arts = [...journey.querySelectorAll('.art')];
+  const count = document.getElementById('jcount');
+  const bar = document.getElementById('jbar');
+  const N = steps.length;
+  const pad = (n) => String(n).padStart(2, '0');
+
+  // Line drawings: normalise every stroke so it can draw itself with one dash.
+  journey.querySelectorAll('.ink, .faint').forEach((el) => el.setAttribute('pathLength', '1'));
+
+  // Keyframes: an anchor and where it sits on the journey, in steps (0.5 = middle of step 1).
+  const q = (k) => journey.querySelector(`[data-k="${k}"]`);
+  const KEYS = [
+    { el: document.getElementById('k0'), u: null, spin: 0 }, // hero headline, at scroll 0
+    { el: q('instruct'), u: 0.45, spin: 1 },
+    { el: q('read1'), u: 1.22, spin: 1 },
+    { el: q('read2'), u: 1.5, spin: 0 },
+    { el: q('read3'), u: 1.78, spin: 0 },
+    { el: q('seal'), u: 2.5, spin: 1 },
+    { el: q('key'), u: 3.5, spin: 1 },
+    { el: q('window'), u: 4.5, spin: 1 },
+    { el: q('logo'), u: 5.5, spin: 1 },
+  ];
+  const DWELL = 0.14; // fraction of a step the square rests on each anchor
+
+  let J = 0;
+  let seg = 1;
+  const measure = () => {
+    J = track.getBoundingClientRect().top + scrollY;
+    seg = (track.offsetHeight - innerHeight) / N;
+  };
+  measure();
+  addEventListener('resize', measure);
+  addEventListener('load', measure);
+  new ResizeObserver(measure).observe(document.body);
+
+  const S = (k) => (KEYS[k].u === null ? 0 : J + KEYS[k].u * seg);
+  const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
+  const rectOf = (el) => el.getBoundingClientRect();
+
+  // "Reached" side effects: ticks, read lines, the lit window.
+  const ticks = [...journey.querySelectorAll('.tick')];
+  const readLines = [...journey.querySelectorAll('.rl')];
+  const homeArt = journey.querySelector('[data-art="home"]');
+
+  let active = -1;
+  const frame = () => {
+    const y = scrollY;
+    const pj = (y - J) / seg; // journey progress in steps
+
+    // Which step is on stage.
+    const ch = clamp(Math.floor(pj), 0, N - 1);
+    if (ch !== active) {
+      active = ch;
+      steps.forEach((s, i) => s.classList.toggle('on', i === ch));
+      arts.forEach((a, i) => a.classList.toggle('on', i === ch));
+      count.textContent = `${pad(ch + 1)} / ${pad(N)}`;
+    }
+    bar.style.transform = `scaleX(${clamp(pj / N, 0, 1)})`;
+
+    // Side effects tied to where the square is.
+    ticks.forEach((t) => t.classList.toggle('lit', pj >= Number(t.dataset.tick)));
+    readLines.forEach((l) => {
+      const k = KEYS.findIndex((key) => key.el?.dataset.k === l.dataset.read);
+      l.classList.toggle('lit', y >= S(k) + seg * 0.05);
+    });
+    homeArt.classList.toggle('hit-window', y >= S(7) - seg * 0.08);
+
+    // Where is the square: between keyframe k and k+1.
+    let k = 0;
+    while (k < KEYS.length - 1 && y >= S(k + 1)) k++;
+    const a = rectOf(KEYS[k].el);
+    let x;
+    let top;
+    let size;
+    let rot = 0;
+    if (k === 0 && !intro.done && y > S(1) * 0.5) intro.finish(); // scrolled away mid-intro
+    if (k === 0 && !intro.done) {
+      // On load: from the middle of the screen to the full stop (loader.js).
+      const r = intro.place(performance.now(), a);
+      ({ x, y: top, size, rot } = r);
+      actor.style.background = r.ink ? `color-mix(in srgb, var(--fg) ${Math.round(r.ink * 100)}%, var(--accent))` : '';
+    } else if (k === KEYS.length - 1) {
+      ({ left: x, top } = a);
+      size = a.width;
+    } else {
+      const from = S(k);
+      const to = S(k + 1);
+      const d = Math.min(DWELL * seg, (to - from) * 0.3);
+      const t = ease(clamp((y - from - d) / (to - from - 2 * d), 0, 1));
+      const b = rectOf(KEYS[k + 1].el);
+      x = a.left + (b.left - a.left) * t;
+      top = a.top + (b.top - a.top) * t - Math.sin(Math.PI * t) * Math.min(80, Math.abs(b.left - a.left) * 0.25);
+      size = a.width + (b.width - a.width) * t;
+      rot = KEYS[k + 1].spin * 90 * t;
+    }
+    actor.style.width = `${size}px`;
+    actor.style.height = `${size}px`;
+    actor.style.transform = `translate(${x}px, ${top}px) rotate(${rot}deg)`;
+    actor.classList.add('placed');
+    requestAnimationFrame(frame);
+  };
+  requestAnimationFrame(frame);
+}
