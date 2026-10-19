@@ -2,6 +2,7 @@ import { initTheme } from '../../js/theme.js';
 import { initMotion } from '../../js/motion.js';
 import { clamp, prefersReducedMotion } from '../../js/palette.js';
 import { initCollage } from './collage.js';
+import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
 import { createIntro } from './loader.js';
 
@@ -15,13 +16,11 @@ import { createIntro } from './loader.js';
  * frame, so the actor stays glued to them while they move.
  */
 
-// Keep only the chosen flavor's hero (they share the headline's id), and mark it in the switcher.
+// Keep only the chosen flavor's hero (they share the headline's id); links keep the flavor (flavor.js).
 const root = document.documentElement;
 const flavor = root.dataset.v;
 document.querySelectorAll('.c2-hero[data-v]').forEach((h) => { if (h.dataset.v !== flavor) h.remove(); });
-document.querySelectorAll('.concepts a').forEach((a) => {
-  if (a.getAttribute('href') === `/phase-2/concept-2/?v=${flavor}`) a.setAttribute('aria-current', 'page');
-});
+keepFlavor();
 
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));

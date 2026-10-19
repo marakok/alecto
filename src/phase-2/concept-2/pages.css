@@ -1,0 +1,182 @@
+/* Phase 2 · Concept 2, the pages around the homepage: company (About Alecto) and careers.
+   On top of journey.css and phase2.css: same tokens, rounded-dot squares, logo, chrome and portrait
+   backdrops (html[data-v]). The one square lands as the headline's full stop and stays (page.js). */
+
+html.landed #k0 { visibility: visible; }
+html.landed .actor { display: none; }
+.c2 .links a[aria-current="page"] { color: var(--fg); background-size: 100% 1px; }
+
+/* ---------- page heroes ---------- */
+.page-hero { padding-block: 80px 96px; }
+.page-hero .hero-copy { gap: 26px; }
+.page-hero h1 { max-width: 7.4em; font-size: clamp(50px, 6.6vw, 96px); }
+.crumb { margin: 0; display: inline-flex; align-items: center; gap: 10px; color: var(--muted) !important; }
+.crumb a { color: inherit; text-decoration: none; }
+.crumb a:hover { color: var(--fg); }
+.crumb i { width: 4px; height: 4px; background: currentColor; border-radius: var(--dot-r); }
+html.jl .page-hero .crumb { --t: 0ms; }
+
+/* ---------- company: hero with office photos ---------- */
+.about-hero { grid-template-columns: minmax(0, 620px) minmax(0, 520px); }
+.about-photos { position: relative; margin: 0; width: 100%; aspect-ratio: 520 / 560; }
+.about-photos img { position: absolute; display: block; object-fit: cover; border-radius: var(--ui-r); }
+.about-photos .p1 { left: 0; top: 0; width: 74%; aspect-ratio: 1; }
+.about-photos .p2 { right: 0; bottom: 0; width: 52%; aspect-ratio: 1; box-shadow: 0 0 0 8px var(--bg); }
+.about-photos .clc.stamp { position: absolute; left: -24px; bottom: 6%; z-index: 2; }
+html.jl .about-hero .about-photos { --t: 450ms; }
+
+/* ---------- numbers band ---------- */
+.numbers { background: var(--tile-empty); padding-block: 56px; }
+.numbers dl { margin: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 32px; }
+.numbers dl > div { display: grid; gap: 6px; padding-left: 20px; border-left: 1px solid var(--line); }
+.numbers dt { order: 2; font-size: 15px; line-height: 1.4; color: var(--muted); }
+.numbers dd { order: 1; margin: 0; font-weight: 800; font-size: clamp(30px, 3vw, 42px); line-height: 1.05; letter-spacing: -.03em; }
+
+/* ---------- company: story ---------- */
+.story { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.story-head { position: sticky; top: 120px; display: grid; gap: 18px; }
+.story-head h2 { margin: 0; }
+.story-body { display: grid; gap: 22px; }
+.story-body p { margin: 0; font-size: 19px; line-height: 1.6; color: var(--muted); max-width: 640px; }
+.story-body p:first-child { font-size: 24px; line-height: 1.45; letter-spacing: -.01em; color: var(--fg); }
+.founder {
+  margin: 18px 0 0; display: flex; gap: 22px; align-items: center; padding: 22px;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--ui-r);
+}
+.founder .mate-tile { flex: none; width: 112px; height: 112px; }
+.founder .mate-tile img { top: 14px; width: 104px; height: 104px; margin-left: -52px; }
+.founder .mate-tile::after { left: 8px; top: 8px; width: 7px; height: 7px; }
+.founder blockquote { margin: 0 0 10px; font-size: 19px; line-height: 1.45; font-weight: 500; letter-spacing: -.01em; }
+.founder figcaption { display: grid; gap: 4px; }
+.founder b { font-weight: 600; }
+.founder small { color: var(--accent-strong); }
+
+/* ---------- company: values ---------- */
+.values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
+.value {
+  display: grid; gap: 14px; align-content: start; padding: 36px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--ui-r);
+}
+.value header { display: flex; align-items: center; gap: 12px; }
+.value header i { width: 12px; height: 12px; background: var(--accent); border-radius: var(--dot-r); }
+.value h3 { margin: 0; font-weight: 700; font-size: clamp(24px, 2.2vw, 30px); line-height: 1.15; letter-spacing: -.02em; }
+.value p { margin: 0; font-size: 17px; line-height: 1.55; color: var(--muted); max-width: 460px; }
+
+/* ---------- company: regulated ---------- */
+.regulated {
+  display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: start;
+  padding: clamp(32px, 5vw, 64px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--ui-r);
+}
+.regulated-head { display: grid; gap: 22px; justify-items: start; }
+.regulated-head h2 { margin: 0; }
+.regulated ul { margin: 0; padding: 0; list-style: none; display: grid; gap: 0; }
+.regulated li { display: grid; gap: 6px; padding-block: 22px; border-top: 1px solid var(--line); }
+.regulated li:first-child { padding-top: 0; border-top: 0; }
+.regulated li b { font-weight: 600; font-size: 19px; letter-spacing: -.01em; }
+.regulated li span { font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+/* ---------- careers: hero with the open roles ---------- */
+.jobs-hero { grid-template-columns: minmax(0, 620px) minmax(0, 470px); }
+.roles-card {
+  width: 100%; justify-self: end; display: grid; background: var(--surface); border: 1px solid var(--line);
+  border-radius: var(--ui-r); box-shadow: 0 30px 60px -36px rgba(20, 20, 40, .4); overflow: hidden;
+}
+.roles-card header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); }
+.roles-card header b { font-weight: 600; font-size: 17px; }
+.roles-card header .count {
+  display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 8px; background: var(--accent); color: var(--accent-fg);
+  font: 600 14px var(--display); border-radius: var(--ui-r);
+}
+.roles-card ul { margin: 0; padding: 0; list-style: none; }
+.roles-card li a {
+  display: grid; grid-template-columns: 1fr auto; gap: 4px 16px; padding: 18px 24px; color: inherit; text-decoration: none;
+  border-bottom: 1px solid var(--line); transition: background-color .2s;
+}
+.roles-card li a:hover { background: var(--tile-empty); }
+.roles-card li b { font-weight: 600; font-size: 16px; }
+.roles-card li span.mono { grid-column: 1; font-size: 11px; color: var(--muted); }
+.roles-card li .go { grid-row: 1 / span 2; grid-column: 2; align-self: center; color: var(--muted); transition: transform .25s var(--ease-out), color .2s; }
+.roles-card li a:hover .go { transform: translateX(3px); color: var(--fg); }
+.roles-card .from { display: flex; gap: 14px; align-items: center; padding: 18px 24px; background: var(--soft); }
+.roles-card .from .face-tile { width: 44px; }
+.roles-card .from p { margin: 0; font-size: 15px; line-height: 1.45; }
+.roles-card .from b { display: block; margin-top: 2px; font: 500 11px var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--accent-strong); }
+html.jl .jobs-hero .roles-card { --t: 500ms; }
+
+/* ---------- careers: why ---------- */
+.perks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 40px 48px; }
+.perk { display: grid; gap: 10px; align-content: start; padding-top: 22px; border-top: 1px solid var(--line); }
+.perk i { width: 12px; height: 12px; background: var(--accent); border-radius: var(--dot-r); }
+.perk h3 { margin: 6px 0 0; font-weight: 600; font-size: 21px; line-height: 1.25; letter-spacing: -.01em; }
+.perk p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--muted); }
+
+/* ---------- careers: a day ---------- */
+.day-band { background: var(--surface); }
+.day { display: grid; grid-template-columns: minmax(0, 4fr) minmax(0, 7fr); gap: clamp(32px, 6vw, 96px); align-items: start; }
+.day-who { position: sticky; top: 120px; display: grid; gap: 22px; justify-items: start; }
+.day-who h2 { margin: 0; }
+.day-who .mate { width: min(100%, 300px); }
+.day ol { margin: 0; padding: 0; list-style: none; position: relative; }
+.day ol::before { content: ""; position: absolute; left: 5px; top: 8px; bottom: 8px; width: 1px; background: var(--line); }
+.day li { position: relative; display: grid; grid-template-columns: 76px 1fr; gap: 4px 20px; padding: 0 0 34px 36px; }
+.day li::before {
+  content: ""; position: absolute; left: 0; top: 5px; width: 11px; height: 11px; background: var(--bg);
+  border: 1.5px solid var(--fg); border-radius: var(--dot-r);
+}
+.day li.you::before { background: var(--accent); border-color: var(--accent); }
+.day time { font: 500 13px/1.6 var(--mono); letter-spacing: .08em; color: var(--muted); }
+.day li b { font-weight: 600; font-size: 19px; line-height: 1.3; letter-spacing: -.01em; }
+.day li p { grid-column: 2; margin: 0; font-size: 16px; line-height: 1.55; color: var(--muted); }
+
+/* ---------- careers: open roles ---------- */
+.roles { border-top: 1px solid var(--fg); }
+.role {
+  display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr) auto; gap: 8px 32px; align-items: center;
+  padding: 28px 4px; border-bottom: 1px solid var(--line); color: inherit; text-decoration: none; transition: background-color .2s, padding .3s var(--ease-out);
+}
+.role:hover { background: var(--tile-empty); padding-inline: 16px; }
+.role b { font-weight: 700; font-size: clamp(20px, 1.9vw, 26px); letter-spacing: -.02em; }
+.role .meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
+.role .go { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--ui-r); transition: background-color .2s, color .2s, border-color .2s; }
+.role:hover .go { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
+.role.open b { color: var(--muted); font-weight: 600; }
+
+/* ---------- careers: how we hire ---------- */
+.hire { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: hire; }
+.hire li {
+  list-style: none; display: grid; gap: 12px; align-content: start; padding: 28px; background: var(--surface);
+  border: 1px solid var(--line); border-radius: var(--ui-r);
+}
+.hire li::before { counter-increment: hire; content: "0" counter(hire); font: 500 12px var(--mono); letter-spacing: .12em; color: var(--accent-strong); }
+.hire b { font-weight: 600; font-size: 20px; letter-spacing: -.01em; }
+.hire p { margin: 0; font-size: 16px; line-height: 1.5; color: var(--muted); }
+.hire-note { margin: 28px 0 0; font-size: 16px; color: var(--muted); }
+.hire-note b { color: var(--fg); font-weight: 600; }
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 1100px) {
+  .about-hero, .jobs-hero { grid-template-columns: minmax(0, 1fr); }
+  .about-photos { max-width: 520px; justify-self: center; }
+  .about-photos .clc.stamp { left: 0; }
+  .roles-card { max-width: 560px; justify-self: start; }
+  .hire { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .page-hero { padding-block: 48px 64px; }
+  .numbers dl { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 28px; }
+  .story, .regulated, .day { grid-template-columns: minmax(0, 1fr); }
+  .story-head, .day-who { position: static; }
+  .values, .perks { grid-template-columns: minmax(0, 1fr); }
+  .value { padding: 28px; }
+  .role { grid-template-columns: minmax(0, 1fr) auto; }
+  .role .meta { grid-column: 1; }
+  .role .go { grid-row: 1 / span 2; grid-column: 2; }
+}
+@media (max-width: 560px) {
+  .story-body p:first-child { font-size: 20px; }
+  .story-body p { font-size: 17px; }
+  .founder { flex-direction: column; align-items: flex-start; }
+  .hire { grid-template-columns: minmax(0, 1fr); }
+  .day li { grid-template-columns: minmax(0, 1fr); padding-left: 30px; }
+  .day li p { grid-column: 1; }
+}

@@ -9,6 +9,8 @@ Marketing site concepts for Alecto Conveyancing.
 | 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
 | 4 · Your person | `/concept-4/` | Concept 3's build-up with the human side up front: your conveyancer introduces herself, messages you at every stage, and the team gets a face |
 | Phase 2 · 2a–2d | `/phase-2/concept-2/?v=a` … `?v=d` | Concept 2 in four flavors: hero, page load and portraits vary, the one square stays |
+| Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2d |
+| Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2d |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
@@ -57,6 +59,25 @@ A second layer of concepts, shown as its own group ("Phase 2") on the concept sw
 
 Mix and match: `?v=` picks the hero and portraits, `?l=` overrides the page load, for example
 `/phase-2/concept-2/?v=c&l=curtain`. The 2d photo is 520px wide; it needs a high-res photo before it is shown large.
+
+### Company and careers pages
+
+`phase-2/concept-2/company/index.html` and `phase-2/concept-2/careers/index.html`, styled by `src/phase-2/concept-2/pages.css`
+on top of `journey.css` and `phase2.css`, with `page.js` as the script. They are prototypes for the client review, to
+show the homepage's family on other kinds of page. Every name, number, perk, role and quote on them is dummy (marked in
+the markup).
+
+- **Same family:** the same chrome, logo, tokens, rounded-dot squares and calmer news bar. Portraits follow the flavor's
+  backdrop.
+- **The one square:** the same page load as the homepage. The square lands as the headline's full stop and stays there,
+  since there is no journey below it.
+- **Company (About Alecto):** office photos with the CLC stamp, a numbers band, the founding story with William's quote,
+  four promises, the team, a "Licensed, insured, accountable" block and a hiring CTA.
+- **Careers:** open roles in a card next to the headline, why Alecto, a day with Tom on a timeline (the squares are
+  the markers), the full roles list, how we hire, and a coffee CTA.
+- **One flavor per review:** links between the phase 2 pages carry `?v=` along (`flavor.js`). On these two pages the
+  switcher's 2a–2d swap the flavor without leaving the page. They are linked from the homepage nav (Company, Careers;
+  Introducers and Lender panel now sit only in the footer) and from the footer's Company column.
 
 ## Feedback round 2 (concept 2 leading, concept 4 calmer)
 
