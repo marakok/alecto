@@ -5,6 +5,7 @@ import { initCollage } from './collage.js';
 import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
 import { createIntro } from './loader.js';
+import { initRadius } from './radius.js';
 
 /**
  * Phase 2 · Concept 2: One square, one journey, in four flavors.
@@ -21,6 +22,7 @@ const root = document.documentElement;
 const flavor = root.dataset.v;
 document.querySelectorAll('.c2-hero[data-v]').forEach((h) => { if (h.dataset.v !== flavor) h.remove(); });
 keepFlavor();
+initRadius();
 
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));

@@ -19,7 +19,7 @@ html.jl .page-hero .crumb { --t: 0ms; }
 /* ---------- company: hero with office photos ---------- */
 .about-hero { grid-template-columns: minmax(0, 620px) minmax(0, 520px); }
 .about-photos { position: relative; margin: 0; width: 100%; aspect-ratio: 520 / 560; }
-.about-photos img { position: absolute; display: block; object-fit: cover; border-radius: var(--ui-r); }
+.about-photos img { position: absolute; display: block; object-fit: cover; border-radius: var(--r6, var(--ui-r)); }
 .about-photos .p1 { left: 0; top: 0; width: 74%; aspect-ratio: 1; }
 .about-photos .p2 { right: 0; bottom: 0; width: 52%; aspect-ratio: 1; box-shadow: 0 0 0 8px var(--bg); }
 .about-photos .clc.stamp { position: absolute; left: -24px; bottom: 6%; z-index: 2; }
@@ -41,7 +41,7 @@ html.jl .about-hero .about-photos { --t: 450ms; }
 .story-body p:first-child { font-size: 24px; line-height: 1.45; letter-spacing: -.01em; color: var(--fg); }
 .founder {
   margin: 18px 0 0; display: flex; gap: 22px; align-items: center; padding: 22px;
-  background: var(--surface); border: 1px solid var(--line); border-radius: var(--ui-r);
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r6, var(--ui-r));
 }
 .founder .mate-tile { flex: none; width: 112px; height: 112px; }
 .founder .mate-tile img { top: 14px; width: 104px; height: 104px; margin-left: -52px; }
@@ -55,7 +55,7 @@ html.jl .about-hero .about-photos { --t: 450ms; }
 .values { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px; }
 .value {
   display: grid; gap: 14px; align-content: start; padding: 36px; background: var(--surface);
-  border: 1px solid var(--line); border-radius: var(--ui-r);
+  border: 1px solid var(--line); border-radius: var(--r6, var(--ui-r));
 }
 .value header { display: flex; align-items: center; gap: 12px; }
 .value header i { width: 12px; height: 12px; background: var(--accent); border-radius: var(--dot-r); }
@@ -65,7 +65,7 @@ html.jl .about-hero .about-photos { --t: 450ms; }
 /* ---------- company: regulated ---------- */
 .regulated {
   display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: clamp(32px, 5vw, 80px); align-items: start;
-  padding: clamp(32px, 5vw, 64px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--ui-r);
+  padding: clamp(32px, 5vw, 64px); background: var(--surface); border: 1px solid var(--line); border-radius: var(--r6, var(--ui-r));
 }
 .regulated-head { display: grid; gap: 22px; justify-items: start; }
 .regulated-head h2 { margin: 0; }
@@ -79,13 +79,13 @@ html.jl .about-hero .about-photos { --t: 450ms; }
 .jobs-hero { grid-template-columns: minmax(0, 620px) minmax(0, 470px); }
 .roles-card {
   width: 100%; justify-self: end; display: grid; background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--ui-r); box-shadow: 0 30px 60px -36px rgba(20, 20, 40, .4); overflow: hidden;
+  border-radius: var(--r6, var(--ui-r)); box-shadow: 0 30px 60px -36px rgba(20, 20, 40, .4); overflow: hidden;
 }
 .roles-card header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; border-bottom: 1px solid var(--line); }
 .roles-card header b { font-weight: 600; font-size: 17px; }
 .roles-card header .count {
   display: grid; place-items: center; min-width: 30px; height: 30px; padding: 0 8px; background: var(--accent); color: var(--accent-fg);
-  font: 600 14px var(--display); border-radius: var(--ui-r);
+  font: 600 14px var(--display); border-radius: var(--r6, var(--ui-r));
 }
 .roles-card ul { margin: 0; padding: 0; list-style: none; }
 .roles-card li a {
@@ -137,7 +137,7 @@ html.jl .jobs-hero .roles-card { --t: 500ms; }
 .role:hover { background: var(--tile-empty); padding-inline: 16px; }
 .role b { font-weight: 700; font-size: clamp(20px, 1.9vw, 26px); letter-spacing: -.02em; }
 .role .meta { display: flex; flex-wrap: wrap; gap: 6px 16px; font: 500 12px var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--muted); }
-.role .go { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--ui-r); transition: background-color .2s, color .2s, border-color .2s; }
+.role .go { display: grid; place-items: center; width: 44px; height: 44px; border: 1px solid var(--line); border-radius: var(--r6, var(--ui-r)); transition: background-color .2s, color .2s, border-color .2s; }
 .role:hover .go { background: var(--accent); border-color: var(--accent); color: var(--accent-fg); }
 .role.open b { color: var(--muted); font-weight: 600; }
 
@@ -145,7 +145,7 @@ html.jl .jobs-hero .roles-card { --t: 500ms; }
 .hire { margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; counter-reset: hire; }
 .hire li {
   list-style: none; display: grid; gap: 12px; align-content: start; padding: 28px; background: var(--surface);
-  border: 1px solid var(--line); border-radius: var(--ui-r);
+  border: 1px solid var(--line); border-radius: var(--r6, var(--ui-r));
 }
 .hire li::before { counter-increment: hire; content: "0" counter(hire); font: 500 12px var(--mono); letter-spacing: .12em; color: var(--accent-strong); }
 .hire b { font-weight: 600; font-size: 20px; letter-spacing: -.01em; }
