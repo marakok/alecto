@@ -1,12 +1,13 @@
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
-// One page per concept: "/" and "/concept-2/" to "/concept-4/", plus phase 2 under "/phase-2/".
+// "/" redirects to phase 2 · concept 2a (leading). Concepts 1 to 4 sit at "/concept-1/" to "/concept-4/", hidden from the switcher.
 export default defineConfig({
   build: {
     rollupOptions: {
       input: {
         main: resolve(import.meta.dirname, 'index.html'),
+        concept1: resolve(import.meta.dirname, 'concept-1/index.html'),
         concept2: resolve(import.meta.dirname, 'concept-2/index.html'),
         concept3: resolve(import.meta.dirname, 'concept-3/index.html'),
         concept4: resolve(import.meta.dirname, 'concept-4/index.html'),
