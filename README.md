@@ -2,9 +2,12 @@
 
 Marketing site concepts for Alecto Conveyancing.
 
+**Phase 2 · concept 2a leads.** `/` opens it (`index.html` redirects to `/phase-2/concept-2/?v=a`), and the concept
+switcher only shows phase 2 (2a–2d). Concepts 1 to 4 are hidden from the switcher but still work at their URLs.
+
 | Concept | URL | Idea |
 | --- | --- | --- |
-| 1 · Live | `/` | Many squares: a live tile skyline that builds per stage, intro loader, scroll motion |
+| 1 · Live | `/concept-1/` | Many squares: a live tile skyline that builds per stage, intro loader, scroll motion |
 | 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
 | 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
 | 4 · Your person | `/concept-4/` | Concept 3's build-up with the human side up front: your conveyancer introduces herself, messages you at every stage, and the team gets a face |
@@ -140,7 +143,8 @@ bun run preview   # serve the build locally
 ## Structure
 
 ```
-index.html              all page markup
+index.html              redirects "/" to phase 2 · concept 2a
+concept-1/index.html    concept 1 page markup
 public/favicon.svg
 src/styles/tokens.css   brand colour tokens, light + dark (mirrors the Figma variables "Alecto / Brand")
 src/styles/main.css     layout, components and sections
@@ -183,7 +187,7 @@ Hidden start states only apply when JavaScript adds `html.motion`, so without JS
 ## Intro loader
 
 The loader plays once per browser session (`sessionStorage` key `alecto-intro-seen`).
-Add `?intro` to the URL to force it, for example `http://localhost:5173/?intro`.
+Add `?intro` to the URL to force it, for example `http://localhost:5173/concept-1/?intro`.
 With reduced motion enabled the loader and build-up are skipped and the finished skyline is shown.
 
 ## Placeholder content to replace before launch
