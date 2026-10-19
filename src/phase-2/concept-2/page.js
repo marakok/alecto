@@ -4,6 +4,7 @@ import { prefersReducedMotion } from '../../js/palette.js';
 import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
 import { createIntro } from './loader.js';
+import { initRadius } from './radius.js';
 
 /**
  * Phase 2 · Concept 2, the pages around the homepage (company, careers).
@@ -13,6 +14,7 @@ import { createIntro } from './loader.js';
 
 const root = document.documentElement;
 keepFlavor();
+initRadius();
 
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));

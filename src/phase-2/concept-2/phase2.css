@@ -21,12 +21,17 @@
   --btn-bg:#8290E8; --btn-fg:#141416;
 }
 
-/* ---------- rounded corners, from the logo dot ---------- */
+/* ---------- rounded corners, from the logo dot ----------
+   The dot's radius is 6% of its side (brand kit: rx 9 on 150). Squares get exactly that in CSS
+   (border-radius: 6%). Every other box gets 6% of its shorter side too: radius.js measures it into --r6,
+   because a percentage on a non-square box would make an ellipse. --ui-r is the fallback without JS.
+   --r6 doesn't inherit, so a box never picks up its parent's radius. */
+@property --r6 { syntax: '*'; inherits: false; }
 .c2 .logo i, .c2 .period, .actor, .c2 .rate i, .proof-row i, .yourcall i, .c2 .online i, .rname i,
 .c2 .eyebrow i, .wordmark .anchor, .c2 .boxes.mini i, .mate-tile::after { border-radius: var(--dot-r); }
 .c2 .btn, .c2 .icon-btn, .c2 .step, .c2 .art, .c2 .review, .c2-cta, .collage img, .mate-tile, .face-tile,
 .c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .strip img, .strip-face, .strip-me figcaption,
-.photo-panel, .c2 .cta-art img { border-radius: var(--ui-r); }
+.photo-panel, .c2 .cta-art img, .clc.badge { border-radius: var(--r6, var(--ui-r)); }
 .c2 .step { overflow: hidden; }
 .c2 .btn.accent { color: var(--accent-fg); }
 
