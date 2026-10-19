@@ -1,0 +1,362 @@
+/* Concept 2: One square, human touched (Figma "Alecto web", node 101:6, Light v11).
+   One accent square (the "actor") travels from the headline full stop through six step cards and
+   ends as the logo dot. html.jl (journey-live) is set in <head> when motion is allowed. Without it,
+   each drawing shows its own static square. */
+
+/* ---------- tokens (Figma "color/*") ---------- */
+.c2 {
+  --bg:#FBFAF7; --fg:#141416; --muted:#5C5C64; --line:#E2DFD6; --surface:#FFFFFF;
+  --accent:#8290E8; --accent-strong:#2939A3; --soft:#ECEEFC; --tile-empty:#F3F1EA; --art-bg:#FAF9F7;
+  --ok:#2F9E6B; --live:#2F9E6B; --btn-bg:#2939A3; --btn-fg:#FBFAF7;
+  --inv-bg:#141416; --inv-fg:#FBFAF7; --inv-muted:#A7A7B0; --inv-line:#2C2C33; --inv-surface:#1C1C20;
+  --mono:"JetBrains Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .c2 {
+  --bg:#141416; --fg:#FBFAF7; --muted:#A7A7B0; --line:#2C2C33; --surface:#1C1C20;
+  --accent:#8290E8; --accent-strong:#A9B2F2; --soft:#22253F; --tile-empty:#212126; --art-bg:#18181B;
+  --ok:#4CC08A; --live:#4CC08A; --btn-bg:#8290E8; --btn-fg:#141416;
+  --inv-bg:#0C0C0E; --inv-fg:#FBFAF7; --inv-muted:#A7A7B0; --inv-line:#2C2C33; --inv-surface:#1C1C20;
+} }
+:root[data-theme="dark"] .c2 {
+  --bg:#141416; --fg:#FBFAF7; --muted:#A7A7B0; --line:#2C2C33; --surface:#1C1C20;
+  --accent:#8290E8; --accent-strong:#A9B2F2; --soft:#22253F; --tile-empty:#212126; --art-bg:#18181B;
+  --ok:#4CC08A; --live:#4CC08A; --btn-bg:#8290E8; --btn-fg:#141416;
+  --inv-bg:#0C0C0E; --inv-fg:#FBFAF7; --inv-muted:#A7A7B0; --inv-line:#2C2C33; --inv-surface:#1C1C20;
+}
+
+/* ---------- type ---------- */
+.c2 .wrap { max-width: 1440px; padding-inline: clamp(16px, 8.33vw, 120px); }
+.c2 .mono, .c2 .eyebrow, .c2 .kick { font: 500 12px/1.2 var(--mono); letter-spacing: .12em; text-transform: uppercase; color: var(--fg); }
+.c2 h2 { font-weight: 800; font-size: clamp(38px, 3.9vw, 56px); line-height: 1.1; letter-spacing: -.03em; }
+.c2 h2 .period { width: 8px; height: 8px; margin-left: 3px; }
+.c2 .eyebrow { margin: 0 0 18px; gap: 8px; }
+.c2 .eyebrow i { width: 8px; height: 8px; }
+.c2 .lede, .c2 .sub { font-size: 18px; line-height: 1.5; color: var(--muted); }
+.c2 .sec { padding-block: clamp(72px, 9vw, 128px); gap: 48px; }
+.c2 .sec-head { align-items: flex-end; }
+.c2 .sec-head .lede { max-width: 440px; }
+
+/* ---------- nav and buttons ---------- */
+.c2 .site-head { border-bottom-color: var(--line); }
+.c2 nav { padding-block: 24px; }
+.c2 nav .logo { font-size: 30px; }
+.c2 .links { gap: 30px; margin-right: auto; margin-left: 64px; }
+.c2 .btn { font-size: 16px; letter-spacing: -.01em; padding: 13px 22px; }
+.c2 .btn.ghost { background: var(--surface); }
+.c2 .btn.accent { background: var(--accent); color: #141416; }
+.c2 .announce { font-size: 15px; padding-block: 12px; background: #8290E8; color: #141416; }
+.c2 .announce-tag { font: 500 12px/1.2 var(--mono); letter-spacing: .12em; color: #141416; border-color: rgba(20, 20, 22, .45); }
+.c2 .announce-cta { text-decoration-color: currentColor; }
+.c2 .announce .boxes.mini i:nth-child(2) { background: #FBFAF7; } /* the accent square would vanish on the accent bar */
+.c2 .announce:focus-visible { outline-color: #141416; }
+
+/* ---------- hero ---------- */
+.c2-hero { display: grid; grid-template-columns: minmax(0, 600px) minmax(0, 560px); justify-content: space-between; align-items: center; gap: 48px; padding-block: 88px 96px; }
+.hero-copy { display: grid; gap: 28px; justify-items: start; }
+.kick { margin: 0; }
+.c2-hero h1 { margin: 0; font-weight: 800; font-size: clamp(54px, 7.2vw, 104px); line-height: 1; letter-spacing: -.045em; max-width: 6.2em; }
+.c2-hero h1 .period { width: 15px; height: 15px; margin-left: 4px; }
+.c2-hero .sub { max-width: 500px; }
+
+.face-tile { position: relative; flex: none; width: 56px; aspect-ratio: 1; overflow: hidden; background: var(--tile-empty); }
+.face-tile::before { content: ""; position: absolute; left: 17.9%; top: 35.7%; width: 64.3%; height: 64.3%; background: var(--accent); }
+.face-tile img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: contain; }
+
+.hello { position: relative; display: flex; gap: 14px; align-items: center; width: 100%; padding-top: 20px; }
+.hello::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 1px; background: var(--line); transform-origin: 0 50%; }
+.hello > div { display: grid; gap: 4px; }
+.hello p { margin: 0; }
+.hello-quote { font-size: 16px; line-height: 1.45; max-width: 400px; }
+.online { display: inline-flex; align-items: center; gap: 6px; color: var(--ok) !important; }
+.online i { width: 7px; height: 7px; background: var(--live); animation: beat 2s infinite; }
+
+/* Hero intro (html.jl = motion allowed). Everything waits, paused, until JS adds html.hero-go (the head
+   script also adds it after 3s as a safety net). Then: the kicker types in, the headline rises word by
+   word from a mask, the square drops in as the full stop, and the rest follows in order. */
+html.jl:not(.hero-go) .c2-hero h1:not([data-split]) { opacity: 0; }
+html.jl .c2-hero .hx { animation: hx-up .9s var(--ease-out) both paused; animation-delay: var(--t, 0ms); }
+html.jl.hero-go .c2-hero .hx,
+html.jl.hero-go .c2-hero .kick,
+html.jl.hero-go .c2-hero h1 .w > span,
+html.jl.hero-go .hello::before,
+html.jl.hero-go .hello .face-tile::before,
+html.jl.hero-go .hello .face-tile img,
+html.jl.hero-go .hello .online i { animation-play-state: running; }
+
+html.jl .c2-hero .kick { animation: hx-type .9s steps(40, end) both paused; }
+@keyframes hx-type { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+
+html.jl .c2-hero h1[data-split] .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .06em .14em; margin: 0 -.06em -.14em; }
+html.jl .c2-hero h1 .w > span { display: inline-block; animation: hx-rise 1.1s var(--ease-out) both paused; animation-delay: calc(180ms + var(--i) * 80ms); }
+@keyframes hx-rise { from { transform: translateY(110%) rotate(4deg); } }
+/* The full stop is the travelling square: on load it falls from the logo dot onto "drama" (main.js). */
+
+html.jl .c2-hero .sub { --t: 700ms; }
+html.jl .c2-hero .ctas .btn:nth-child(1) { --t: 860ms; }
+html.jl .c2-hero .ctas .btn:nth-child(2) { --t: 940ms; }
+@keyframes hx-up { from { opacity: 0; transform: translateY(22px); } }
+
+/* Hannah: the rule draws across, her block rises, she pops up in front of it, then her words and the
+   green "online" dot. */
+html.jl .hello::before { animation: hx-rule 1s var(--ease-slot) both paused 1000ms; transform: scaleX(1); }
+@keyframes hx-rule { from { transform: scaleX(0); } }
+html.jl .hello .face-tile::before { animation: hx-block .7s var(--ease-out) both paused 1200ms; }
+@keyframes hx-block { from { transform: translateY(100%); } }
+html.jl .hello .face-tile img { animation: hx-pop .8s cubic-bezier(.35, 1.5, .55, 1) both paused 1350ms; transform-origin: 50% 100%; }
+@keyframes hx-pop { from { opacity: 0; transform: translateY(30%) scale(.8); } }
+html.jl .hello > div { --t: 1450ms; }
+html.jl .hello .online i { animation: hx-pop .5s cubic-bezier(.35, 1.7, .55, 1) both paused 2000ms, beat 2s 2.5s infinite; }
+
+/* Collage: positions from the 560 × 600 Figma frame, in percent so it scales.
+   Each piece has a resting tilt (--r) and a depth (--d) for the pointer parallax. The transform is built
+   from variables so hover and parallax can change them; the intro animates the separate translate,
+   rotate and scale properties on top, so it never fights with the resting tilt. */
+.collage { --mx: 0; --my: 0; position: relative; margin: 0; width: 100%; aspect-ratio: 560 / 600; container-type: inline-size; }
+.collage > * {
+  --r: 0deg; --d: 0; --s: 1; position: absolute; display: block;
+  transform: translate(calc(var(--mx) * var(--d) * 1px), calc(var(--my) * var(--d) * 1px)) rotate(var(--r)) scale(var(--s));
+}
+.collage img { object-fit: cover; }
+.collage .outline-box { --r: -4deg; --d: 6; left: 3.96%; top: 23.01%; width: 58.93%; height: 60%; border: 1.5px solid var(--line); }
+.collage .m1 { --r: 6deg; --d: 12; left: 4.69%; top: 13.73%; width: 44.64%; aspect-ratio: 1; }
+.collage .m2 { --r: -4deg; --d: 18; left: 54.95%; top: 1.95%; width: 41.07%; aspect-ratio: 1; }
+.collage .pblock { --r: 6deg; --d: 28; left: 45.96%; top: 46.69%; width: 15%; aspect-ratio: 1; background: var(--accent); }
+.collage .m3 { --r: 3deg; --d: 14; left: 15.02%; top: 59.27%; width: 39.29%; aspect-ratio: 1; }
+.collage .m4 { --r: -5deg; --d: 22; left: 58.78%; top: 48.33%; width: 39.29%; aspect-ratio: 1; }
+.collage figcaption { --d: 4; left: 58.93%; top: 93.33%; white-space: nowrap; }
+
+/* Intro: once the photos have loaded (JS adds .in), they drop onto the table one by one, the outline
+   box settles underneath and the periwinkle block lands last with a little bounce. */
+html.motion .collage:not(.in) > * { opacity: 0; }
+html.motion .collage.in > * { animation: photo-in 1.1s var(--ease-out) both; animation-delay: var(--t, 0ms); }
+html.motion .collage .outline-box { --t: 0ms; animation-name: box-in; }
+html.motion .collage .m1 { --t: 120ms; --from: -40px 70px; --spin: -14deg; }
+html.motion .collage .m2 { --t: 260ms; --from: 40px 70px; --spin: 12deg; }
+html.motion .collage .m3 { --t: 400ms; --from: -30px 80px; --spin: -10deg; }
+html.motion .collage .m4 { --t: 540ms; --from: 30px 80px; --spin: 14deg; }
+html.motion .collage .pblock { --t: 820ms; animation: block-in .8s cubic-bezier(.35, 1.6, .55, 1) both var(--t); }
+html.motion .collage.in figcaption { --t: 1000ms; animation-name: caption-in; }
+@keyframes photo-in { from { opacity: 0; translate: var(--from, 0 70px); rotate: var(--spin, 10deg); scale: .86; } 40% { opacity: 1; } }
+@keyframes box-in { from { opacity: 0; scale: .9; rotate: 4deg; } }
+@keyframes block-in { from { opacity: 0; scale: 0; rotate: -90deg; } 30% { opacity: 1; } }
+@keyframes caption-in { from { opacity: 0; translate: 0 12px; } }
+
+/* Hover: the photo under the pointer is picked up off the table: it straightens, lifts and comes to the
+   front. The parallax follows the pointer slowly (the JS eases --mx and --my). */
+@media (hover: hover) {
+  html.motion .collage img { transition: transform .5s var(--ease-out), box-shadow .5s var(--ease-out), filter .4s; }
+  html.motion .collage img:hover {
+    --r: 0deg; --s: 1.05; z-index: 5;
+    box-shadow: 0 34px 60px -28px rgba(20, 20, 40, .5);
+  }
+  html.motion .collage:has(img:hover) img:not(:hover) { filter: saturate(.75) brightness(.97); }
+  html.motion .collage .pblock { transition: transform .6s cubic-bezier(.35, 1.6, .55, 1); }
+  html.motion .collage:has(img:hover) .pblock { --r: 20deg; }
+}
+
+/* ---------- three proofs ---------- */
+.proofs { background: var(--tile-empty); padding-block: 72px; }
+.proof-row, .facts { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 48px; }
+.proof-row > div { display: grid; gap: 10px; align-content: start; }
+.proof-row i { width: 12px; height: 12px; background: var(--accent); }
+.proof-row h3 { margin: 0; font-weight: 600; font-size: 22px; line-height: 1.2; letter-spacing: -.01em; }
+.proof-row p, .facts span { margin: 0; font-size: 16px; line-height: 1.45; color: var(--muted); }
+.facts { margin-top: 40px; padding-top: 28px; border-top: 1px solid var(--line); }
+.facts > div { display: grid; gap: 4px; }
+.facts b { font-weight: 800; font-size: 36px; line-height: 1.1; letter-spacing: -.03em; }
+
+/* ---------- the actor ---------- */
+.actor { display: none; }
+html.jl .actor {
+  display: block; position: fixed; left: 0; top: 0; z-index: 20; width: 10px; height: 10px;
+  background: var(--accent); pointer-events: none; will-change: transform, width, height;
+}
+html.jl #k0 { visibility: hidden; }
+html.jl .actor:not(.placed) { opacity: 0; } /* until the script has put it somewhere */
+html.jl .logo i.lent { visibility: hidden; } /* the logo dot is the square, on its way down */
+
+/* ---------- how it works: six step cards ---------- */
+.steps-list { display: grid; gap: 24px; }
+.step-card { display: flex; gap: 48px; align-items: center; padding: 48px; background: var(--surface); border: 1px solid var(--line); }
+.ctext { flex: 1; min-width: 0; display: grid; gap: 18px; justify-items: start; align-content: start; }
+.ceyebrow { margin: 0; }
+.ceyebrow b { color: var(--accent-strong); font-weight: 500; margin-right: 10px; }
+.ctext h3 { margin: 0; font-weight: 800; font-size: clamp(32px, 3.1vw, 44px); line-height: 1.1; letter-spacing: -.03em; }
+.ctext h3 .period { width: 6px; height: 6px; margin-left: 3px; }
+.cbody { margin: 0; max-width: 520px; font-size: 18px; line-height: 1.5; color: var(--muted); }
+.helper { display: flex; gap: 16px; align-items: center; width: 100%; padding-top: 20px; border-top: 1px solid var(--line); }
+.helper p { margin: 0; font-size: 16px; line-height: 1.45; }
+.helper b { display: block; margin-bottom: 4px; font-weight: 500; }
+
+.yourcall { margin: 0; display: flex; align-items: center; gap: 12px; padding: 16px 48px; background: var(--soft); font-size: 16px; line-height: 1.45; }
+.yourcall i { flex: none; width: 10px; height: 10px; background: var(--accent); }
+.yourcall b { flex: none; color: var(--accent-strong); font-weight: 500; }
+
+/* drawings */
+.art { flex: none; width: 340px; height: 298px; position: relative; background: var(--art-bg); }
+.art svg { width: 100%; height: 100%; display: block; overflow: visible; }
+.art .ink, .art .faint { fill: none; stroke-width: 1.5; stroke-linecap: square; }
+.art .ink { stroke: var(--fg); }
+.art .ink.bold { stroke-width: 4; }
+.art .faint { stroke: var(--line); stroke-width: 2; }
+.art text { font: 500 10px var(--mono); letter-spacing: .1em; fill: var(--muted); }
+.art text.lbl { font: 500 13px var(--display); letter-spacing: -.01em; fill: var(--fg); }
+.art .anchor { fill: var(--accent); }
+.art .anchor.ghost { fill: none; }
+.art .tick { fill: var(--fg); }
+.art .glow { opacity: .9; }
+#glow stop { stop-color: var(--accent); }
+.art-word { display: grid; place-items: center; background: none; }
+.wordmark { font-weight: 700; font-size: 100px; letter-spacing: -.065em; line-height: 1; display: flex; align-items: baseline; }
+.wordmark .anchor { display: inline-block; width: 19px; height: 19px; margin-left: 12px; background: var(--accent); }
+
+/* ---------- live: the step cards pin, one at a time, while the square travels ---------- */
+.jmeta { display: none; }
+html.jl .stage-track { height: calc(7 * 100vh); }
+html.jl .pin {
+  position: sticky; top: 0; height: 100vh; display: grid; grid-template-rows: minmax(0, 1fr) auto;
+  align-items: center; row-gap: 20px; padding-block: 104px 32px;
+}
+html.jl .steps-list { display: grid; gap: 0; }
+html.jl .step { grid-area: 1 / 1; display: flex; flex-direction: column; opacity: 0; pointer-events: none; transition: opacity .45s ease; }
+html.jl .step.on { opacity: 1; pointer-events: auto; }
+html.jl .step-card { flex: 1; }
+html.jl .ctext { opacity: 0; transform: translateY(26px); transition: opacity .5s ease, transform .7s var(--ease-out); }
+html.jl .step.on .ctext { opacity: 1; transform: none; transition-delay: .12s; }
+html.jl .yourcall { opacity: 0; transform: translateY(10px); transition: opacity .5s ease, transform .6s var(--ease-out); }
+html.jl .step.on .yourcall { opacity: 1; transform: none; transition-delay: .35s; }
+
+html.jl .jmeta {
+  display: flex; align-items: center; gap: 16px;
+  font: 500 12px var(--mono); letter-spacing: .12em; color: var(--muted); font-variant-numeric: tabular-nums;
+}
+.jtrack { width: 160px; height: 1px; background: var(--line); position: relative; overflow: hidden; }
+.jtrack i { position: absolute; inset: 0; background: var(--fg); transform: scaleX(0); transform-origin: 0 50%; }
+
+/* the square is the actor; line drawings draw themselves when their step comes on */
+html.jl .art .anchor { fill: transparent; }
+html.jl .wordmark .anchor { background: transparent; }
+html.jl .art .ink, html.jl .art .faint { stroke-dasharray: 1; stroke-dashoffset: 1; transition: stroke-dashoffset 1.3s var(--ease-slot), stroke .4s; }
+html.jl .art.on .ink, html.jl .art.on .faint { stroke-dashoffset: 0; }
+html.jl .art text { opacity: 0; transition: opacity .6s ease .5s; }
+html.jl .art.on text { opacity: 1; }
+html.jl .art .tick { opacity: 0; transform-box: fill-box; transform-origin: center; transform: scale(0); transition: transform .4s cubic-bezier(.35, 1.6, .55, 1), opacity .2s; }
+html.jl .art .tick.lit { opacity: 1; transform: none; }
+html.jl .art .rl.lit { stroke: var(--fg); stroke-width: 1.5; }
+html.jl .art .glow { opacity: 0; transition: opacity 1s ease; }
+html.jl .art.hit-window .glow { opacity: .9; }
+html.jl .wordmark { opacity: 0; transform: translateY(30px); transition: opacity .6s ease, transform .9s var(--ease-out); }
+html.jl .art.on .wordmark { opacity: 1; transform: none; }
+
+/* ---------- team ---------- */
+.team-band { background: var(--surface); }
+.team-band .sec-head { display: grid; gap: 18px; justify-content: start; }
+.team-band .sec-head .lede { max-width: 560px; }
+.team { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 24px; }
+.mate { margin: 0; display: grid; gap: 16px; align-content: start; }
+.mate-tile { position: relative; height: 260px; overflow: hidden; background: var(--tile-empty); }
+.mate-tile::before { content: ""; position: absolute; left: 50%; top: 110px; width: 150px; height: 150px; margin-left: -75px; background: var(--accent); }
+.mate-tile img { position: absolute; left: 50%; top: 36px; width: 230px; height: 230px; margin-left: -115px; object-fit: contain; }
+.mate figcaption { display: grid; gap: 6px; }
+.mate b { font-weight: 600; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; }
+.mate small { color: var(--accent-strong); }
+.mate p { margin: 0; color: var(--muted); line-height: 1.45; font-size: 15px; }
+
+/* ---------- reviews ---------- */
+.c2 .reviews { gap: 24px; }
+.c2 .review { padding: 32px; gap: 28px; }
+.c2 .review blockquote { margin: 16px 0 0; font-size: 20px; line-height: 1.2; letter-spacing: -.01em; font-weight: 500; }
+.c2 .by { gap: 14px; }
+.initials { flex: none; width: 44px; height: 44px; display: grid; place-items: center; background: var(--tile-empty); color: var(--accent-strong) !important; }
+.c2 .by > div { display: grid; gap: 4px; }
+.rname { font-weight: 600; font-size: 17px; letter-spacing: -.01em; }
+.rname i { display: inline-block; width: 6px; height: 6px; margin-left: 3px; background: var(--accent); }
+.c2 .by small { margin: 0; font-size: 12px; color: var(--fg); }
+
+/* ---------- faq ---------- */
+.c2 .faq { padding-top: 0; }
+.c2 .faq h2 { max-width: 6em; }
+.c2 .faq summary { padding-block: 26px; font-size: 19px; letter-spacing: -.01em; }
+.c2 .faq details p { margin-bottom: 28px; font-size: 18px; line-height: 1.5; max-width: 620px; }
+.c2 .pm { width: 20px; height: 20px; }
+.c2 .pm::before { width: 14px; height: 1.8px; }
+.c2 .pm::after { width: 1.8px; height: 14px; }
+.c2 .faq details[open] .pm::before { background: var(--fg); }
+
+/* ---------- cta: photos on ink ---------- */
+.c2-cta {
+  margin-bottom: clamp(72px, 8vw, 120px); padding: 0; min-height: 480px; display: flex; align-items: center;
+  border: 1px solid var(--inv-line);
+}
+.cta-copy { position: relative; z-index: 1; display: grid; gap: 24px; justify-items: start; padding: 79px 71px; }
+.c2-cta h2 { color: var(--inv-fg); font-size: clamp(40px, 4.2vw, 60px); line-height: 1; letter-spacing: -.045em; max-width: 8.6em; }
+.c2-cta p { color: var(--inv-muted); font-size: 18px; }
+.c2-cta .btn.ghost { background: var(--inv-surface); }
+/* Art: the 518 × 480 right-hand part of the Figma CTA, in percent. */
+.cta-art { position: absolute; right: 0; top: 0; width: 518px; height: 480px; }
+.cta-art > * { position: absolute; display: block; }
+.cta-art img { object-fit: cover; aspect-ratio: 1; }
+.cta-art .outline-box { left: 17.12%; top: 28.39%; width: 54.05%; aspect-ratio: 1; border: 1.5px solid var(--inv-line); transform: rotate(-5deg); }
+.cta-art .c-tower { left: 41.89%; top: -6.46%; width: 57.92%; }
+.cta-art .c-office { left: 1.61%; top: 43.14%; width: 46.33%; transform: rotate(4deg); }
+.cta-art .c-meeting { left: 18.42%; top: 20.83%; width: 48.26%; transform: rotate(-4deg); }
+.cta-art .pblock { left: 57.88%; top: 33.74%; width: 11.58%; aspect-ratio: 1; background: var(--accent); transform: rotate(6deg); }
+
+/* ---------- footer ---------- */
+.c2 .site { margin-top: 0; }
+.c2 .fcols { gap: 80px; }
+.c2 .fcols h4 { color: var(--fg); font-size: 12px; letter-spacing: .12em; }
+.c2 .fgrid > div:first-child p { font-size: 16px; }
+.c2 .legal { font: 400 13px/1.45 var(--display); }
+
+/* ---------- smaller screens ---------- */
+@media (max-width: 1240px) {
+  .c2 .links { margin-left: 32px; gap: 22px; }
+  .cta-art { width: 420px; height: 389px; }
+}
+@media (max-width: 1100px) {
+  .c2-hero { grid-template-columns: 1fr; padding-block: 56px 64px; }
+  .collage { max-width: 560px; justify-self: center; }
+  .step-card { padding: 36px; gap: 32px; }
+  .yourcall { padding-inline: 36px; }
+  .art { width: 300px; height: 263px; }
+  .wordmark { font-size: 80px; }
+  .c2-cta { flex-direction: column; align-items: stretch; }
+  .cta-copy { padding: 56px 32px 0; }
+  .cta-art { position: relative; align-self: flex-end; margin-top: 8px; width: min(100%, 420px); height: auto; aspect-ratio: 518 / 480; }
+}
+@media (max-width: 900px) {
+  .proof-row, .facts { grid-template-columns: 1fr; gap: 28px; }
+  .step-card { flex-direction: column-reverse; align-items: stretch; padding: 24px; gap: 24px; }
+  .art { width: 100%; height: auto; aspect-ratio: 340 / 298; }
+  .art-word { aspect-ratio: auto; min-height: 160px; }
+  .yourcall { padding: 14px 24px; flex-wrap: wrap; row-gap: 4px; }
+  .yourcall span { flex-basis: 100%; }
+  .team { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 32px; }
+  .c2 .fcols { gap: 40px; }
+}
+@media (max-width: 560px) {
+  .c2 .announce { font-size: 13px; }
+  .hello { align-items: flex-start; }
+  .cbody, .c2 .lede, .c2 .sub { font-size: 17px; }
+  .wordmark { font-size: 64px; }
+  .wordmark .anchor { width: 12px; height: 12px; margin-left: 8px; }
+  .mate-tile { height: 200px; }
+  .mate-tile::before { top: 85px; width: 115px; height: 115px; margin-left: -57.5px; }
+  .mate-tile img { top: 28px; width: 176px; height: 176px; margin-left: -88px; }
+  .cta-copy { padding: 40px 20px 0; }
+}
+@media (max-width: 900px) {
+  html.jl .pin { padding-block: 72px 16px; row-gap: 12px; }
+  html.jl .step-card { padding: 16px; gap: 12px; }
+  html.jl .art { width: auto; height: min(30vh, 240px); aspect-ratio: 340 / 298; align-self: center; }
+  html.jl .art-word { aspect-ratio: auto; min-height: 0; height: min(18vh, 140px); width: 100%; }
+  html.jl .ctext { gap: 10px; }
+  html.jl .ctext h3 { font-size: 26px; }
+  html.jl .cbody { font-size: 15px; line-height: 1.45; }
+  html.jl .helper { gap: 12px; padding-top: 12px; }
+  html.jl .helper p { font-size: 14px; }
+  html.jl .face-tile { width: 44px; }
+  html.jl .yourcall { padding: 10px 16px; font-size: 14px; }
+}
+@media (prefers-reduced-motion: reduce) { .online i { animation: none !important; } }
