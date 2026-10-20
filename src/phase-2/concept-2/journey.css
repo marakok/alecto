@@ -195,7 +195,7 @@ html.jl .logo i.lent { visibility: hidden; } /* the logo dot is the square, on i
 /* drawings */
 .art { flex: none; width: 340px; height: 298px; position: relative; background: var(--art-bg); }
 .art svg { width: 100%; height: 100%; display: block; overflow: visible; }
-.art .ink, .art .faint { fill: none; stroke-width: 1.5; stroke-linecap: square; }
+.art .ink, .art .faint { fill: none; stroke-width: 1.5; stroke-linecap: square; stroke-linejoin: round; } /* corners softened like the logo square (rects carry an rx) */
 .art .ink { stroke: var(--fg); }
 .art .ink.bold { stroke-width: 4; }
 .art .faint { stroke: var(--line); stroke-width: 2; }
