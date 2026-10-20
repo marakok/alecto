@@ -61,7 +61,9 @@
 /* 2a: a periwinkle news bar, for contrast with the photo hero (white on #5E6AD2, ink on #8290E8 in dark) */
 html[data-v="a"] .c2 .announce { background: var(--accent); color: var(--accent-fg); }
 html[data-v="a"] .c2 .announce-tag { color: var(--accent-fg); border-color: color-mix(in srgb, var(--accent-fg) 50%, transparent); }
-html[data-v="a"] .c2 .announce .boxes.mini i:nth-child(2) { background: var(--accent-fg); }
+/* the mark: an ink box with a white one on top, in both themes */
+html[data-v="a"] .c2 .announce .boxes.mini i:nth-child(1) { background: #141416; }
+html[data-v="a"] .c2 .announce .boxes.mini i:nth-child(2) { background: #FBFAF7; }
 html[data-v="a"] .c2 .announce:focus-visible { outline-color: var(--fg); }
 .c2-cta .pblock, .c2-cta .outline-box { display: none; }
 
