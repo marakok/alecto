@@ -50,18 +50,23 @@ A second layer of concepts, shown as its own group ("Phase 2") on the concept sw
 - **Reviews with photos** of the people (stock dummies from `public/concept-2/`; swap for real clients' photos,
   with their permission).
 - **No big periwinkle block behind the portraits:** each flavor tries another backdrop.
-- **Page load:** the square starts alone in the middle of a blank screen and ends as the headline's full stop
-  (`loader.js`).
+- **Page load:** the square starts alone in the middle of a blank screen, pops up, the page fades in and it hops
+  onto "drama" as the headline's full stop (`drop`, from 2a, now for every flavor; `loader.js`).
+- **The path photo** (`public/phase-2/move-path.jpg`, stock, high-res of `move-3.jpg`): two people carry boxes over
+  square stepping stones, and the stones light up in periwinkle, one by one like footsteps, then a soft step runs
+  along them (`stones.js`). The stone shapes come from one mask made from the photo
+  (`public/phase-2/move-path-stones.png`), each stone clipped to its outline. Without JS or with reduced motion the
+  stones are simply lit. A new photo needs a new mask and outlines: `scripts/stone-mask.py` makes both.
 
-| Flavor | Hero | Page load (`?l=`) | Portraits |
-| --- | --- | --- | --- |
-| 2a · Calm | Concept 2's hero, decluttered; CLC as a stamp on the photos | `drop`: pops up, page fades in, hops onto "drama" | warm neutral |
-| 2b · Your person | Hannah is the picture, her promise on a card; CLC under the buttons | `curtain`: grows to fill the screen, shrinks onto "drama" | ink |
-| 2c · Trust first | One centred column, a big CLC badge in the kicker's place, a straight photo strip | `count`: counts to 100 in four quarter turns, then hops | fine line |
-| 2d · Real life | One full-bleed moving photo with the headline on it; CLC and Hannah in a bar | `wordmark`: the wordmark slides out of the square, it goes to the logo, then falls | light periwinkle wash |
+| Flavor | Hero | Portraits |
+| --- | --- | --- |
+| 2a · Calm | Concept 2's hero, decluttered; CLC as a stamp on the photos | warm neutral |
+| 2b · Your person | The path photo is the picture, Hannah's promise on a card; CLC under the buttons | ink |
+| 2c · Trust first | One centred column, a big CLC badge in the kicker's place, a straight photo strip with the path photo | fine line |
+| 2d · Real life | The path photo full width with the headline on it; it pans from the people to the path as you scroll and the stones light as they come into view; CLC and Hannah in a bar | light periwinkle wash |
 
-Mix and match: `?v=` picks the hero and portraits, `?l=` overrides the page load, for example
-`/phase-2/concept-2/?v=c&l=curtain`. The 2d photo is 520px wide; it needs a high-res photo before it is shown large.
+Mix and match: `?v=` picks the hero and portraits, `?l=` still tries the other page loads (`curtain`, `count`,
+`wordmark`), for example `/phase-2/concept-2/?v=c&l=curtain`.
 
 ### Company and careers pages
 

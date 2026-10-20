@@ -30,7 +30,7 @@
 .c2 .logo i, .c2 .period, .actor, .c2 .rate i, .proof-row i, .yourcall i, .c2 .online i, .rname i,
 .c2 .eyebrow i, .wordmark .anchor, .c2 .boxes.mini i, .mate-tile::after { border-radius: var(--dot-r); }
 .c2 .btn, .c2 .icon-btn, .c2 .step, .c2 .art, .c2 .review, .c2-cta, .collage img, .mate-tile, .face-tile,
-.c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .strip img, .strip-face, .strip-me figcaption,
+.c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .strip img, .strip .path-photo, .strip-face, .strip-me figcaption,
 .photo-panel, .c2 .cta-art img, .clc.badge { border-radius: var(--r6, var(--ui-r)); }
 .c2 .step { overflow: hidden; }
 .c2 .btn.accent { color: var(--accent-fg); }
@@ -112,7 +112,7 @@ html[data-v="d"] .c2-hero[data-v]:not([data-v="d"]) { display: none; }
 .clc.badge .clc-mark { width: 56px; background: var(--fg); color: var(--bg); border-color: var(--fg); font-size: 15px; }
 .clc.badge .clc-text b { font-size: 18px; }
 /* D: on the photo */
-.clc.bar { color: #FBFAF7; }
+.clc.bar { height: auto; background: none; color: #FBFAF7; } /* not the generic .bar (main.css) */
 .clc.bar small { color: rgba(251, 250, 247, .7); }
 
 /* ---------- A · Calm ---------- */
@@ -192,6 +192,50 @@ html.jl .hero-c .strip > :nth-child(4) { --t: 1340ms; }
 .hello.mini .online { font-size: 11px; }
 html.jl .hero-d .photo-bar { --t: 1150ms; }
 
+/* ---------- the path photo: square stepping stones that light up (stones.js) ----------
+   The photo always covers its frame (like object-fit: cover), but as a box, so the stones layer can sit
+   exactly on it: .pp is the photo's own box, --fy (0 top, 1 bottom) picks which part shows. */
+.path-photo { position: relative; overflow: hidden; container-type: size; background: #7d8a6a; }
+.path-photo .pp {
+  position: absolute; left: 50%; translate: -50% 0; aspect-ratio: 1333 / 2000;
+  width: max(100cqw, 100cqh * 1333 / 2000);
+  top: calc((100cqh - max(100cqh, 100cqw * 2000 / 1333)) * var(--fy, .5));
+}
+.path-photo .pp > img { position: static; translate: none; display: block; width: 100%; height: 100%; }
+.stones { position: absolute; inset: 0; pointer-events: none; filter: drop-shadow(0 0 .6cqw rgba(130, 144, 232, .9)); }
+.stones::before, .stones i {
+  content: ""; position: absolute; inset: 0; background: #8290E8;
+  -webkit-mask: url(/phase-2/move-path-stones.png) 0 0 / 100% 100%; mask: url(/phase-2/move-path-stones.png) 0 0 / 100% 100%;
+}
+.stones::before { opacity: .85; }
+.stones.seq::before { display: none; }
+.stones i { clip-path: var(--c); opacity: 0; transition: opacity .45s var(--ease-out); }
+/* in a frame: on one by one, then a step runs along them (a brighter flash, stone by stone) */
+.stones.lit i { opacity: .85; transition-delay: var(--d); animation: stone-step 7s calc(var(--d) + 2.6s) infinite; }
+@keyframes stone-step {
+  0%, 9%, 100% { background: #8290E8; }
+  3% { background: #B9C1F6; }
+}
+/* full width: on as the photo pans past them */
+.stones i.on { opacity: .85; }
+
+/* B: the photo is the picture, Hannah's card sits on it */
+.hero-b .hannah-tile.path-photo { aspect-ratio: 4 / 5; --fy: .45; }
+.hero-b .hannah.with-photo .hannah-card { left: auto; right: -40px; }
+.hannah-card .hannah-who { display: flex; align-items: center; gap: 12px; }
+.hannah-card .face-tile { width: 48px; flex: none; }
+/* C: one cell of the strip */
+.strip .path-photo { aspect-ratio: 4 / 5; --fy: .55; }
+/* D: the photo full width, it pans to the path as you scroll */
+.hero-d.full { padding-inline: 0; max-width: none; padding-top: 0; }
+.hero-d.full .photo-panel { border-radius: 0; min-height: min(88vh, 860px); }
+.hero-d.full .path-photo { position: absolute; inset: 0; z-index: -2; --fy: .06; }
+.hero-d.full .hero-copy { max-width: 900px; padding-inline: clamp(16px, 8.33vw, 120px); }
+.hero-d.full .photo-bar { padding-inline: clamp(16px, 8.33vw, 120px); }
+.hero-d.full .photo-panel::before {
+  background: linear-gradient(90deg, rgba(20, 20, 22, .8), rgba(20, 20, 22, .45) 45%, rgba(20, 20, 22, 0) 75%);
+}
+
 /* ---------- portraits: what sits behind the people (instead of the big periwinkle block) ---------- */
 .mate-tile, .face-tile { background: var(--portrait-bg); box-shadow: inset 0 0 0 1px var(--portrait-line); }
 .mate-tile::before, .face-tile::before { display: none; }
@@ -221,6 +265,9 @@ html[data-v="d"] .c2 { --portrait-bg: color-mix(in srgb, var(--accent) 12%, var(
   .hero-b { grid-template-columns: minmax(0, 1fr); }
   .hannah { max-width: 520px; justify-self: center; }
   .hannah-card { left: 16px; }
+  /* with the photo: the card sits under it, so it doesn't cover the stones */
+  .hannah.with-photo { padding-bottom: 0; }
+  .hero-b .hannah.with-photo .hannah-card { position: relative; left: auto; right: auto; width: auto; margin: -36px 16px 0; }
 }
 @media (max-width: 760px) {
   .strip { grid-template-columns: repeat(2, minmax(0, 1fr)); }

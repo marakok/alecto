@@ -13,15 +13,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
     /* Before first paint (as on the homepage): apply a saved theme, pick the flavor (?v=a|b|c|d, portraits) and the page
-       load (?l=drop|curtain|count|wordmark, defaults to the flavor's own), and decide whether motion is
+       load (?l=drop|curtain|count|wordmark, defaults to drop, 2a's, for every flavor), and decide whether motion is
        allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
     (function () {
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var q = new URLSearchParams(location.search);
       var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
-      var LOADS = { a: 'drop', b: 'curtain', c: 'count', d: 'wordmark' };
-      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : LOADS[v];
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* 2a's load, for every flavor */
       d.setAttribute('data-v', v);
       d.setAttribute('data-l', l);
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;

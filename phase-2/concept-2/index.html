@@ -13,15 +13,14 @@
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
     /* Before first paint: apply a saved theme, pick the flavor (?v=a|b|c|d, hero and team) and the page
-       load (?l=drop|curtain|count|wordmark, defaults to the flavor's own), and decide whether motion is
+       load (?l=drop|curtain|count|wordmark, defaults to drop, 2a's, for every flavor), and decide whether motion is
        allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
     (function () {
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var q = new URLSearchParams(location.search);
       var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
-      var LOADS = { a: 'drop', b: 'curtain', c: 'count', d: 'wordmark' };
-      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : LOADS[v];
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* 2a's load, for every flavor */
       d.setAttribute('data-v', v);
       d.setAttribute('data-l', l);
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -113,12 +112,13 @@
       <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
       <p class="clc line hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
     </div>
-    <!-- Illustrative person: replace with a real Alecto conveyancer. -->
-    <figure class="hannah hx" aria-label="Your conveyancer">
-      <div class="hannah-tile"><img src="/concept-2/hannah.png" alt="Hannah Reid"></div>
+    <!-- Dummy photo (stock): the stepping stones light up (stones.js). Illustrative person: replace with a
+         real Alecto conveyancer. -->
+    <figure class="hannah with-photo hx" aria-label="Your conveyancer">
+      <div class="hannah-tile path-photo" data-path><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
       <figcaption class="hannah-card">
         <p class="hannah-quote">“I’ll look after your move myself, from offer accepted to keys in hand.”</p>
-        <p class="hannah-by"><b>Hannah Reid</b><span class="mono">Senior conveyancer</span><span class="online mono"><i></i>Online now</span></p>
+        <div class="hannah-who"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p class="hannah-by"><b>Hannah Reid</b><span class="mono">Senior conveyancer</span><span class="online mono"><i></i>Online now</span></p></div>
       </figcaption>
     </figure>
   </section>
@@ -132,20 +132,21 @@
       <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
       <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
     </div>
-    <!-- Dummy photos: replace with real Alecto moves. Hannah: illustrative. -->
+    <!-- Dummy photos: replace with real Alecto moves (the stepping stones one lights up, stones.js). Hannah: illustrative. -->
     <div class="strip">
       <figure class="strip-me hx"><div class="strip-face"><img src="/concept-2/hannah.png" alt=""></div><figcaption><b>Hannah Reid</b><span class="online mono"><i></i>Your conveyancer</span></figcaption></figure>
+      <div class="hx path-photo" data-path><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
       <img class="hx" src="/concept-2/move-2.jpg" alt="">
-      <img class="hx" src="/concept-2/move-3.jpg" alt="">
       <img class="hx" src="/concept-2/move-4.jpg" alt="">
     </div>
   </section>
 
-  <!-- D · Real life: one full-bleed photo of a move, the headline on it. CLC and Hannah share a quiet bar
-       at the bottom. -->
-  <section class="c2-hero hero-d wrap" data-v="d">
+  <!-- D · Real life: one photo of a move, full width, the headline on it. As you scroll it pans from the
+       people down to the path and the stepping stones light up (stones.js). CLC and Hannah share a quiet bar
+       at the bottom. Dummy photo (stock, 1333 px wide): swap for a real move, high-res. -->
+  <section class="c2-hero hero-d full wrap" data-v="d">
     <div class="photo-panel">
-      <img class="photo-bg" src="/concept-2/move-3.jpg" alt="">
+      <div class="path-photo" data-path="pan"><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
       <div class="hero-copy">
         <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
         <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
