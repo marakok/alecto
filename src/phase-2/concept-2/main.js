@@ -7,6 +7,7 @@ import { createIntro } from './loader.js';
 import { initRadius } from './radius.js';
 import { initReveal } from './reveal.js';
 import { initStones } from './stones.js';
+import { initBoxes } from '../../js/boxes.js';
 
 /**
  * Phase 2 · Concept 2: One square, one journey, in three flavors.
@@ -31,6 +32,7 @@ initMotion({ reduce, cursor: false }); // the square cursor would compete with t
 initReveal({ reduce });
 const prepared = prepareHero({ reduce });
 initStones({ reduce });
+initBoxes({ reduce });
 
 const live = root.classList.contains('jl') && !reduce;
 if (live) initJourney();
