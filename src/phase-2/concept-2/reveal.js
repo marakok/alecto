@@ -19,14 +19,14 @@ const GROUPS = [
   ['.journey .jmeta', ':scope > *', 'rise', 90],
   ['.team', ':scope > .mate', 'mask', 110],
   ['.cta-copy', ':scope > p, :scope > .ctas', 'rise', 120],
-  ['.cta-art', ':scope > img', 'mask', 140],
+  ['.cta-art', ':scope > img, :scope > .cta-square', 'mask', 140],
   // company and careers pages
   ['.about-photos', ':scope > img', 'mask', 140],
   ['.values, .perks', ':scope > *', 'rise', 90],
   ['.roles', ':scope > *', 'rise', 70],
 ];
 const POPS = '.proof-row i, .c2 main .eyebrow i';
-const PARALLAX = '.rphoto, .cta-art img, .about-photos img';
+const PARALLAX = '.rphoto, .cta-art img, .cta-art .cta-square, .about-photos img';
 
 export function initReveal({ reduce }) {
   const root = document.documentElement;

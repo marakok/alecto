@@ -50,3 +50,16 @@ html.rv.motion .c2 [data-reveal] {
 html.rv.motion .c2 [data-reveal="tile"] { filter: none; translate: 0 48px; clip-path: inset(100% 0 0 0 round var(--r6, var(--ui-r))); }
 html.rv.motion .c2 [data-reveal].in { translate: none; filter: none; clip-path: inset(0 0 0 0 round var(--r6, var(--ui-r))); }
 html.rv.motion .c2 h2[data-split] .w > span { transition-duration: 1.3s; transition-timing-function: var(--ease-expo); }
+
+/* ---------- review stars: five empty squares fill in, one by one, once their card is up ---------- */
+html.rv .c2 .review .rate i {
+  background: transparent; box-shadow: inset 0 0 0 1.5px color-mix(in srgb, var(--accent) 45%, transparent); scale: .7;
+  transition: background-color .35s ease-out, box-shadow .35s ease-out, scale .55s cubic-bezier(.34, 1.56, .64, 1);
+  transition-delay: calc(var(--d, 0ms) + 300ms + var(--k) * 140ms);
+}
+html.rv .c2 .review .rate i:nth-child(1) { --k: 0; }
+html.rv .c2 .review .rate i:nth-child(2) { --k: 1; }
+html.rv .c2 .review .rate i:nth-child(3) { --k: 2; }
+html.rv .c2 .review .rate i:nth-child(4) { --k: 3; }
+html.rv .c2 .review .rate i:nth-child(5) { --k: 4; }
+html.rv .c2 .review.in .rate i { background: var(--accent); box-shadow: inset 0 0 0 1.5px var(--accent); scale: 1; }

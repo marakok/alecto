@@ -9,7 +9,7 @@
 .c2 {
   --accent:#5E6AD2; --accent-strong:#4753B8; --accent-fg:#FFFFFF; --soft:#EEF0FB;
   --btn-bg:#5E6AD2; --btn-fg:#FFFFFF;
-  --dot-r: 6%; --ui-r: 4px;
+  --dot-r: min(6%, 12px); --ui-r: 4px; /* 6% of the side, never more than 12px (radius.js: the same cap) */
   --portrait-bg: var(--tile-empty); --portrait-line: transparent; --portrait-dot: var(--accent);
 }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .c2 {
@@ -30,7 +30,7 @@
 .c2 .logo i, .c2 .period, .actor, .c2 .rate i, .proof-row i, .yourcall i, .c2 .online i, .rname i,
 .c2 .eyebrow i, .wordmark .anchor, .c2 .boxes.mini i, .mate-tile::after { border-radius: var(--dot-r); }
 .c2 .btn, .c2 .icon-btn, .c2 .step, .c2 .art, .c2 .review, .c2-cta, .mate-tile, .face-tile,
-.c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .photo-panel, .c2 .cta-art img { border-radius: var(--r6, var(--ui-r)); }
+.c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .photo-panel, .c2 .cta-art img, .cta-square { border-radius: var(--r6, var(--ui-r)); }
 .c2 .step { overflow: hidden; }
 .c2 .btn.accent { color: var(--accent-fg); }
 
@@ -136,7 +136,7 @@ html.jl .hero-right .clc.line { --t: 1050ms; }
    out at the top right. They fade in after the photo; scroll shifts them a little (--s, boxes.js). */
 .hannah.with-photo { isolation: isolate; }
 .hero-boxes { --w: 360px; --box-line: color-mix(in srgb, var(--fg) 14%, transparent); right: -104px; top: -48px; z-index: -1; }
-.hero-boxes i { border-radius: var(--dot-r); } /* 6% of the side, like the logo dot and every box */
+.hero-boxes i { border-radius: var(--dot-r); } /* like the logo dot and every box */
 .hero-boxes i::after { display: none; }
 .hero-boxes i:nth-child(2) { --box-line: color-mix(in srgb, var(--accent) 55%, transparent); }
 html.jl .hero-boxes { opacity: 0; transition: opacity 2s var(--ease-expo, ease-out) 1.1s; }
@@ -197,6 +197,10 @@ html.jl .hero-photo .clc.line { --t: 1050ms; }
 .hero-right .hannah.with-photo .hannah-card { left: auto; right: -40px; }
 .hannah-card .hannah-who { display: flex; align-items: center; gap: 12px; }
 .hannah-card .face-tile { width: 48px; flex: none; }
+/* ---------- CTA: the brand squares in place of the outer photos (as in the hero) ---------- */
+.cta-art .cta-square { aspect-ratio: 1; border: 1.5px solid color-mix(in srgb, var(--inv-fg) 22%, transparent); }
+.cta-art .cta-square.c-tower { border-color: color-mix(in srgb, var(--accent) 60%, transparent); transform: rotate(7deg); top: 8%; left: 46%; width: 48%; }
+
 /* ---------- portraits: what sits behind the people (instead of the big periwinkle block) ---------- */
 .mate-tile, .face-tile { background: var(--portrait-bg); box-shadow: inset 0 0 0 1px var(--portrait-line); }
 .mate-tile::before, .face-tile::before { display: none; }
