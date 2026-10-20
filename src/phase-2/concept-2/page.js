@@ -5,6 +5,7 @@ import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
 import { createIntro } from './loader.js';
 import { initRadius } from './radius.js';
+import { initReveal } from './reveal.js';
 
 /**
  * Phase 2 · Concept 2, the pages around the homepage (company, careers).
@@ -19,6 +20,7 @@ initRadius();
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
+initReveal({ reduce });
 const prepared = prepareHero({ reduce });
 
 if (root.classList.contains('jl') && !reduce) land();

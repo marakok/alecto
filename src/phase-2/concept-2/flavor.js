@@ -1,6 +1,6 @@
 /**
  * Keep a review in one flavor: links between the phase 2 pages carry ?v= along, and on the company and
- * careers pages the switcher's 2a–2d swap the flavor without leaving the page.
+ * careers pages the switcher's 2a–2c swap the flavor without leaving the page.
  */
 export function keepFlavor() {
   const root = document.documentElement;
@@ -11,7 +11,7 @@ export function keepFlavor() {
   document.querySelectorAll(`a[href^="${HOME}"]`).forEach((a) => {
     const u = new URL(a.getAttribute('href'), location.origin);
     if (a.closest('.concepts')) {
-      // 2a–2d: same page, other flavor.
+      // 2a–2c: same page, other flavor.
       const to = u.searchParams.get('v');
       if (to) {
         a.setAttribute('href', `${here}?v=${to}`);

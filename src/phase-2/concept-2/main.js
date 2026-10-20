@@ -1,15 +1,17 @@
 import { initTheme } from '../../js/theme.js';
 import { initMotion } from '../../js/motion.js';
 import { clamp, prefersReducedMotion } from '../../js/palette.js';
-import { initCollage } from './collage.js';
 import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
 import { createIntro } from './loader.js';
 import { initRadius } from './radius.js';
+import { initReveal } from './reveal.js';
+import { initStones } from './stones.js';
+import { initBoxes } from '../../js/boxes.js';
 
 /**
- * Phase 2 · Concept 2: One square, one journey, in four flavors.
- * The flavor (?v=a|b|c|d) swaps the hero and the team portraits; the page load (?l=) is one of four ways
+ * Phase 2 · Concept 2: One square, one journey, in three flavors.
+ * The flavor (?v=a|b|c) swaps the hero and the team portraits; the page load (?l=) is one of four ways
  * for the square to arrive (loader.js). From the headline on, it is concept 2: a single fixed square (the
  * actor) travels between anchor elements as you scroll:
  * headline full stop → checkbox → reading marker → seal → key → lit window → logo dot.
@@ -27,8 +29,10 @@ initRadius();
 const reduce = prefersReducedMotion();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false }); // the square cursor would compete with the one square
+initReveal({ reduce });
 const prepared = prepareHero({ reduce });
-initCollage({ reduce });
+initStones({ reduce });
+initBoxes({ reduce });
 
 const live = root.classList.contains('jl') && !reduce;
 if (live) initJourney();
