@@ -1,4 +1,5 @@
 import { clamp } from '../../js/palette.js';
+import { afterIntro } from './reveal.js';
 
 /**
  * The path photo (two people carrying boxes over square stepping stones): the stones light up in the brand
@@ -43,18 +44,6 @@ export function initStones({ reduce }) {
     if (frame.dataset.path === 'pan') pan(frame, stones);
     else afterIntro(() => setTimeout(() => layer.classList.add('lit'), 1300));
   });
-}
-
-// Run once the load screen lifts (loader.js adds html.hero-go).
-function afterIntro(fn) {
-  const root = document.documentElement;
-  if (root.classList.contains('hero-go')) return fn();
-  const mo = new MutationObserver(() => {
-    if (!root.classList.contains('hero-go')) return;
-    mo.disconnect();
-    fn();
-  });
-  mo.observe(root, { attributes: true, attributeFilter: ['class'] });
 }
 
 // Full width: scroll pans the photo from the faces (--fy .06) down to the path (.8). A stone lights once

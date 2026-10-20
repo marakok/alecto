@@ -27,8 +27,11 @@
    because a percentage on a non-square box would make an ellipse. --ui-r is the fallback without JS.
    --r6 doesn't inherit, so a box never picks up its parent's radius. */
 @property --r6 { syntax: '*'; inherits: false; }
-.c2 .logo i, .c2 .period, .actor, .c2 .rate i, .proof-row i, .yourcall i, .c2 .online i, .rname i,
+.c2 .logo i, .c2 .period, .c2 .rate i, .proof-row i, .yourcall i, .c2 .online i, .rname i,
 .c2 .eyebrow i, .wordmark .anchor, .c2 .boxes.mini i, .mate-tile::after { border-radius: var(--dot-r); }
+/* The one square, and the headline's full stop it lands on, get the logo square's corner as you see it on
+   the favicon and app icon (rx 12 on 64, so 19%): 6% is too fine to see on a square this small. */
+.actor, .c2 .c2-hero .period, .c2 .page-hero .period { border-radius: var(--sq-r, 19%); }
 .c2 .btn, .c2 .icon-btn, .c2 .step, .c2 .art, .c2 .review, .c2-cta, .mate-tile, .face-tile,
 .c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .photo-panel, .c2 .cta-art img { border-radius: var(--r6, var(--ui-r)); }
 .c2 .step { overflow: hidden; }
