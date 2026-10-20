@@ -163,7 +163,11 @@ html.jl .hero-photo .clc.line { --t: 1050ms; }
 /* C: edge to edge, the copy lines up with the page */
 .hero-photo.full { padding-inline: 0; max-width: none; padding-top: 0; }
 .hero-photo.full .photo-panel { border-radius: 0; min-height: min(88vh, 860px); }
-.hero-photo.full .hero-copy { max-width: 900px; padding-inline: clamp(16px, 8.33vw, 120px); }
+/* line the copy up with the nav: past 1440px the page column (.wrap) is centred, so add its side margin */
+.hero-photo.full .hero-copy {
+  --off: max(0px, (100% - 1440px) / 2);
+  max-width: calc(var(--off) + 900px); padding-inline: calc(var(--off) + clamp(16px, 8.33vw, 120px)) clamp(16px, 8.33vw, 120px);
+}
 
 /* ---------- the path photo: square stepping stones that light up (stones.js) ----------
    The photo always covers its frame (like object-fit: cover), but as a box, so the stones layer can sit
