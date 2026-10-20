@@ -53,14 +53,14 @@
 /* ---------- calmer chrome ---------- */
 .c2 .announce { background: var(--inv-bg); color: var(--inv-fg); }
 .c2 .announce-tag { color: var(--inv-fg); border-color: var(--inv-line); }
-.c2 .announce .boxes.mini i:nth-child(2) { background: var(--accent); }
 .c2 .announce:focus-visible { outline-color: var(--accent); }
+/* the headline: long on wide screens, short on narrow ones */
+.c2 .announce-text .short { display: none; }
+@media (max-width: 1100px) { .c2 .announce-text .long { display: none; } .c2 .announce-text .short { display: inline; } }
+@media (max-width: 640px) { .c2 .announce-text { white-space: normal; } } /* two lines rather than cut off */
 /* 2a: a periwinkle news bar, for contrast with the photo hero (white on #5E6AD2, ink on #8290E8 in dark) */
 html[data-v="a"] .c2 .announce { background: var(--accent); color: var(--accent-fg); }
 html[data-v="a"] .c2 .announce-tag { color: var(--accent-fg); border-color: color-mix(in srgb, var(--accent-fg) 50%, transparent); }
-/* the mark: an ink box with a white one on top, in both themes */
-html[data-v="a"] .c2 .announce .boxes.mini i:nth-child(1) { background: #141416; }
-html[data-v="a"] .c2 .announce .boxes.mini i:nth-child(2) { background: #FBFAF7; }
 html[data-v="a"] .c2 .announce:focus-visible { outline-color: var(--fg); }
 .c2-cta .pblock, .c2-cta .outline-box { display: none; }
 
