@@ -12,15 +12,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
-    /* Before first paint (as on the homepage): apply a saved theme, pick the flavor (?v=a|b|c|d, portraits) and the page
-       load (?l=drop|curtain|count|wordmark, defaults to drop, 2a's, for every flavor), and decide whether motion is
+    /* Before first paint (as on the homepage): apply a saved theme, pick the flavor (?v=a|b|c, portraits) and the page
+       load (?l=drop|curtain|count|wordmark, defaults to drop for every flavor), and decide whether motion is
        allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
     (function () {
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var q = new URLSearchParams(location.search);
-      var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
-      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* 2a's load, for every flavor */
+      var v = /^[abc]$/.test(q.get('v')) ? q.get('v') : 'a'; /* 2a leads */
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* the drop, for every flavor */
       d.setAttribute('data-v', v);
       d.setAttribute('data-l', l);
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -202,7 +202,7 @@
   </div>
 </footer>
 
-<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · Concept 2a · Calm">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · Concept 2b · Your person">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · Concept 2c · Trust first">2c</a><a href="/phase-2/concept-2/?v=d" title="Phase 2 · Concept 2d · Real life">2d</a></nav>
+<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a · Photo right">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · 2b · Photo full, boxed">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · 2c · Photo full width">2c</a></nav>
 
 <script type="module" src="/src/phase-2/concept-2/page.js"></script>
 </body>

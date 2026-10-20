@@ -12,15 +12,15 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
   <script>
-    /* Before first paint: apply a saved theme, pick the flavor (?v=a|b|c|d, hero and team) and the page
-       load (?l=drop|curtain|count|wordmark, defaults to drop, 2a's, for every flavor), and decide whether motion is
+    /* Before first paint: apply a saved theme, pick the flavor (?v=a|b|c, hero and team) and the page
+       load (?l=drop|curtain|count|wordmark, defaults to drop for every flavor), and decide whether motion is
        allowed (html.jl: the square travels; html.veiled: the page waits behind the load screen). */
     (function () {
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var q = new URLSearchParams(location.search);
-      var v = /^[abcd]$/.test(q.get('v')) ? q.get('v') : 'a';
-      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* 2a's load, for every flavor */
+      var v = /^[abc]$/.test(q.get('v')) ? q.get('v') : 'a'; /* 2a leads */
+      var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* the drop, for every flavor */
       d.setAttribute('data-v', v);
       d.setAttribute('data-l', l);
       var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -74,38 +74,11 @@
 <div class="actor" id="actor" aria-hidden="true"></div>
 
 <main id="main">
-  <!-- Four hero flavors; the head script picks one (?v=) and main.js removes the others. Each keeps the
+  <!-- Three hero flavors; the head script picks one (?v=) and main.js removes the others. Each keeps the
        one square: it is the full stop of the headline, and the journey below picks it up from there. -->
 
-  <!-- A · Calm: the Figma hero, decluttered. No kicker, a straight collage without the extra square, and the
-       CLC licence as a stamp on the photos. -->
-  <section class="c2-hero hero-a wrap" data-v="a">
-    <div class="hero-copy">
-      <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
-      <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
-      <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
-      <!-- Illustrative person: replace the name, words and portrait with a real Alecto conveyancer. -->
-      <aside class="hello" aria-label="Your conveyancer">
-        <span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span>
-        <div class="hx">
-          <p class="mono">Hannah Reid, your conveyancer</p>
-          <p class="hello-quote">“I’ll look after your move myself, from offer accepted to keys in hand.”</p>
-          <p class="online mono"><i></i>Online now</p>
-        </div>
-      </aside>
-    </div>
-    <!-- Dummy photos: replace with real Alecto moves. -->
-    <figure class="collage" aria-hidden="true">
-      <img class="m1" src="/concept-2/move-1.jpg" alt="">
-      <img class="m2" src="/concept-2/move-2.jpg" alt="">
-      <img class="m3" src="/concept-2/move-3.jpg" alt="">
-      <img class="m4" src="/concept-2/move-4.jpg" alt="">
-    </figure>
-    <p class="clc stamp hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
-  </section>
-
-  <!-- B · Your person: Hannah is the picture. A big portrait with her promise, CLC under the buttons. -->
-  <section class="c2-hero hero-b wrap" data-v="b">
+  <!-- A · Photo right: the path photo is the picture, Hannah's promise on a card, CLC under the buttons. -->
+  <section class="c2-hero hero-right wrap" data-v="a">
     <div class="hero-copy">
       <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
       <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
@@ -123,41 +96,29 @@
     </figure>
   </section>
 
-  <!-- C · Trust first: one centred column with the square in the middle of the page. The CLC licence takes
-       the kicker's place, large. Calm, straight photo strip below. -->
-  <section class="c2-hero hero-c wrap" data-v="c">
-    <div class="hero-copy">
-      <p class="clc badge hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
-      <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
-      <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
-      <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
-    </div>
-    <!-- Dummy photos: replace with real Alecto moves (the stepping stones one lights up, stones.js). Hannah: illustrative. -->
-    <div class="strip">
-      <figure class="strip-me hx"><div class="strip-face"><img src="/concept-2/hannah.png" alt=""></div><figcaption><b>Hannah Reid</b><span class="online mono"><i></i>Your conveyancer</span></figcaption></figure>
-      <div class="hx path-photo" data-path><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
-      <img class="hx" src="/concept-2/move-2.jpg" alt="">
-      <img class="hx" src="/concept-2/move-4.jpg" alt="">
-    </div>
-  </section>
-
-  <!-- D · Real life: one photo of a move, full width, the headline on it. As you scroll it pans from the
-       people down to the path and the stepping stones light up (stones.js). CLC and Hannah share a quiet bar
-       at the bottom. Dummy photo (stock, 1333 px wide): swap for a real move, high-res. -->
-  <section class="c2-hero hero-d full wrap" data-v="d">
+  <!-- B · Photo full, boxed, and C · Photo full width: the path photo with the headline on it, no bar. As you
+       scroll it pans from the people down to the path and the stepping stones light up (stones.js). CLC under
+       the buttons. Dummy photo (stock, 1333 px wide): swap for a real move, high-res. -->
+  <section class="c2-hero hero-photo boxed wrap" data-v="b">
     <div class="photo-panel">
       <div class="path-photo" data-path="pan"><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
       <div class="hero-copy">
         <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
         <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
         <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
+        <p class="clc line on-photo hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
       </div>
-      <div class="photo-bar hx">
-        <p class="clc bar hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
-        <aside class="hello mini" aria-label="Your conveyancer">
-          <span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span>
-          <p><b>Hannah Reid</b><span class="online mono"><i></i>Your conveyancer, online now</span></p>
-        </aside>
+    </div>
+  </section>
+
+  <section class="c2-hero hero-photo full wrap" data-v="c">
+    <div class="photo-panel">
+      <div class="path-photo" data-path="pan"><div class="pp"><img src="/phase-2/move-path.jpg" alt="Two people carry moving boxes along a garden path of square stepping stones"><span class="stones" aria-hidden="true"></span></div></div>
+      <div class="hero-copy">
+        <h1>Move home without <span class="nowrap">the drama<span class="period" id="k0"></span></span></h1>
+        <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
+        <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
+        <p class="clc line on-photo hx"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Regulated by the Council for Licensed Conveyancers</b><small class="mono">Licence 14351</small></span></p>
       </div>
     </div>
   </section>
@@ -416,7 +377,7 @@
   </div>
 </footer>
 
-<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · Concept 2a · Calm">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · Concept 2b · Your person">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · Concept 2c · Trust first">2c</a><a href="/phase-2/concept-2/?v=d" title="Phase 2 · Concept 2d · Real life">2d</a></nav>
+<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a · Photo right">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · 2b · Photo full, boxed">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · 2c · Photo full width">2c</a></nav>
 
 <script type="module" src="/src/phase-2/concept-2/main.js"></script>
 </body>

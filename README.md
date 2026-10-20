@@ -3,7 +3,7 @@
 Marketing site concepts for Alecto Conveyancing.
 
 **Phase 2 · concept 2a leads.** `/` opens it (`index.html` redirects to `/phase-2/concept-2/?v=a`), and the concept
-switcher only shows phase 2 (2a–2d). Concepts 1 to 4 are hidden from the switcher but still work at their URLs.
+switcher only shows phase 2 (2a–2c). Concepts 1 to 4 are hidden from the switcher but still work at their URLs.
 
 | Concept | URL | Idea |
 | --- | --- | --- |
@@ -11,9 +11,9 @@ switcher only shows phase 2 (2a–2d). Concepts 1 to 4 are hidden from the switc
 | 2 · One square | `/concept-2/` | One square: it travels from the headline through the whole move and ends as the logo dot |
 | 3 · Square by square | `/concept-3/` | No loader: the page builds itself tile by tile, and ~170 squares fly in to build a house as you scroll |
 | 4 · Your person | `/concept-4/` | Concept 3's build-up with the human side up front: your conveyancer introduces herself, messages you at every stage, and the team gets a face |
-| Phase 2 · 2a–2d | `/phase-2/concept-2/?v=a` … `?v=d` | Concept 2 in four flavors: hero, page load and portraits vary, the one square stays |
-| Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2d |
-| Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2d |
+| Phase 2 · 2a–2c | `/phase-2/concept-2/?v=a` … `?v=c` | Concept 2 in three flavors: the hero and portraits vary, the one square stays. 2a leads |
+| Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
+| Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
@@ -36,7 +36,7 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 A second layer of concepts, shown as its own group ("Phase 2") on the concept switcher. Phase 2 pages live under
 `phase-2/` with their code under `src/phase-2/`, so the phase 1 concepts stay as they were.
 
-### Concept 2, four flavors
+### Concept 2, three flavors (for Will: 2a photo right, 2b photo full boxed, 2c photo full width)
 
 `phase-2/concept-2/index.html`, `src/phase-2/concept-2/`. Concept 2 with the one square journey unchanged, and on top:
 
@@ -51,22 +51,21 @@ A second layer of concepts, shown as its own group ("Phase 2") on the concept sw
   with their permission).
 - **No big periwinkle block behind the portraits:** each flavor tries another backdrop.
 - **Page load:** the square starts alone in the middle of a blank screen, pops up, the page fades in and it hops
-  onto "drama" as the headline's full stop (`drop`, from 2a, now for every flavor; `loader.js`).
+  onto "drama" as the headline's full stop (`drop`, for every flavor; `loader.js`).
 - **The path photo** (`public/phase-2/move-path.jpg`, stock, high-res of `move-3.jpg`): two people carry boxes over
   square stepping stones, and the stones light up in periwinkle, one by one like footsteps, then a soft step runs
   along them (`stones.js`). The stone shapes come from one mask made from the photo
-  (`public/phase-2/move-path-stones.png`), each stone clipped to its outline. Without JS or with reduced motion the
+  (`public/phase-2/move-path-stones.png`), each stone clipped to its outline (bump the `?v=` on the mask URL in `phase2.css` after a new mask, so browsers don't keep the old one). Without JS or with reduced motion the
   stones are simply lit. A new photo needs a new mask and outlines: `scripts/stone-mask.py` makes both.
 
 | Flavor | Hero | Portraits |
 | --- | --- | --- |
-| 2a · Calm | Concept 2's hero, decluttered; CLC as a stamp on the photos | warm neutral |
-| 2b · Your person | The path photo is the picture, Hannah's promise on a card; CLC under the buttons | ink |
-| 2c · Trust first | One centred column, a big CLC badge in the kicker's place, a straight photo strip with the path photo | fine line |
-| 2d · Real life | The path photo full width with the headline on it; it pans from the people to the path as you scroll and the stones light as they come into view; CLC and Hannah in a bar | light periwinkle wash |
+| 2a · Photo right (leads, the default) | The path photo is the picture, Hannah's promise on a card; CLC under the buttons | ink |
+| 2b · Photo full, boxed | The path photo in a rounded frame with the headline on it; it pans from the people to the path as you scroll and the stones light as they come into view; CLC under the buttons, no bar | fine line |
+| 2c · Photo full width | As 2b, edge to edge | light periwinkle wash |
 
 Mix and match: `?v=` picks the hero and portraits, `?l=` still tries the other page loads (`curtain`, `count`,
-`wordmark`), for example `/phase-2/concept-2/?v=c&l=curtain`.
+`wordmark`), for example `/phase-2/concept-2/?v=b&l=curtain`.
 
 ### Company and careers pages
 
@@ -84,7 +83,7 @@ the markup).
 - **Careers:** open roles in a card next to the headline, why Alecto, a day with Tom on a timeline (the squares are
   the markers), the full roles list, how we hire, and a coffee CTA.
 - **One flavor per review:** links between the phase 2 pages carry `?v=` along (`flavor.js`). On these two pages the
-  switcher's 2a–2d swap the flavor without leaving the page. They are linked from the homepage nav (Company, Careers;
+  switcher's 2a–2c swap the flavor without leaving the page. They are linked from the homepage nav (Company, Careers;
   Introducers and Lender panel now sit only in the footer) and from the footer's Company column.
 
 ## Feedback round 2 (concept 2 leading, concept 4 calmer)

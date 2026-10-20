@@ -6,9 +6,9 @@
  */
 const ROUNDED = [
   // phase2.css
-  '.c2 .btn', '.c2 .icon-btn', '.c2 .step', '.c2 .art', '.c2 .review', '.c2-cta', '.collage img', '.mate-tile',
-  '.face-tile', '.c2 .announce-tag', '.clc-mark', '.clc.stamp', '.clc.badge', '.hannah-tile', '.hannah-card',
-  '.strip img', '.strip .path-photo', '.strip-face', '.strip-me figcaption', '.photo-panel', '.c2 .cta-art img',
+  '.c2 .btn', '.c2 .icon-btn', '.c2 .step', '.c2 .art', '.c2 .review', '.c2-cta', '.mate-tile',
+  '.face-tile', '.c2 .announce-tag', '.clc-mark', '.clc.stamp', '.hannah-tile', '.hannah-card',
+  '.photo-panel', '.c2 .cta-art img',
   // pages.css
   '.about-photos img', '.founder', '.value', '.regulated', '.roles-card', '.roles-card header .count', '.role .go',
   '.hire li',
