@@ -32,6 +32,11 @@
 .c2 .btn, .c2 .icon-btn, .c2 .step, .c2 .art, .c2 .review, .c2-cta, .mate-tile, .face-tile,
 .c2 .announce-tag, .clc-mark, .clc.stamp, .hannah-tile, .hannah-card, .photo-panel, .c2 .cta-art img, .cta-square { border-radius: var(--r6, var(--ui-r)); }
 .c2 .step { overflow: hidden; }
+/* --line is so close to the page colour that, bent round a corner, the 1px edge smears away and the corner
+   reads as a blur. The rounded boxes with an edge get one a touch darker, so the curve stays crisp. */
+.c2 { --edge: color-mix(in srgb, var(--fg) 15%, var(--bg)); }
+.c2 :is(.icon-btn, .btn.ghost, .review, .step-card, .hannah-card, .clc.stamp, .founder, .value, .regulated,
+  .roles-card, .role .go, .hire li) { border-color: var(--edge); }
 .c2 .btn.accent { color: var(--accent-fg); }
 
 /* ---------- the logo: brand kit letters, the dot as an element (the square can take its place) ----------
@@ -199,6 +204,11 @@ html.jl .hero-photo .clc.line { --t: 1050ms; }
 
 /* A: the photo is the picture, Hannah's card sits on it */
 .hero-right .hannah-tile.path-photo { aspect-ratio: 4 / 5; --fy: .45; }
+/* the sky is as pale as the page, so without an edge the squares behind seem to stop mid-air */
+.hero-right .hannah-tile.path-photo::after {
+  content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none;
+  box-shadow: inset 0 0 0 1px var(--edge);
+}
 .hero-right .hannah.with-photo .hannah-card { left: auto; right: -40px; }
 .hannah-card .hannah-who { display: flex; align-items: center; gap: 12px; }
 .hannah-card .face-tile { width: 48px; flex: none; }

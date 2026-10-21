@@ -2,8 +2,8 @@
 
 Marketing site concepts for Alecto Conveyancing.
 
-**Phase 2 · concept 2a leads.** `/` opens it (`index.html` redirects to `/phase-2/concept-2/?v=a`), and the concept
-switcher only shows phase 2 (2a–2c). Concepts 1 to 4 are hidden from the switcher but still work at their URLs.
+**Phase 2 · concept 2a is the one.** `/` opens it (`index.html` redirects to `/phase-2/concept-2/?v=a`). The concept
+switcher is gone: the phase 2 pages always show 2a and ignore `?v=`. Concepts 1 to 4 still work at their URLs.
 
 | Concept | URL | Idea |
 | --- | --- | --- |
@@ -82,8 +82,7 @@ the markup).
   four promises, the team, a "Licensed, insured, accountable" block and a hiring CTA.
 - **Careers:** open roles in a card next to the headline, why Alecto, a day with Tom on a timeline (the squares are
   the markers), the full roles list, how we hire, and a coffee CTA.
-- **One flavor per review:** links between the phase 2 pages carry `?v=` along (`flavor.js`). On these two pages the
-  switcher's 2a–2c swap the flavor without leaving the page. They are linked from the homepage nav (Company, Careers;
+- **One flavor:** links between the phase 2 pages carry `?v=` along (`flavor.js`); only 2a is shown. They are linked from the homepage nav (Company, Careers;
   Introducers and Lender panel now sit only in the footer) and from the footer's Company column.
 
 ## Feedback round 2 (concept 2 leading, concept 4 calmer)

@@ -19,8 +19,9 @@ const MAX = 12; // px, the cap (also --dot-r in phase2.css)
 export function initRadius() {
   const ro = new ResizeObserver((entries) => {
     entries.forEach(({ target, borderBoxSize: [box] }) => {
-      const r = Math.min(Math.min(box.inlineSize, box.blockSize) * RATIO, MAX);
-      target.style.setProperty('--r6', `${r.toFixed(2)}px`);
+      // whole pixels: a fractional radius puts the curve between pixels and softens it
+      const r = Math.max(1, Math.round(Math.min(Math.min(box.inlineSize, box.blockSize) * RATIO, MAX)));
+      target.style.setProperty('--r6', `${r}px`);
     });
   });
   document.querySelectorAll(ROUNDED.join(',')).forEach((el) => ro.observe(el, { box: 'border-box' }));
