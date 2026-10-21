@@ -19,7 +19,7 @@
       var d = document.documentElement;
       try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
       var q = new URLSearchParams(location.search);
-      var v = /^[abc]$/.test(q.get('v')) ? q.get('v') : 'a'; /* 2a leads */
+      var v = 'a'; /* 2a is the one: the switcher is gone, ?v= is ignored */
       var l = /^(drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'drop'; /* the drop, for every flavor */
       d.setAttribute('data-v', v);
       d.setAttribute('data-l', l);
@@ -186,7 +186,6 @@
   </div>
 </footer>
 
-<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a · Photo right">2a</a><a href="/phase-2/concept-2/?v=b" title="Phase 2 · 2b · Photo full, boxed">2b</a><a href="/phase-2/concept-2/?v=c" title="Phase 2 · 2c · Photo full width">2c</a></nav>
 
 <script type="module" src="/src/phase-2/concept-2/page.js"></script>
 </body>
