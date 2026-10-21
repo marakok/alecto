@@ -239,3 +239,11 @@ html[data-v="c"] .c2 { --portrait-bg: color-mix(in srgb, var(--accent) 12%, var(
   .photo-panel { min-height: 0; }
   .photo-panel::before { background: linear-gradient(0deg, rgba(20, 20, 22, .85), rgba(20, 20, 22, .55)); }
 }
+/* the smallest phones (320px): the logo, theme switch and "Get a quote" fit on one row */
+@media (max-width: 400px) {
+  .c2 nav { gap: 12px; }
+  .c2 nav .logo { font-size: 23px; }
+  .c2 nav .actions { gap: 8px; }
+  .c2 nav .icon-btn { width: 40px; height: 40px; }
+  .c2 nav .actions .btn { padding: 11px 14px; font-size: 15px; }
+}

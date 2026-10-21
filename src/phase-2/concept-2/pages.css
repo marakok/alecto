@@ -180,3 +180,10 @@ html.jl .jobs-hero .roles-card { --t: 500ms; }
   .day li { grid-template-columns: minmax(0, 1fr); padding-left: 30px; }
   .day li p { grid-column: 1; }
 }
+/* the smallest phones (320px): "Conveyancing" fits the column, and so do the numbers */
+@media (max-width: 400px) {
+  .page-hero h1 { font-size: min(50px, 12vw); }
+  .numbers dl { column-gap: 20px; }
+  .numbers dl > div { padding-left: 14px; }
+  .numbers dd { font-size: 28px; }
+}
