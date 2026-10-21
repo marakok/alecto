@@ -135,6 +135,7 @@ html.jl .hero-right .clc.line { --t: 1050ms; }
 /* the brand element behind the photo: two plain squares (the moving boxes, no tape), big and faint, peeking
    out at the top right. They fade in after the photo; scroll shifts them a little (--s, boxes.js). */
 .hannah.with-photo { isolation: isolate; }
+.hero-right { overflow-x: clip; } /* the squares peek into the side margin, never past the screen edge */
 .hero-boxes { --w: 360px; --box-line: color-mix(in srgb, var(--fg) 14%, transparent); right: -104px; top: -48px; z-index: -1; }
 .hero-boxes i { border-radius: var(--dot-r); } /* like the logo dot and every box */
 .hero-boxes i::after { display: none; }
@@ -239,6 +240,8 @@ html[data-v="c"] .c2 { --portrait-bg: color-mix(in srgb, var(--accent) 12%, var(
   .photo-panel { min-height: 0; }
   .photo-panel::before { background: linear-gradient(0deg, rgba(20, 20, 22, .85), rgba(20, 20, 22, .55)); }
 }
+/* five links (Company, Careers) need more room than the base nav: drop them a little earlier than 980px */
+@media (max-width: 1040px) { .c2 nav .links { display: none; } }
 /* the smallest phones (320px): the logo, theme switch and "Get a quote" fit on one row */
 @media (max-width: 400px) {
   .c2 nav { gap: 12px; }
