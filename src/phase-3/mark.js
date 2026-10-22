@@ -6,12 +6,16 @@ import { clamp } from '../js/palette.js';
  * cropped, in flat periwinkle and ink on warm paper, with one movement at a time.
  *
  *  - The hero ([data-mark="hero"], pinned): a single giant rounded corner of periwinkle glides in and settles, with
- *    window light moving through it (duotone) and a glimpse of what you see on a card; it drifts with the pointer.
+ *    window light moving through it (duotone) and a glimpse of what you see on a card.
  *    As you scroll, it zooms out until you see what it is: the full stop of "alecto." The letters fade in as it
  *    shrinks, the light and the card fade out. The headline ends on the same square, small.
  *  - The aha ([data-mark="meet"], pinned): four solid squares slide in from the corners and meet; the gap between
  *    their corners is the AI star, and it lights up.
  *  - [data-mark-in]: squares that carry content slide into place when they come into view.
+ *  - The travelling square: once the hero lets go, the full stop of "alecto." breaks loose and travels down the page
+ *    through every [data-dot]: into the middle of the four squares (where it turns into the star), into the first
+ *    figure, then from chapter to chapter, filling each mark it reaches. A [data-dot][data-hold] keeps it until its
+ *    pinned section lets go.
  * Reduced motion: everything in its final place.
  */
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
@@ -43,12 +47,51 @@ export function initMark({ reduce }) {
   const copy = hero ? hero.querySelectorAll('.mk-copy h1, .mk-copy .sub') : [];
   const ctas = hero?.querySelector('.mk-copy .ctas');
 
-  // the corner follows the pointer a few pixels, like a real object
-  hero?.addEventListener('pointermove', (e) => {
-    if (e.pointerType !== 'mouse') return;
-    stage.style.setProperty('--px', `${((e.clientX / innerWidth - 0.5) * -18).toFixed(1)}px`);
-    stage.style.setProperty('--py', `${((e.clientY / innerHeight - 0.5) * -12).toFixed(1)}px`);
-  });
+
+  // the travelling square: one fixed square, always between two [data-dot] anchors (or resting on one)
+  const anchors = [...document.querySelectorAll('[data-dot]')];
+  const traveller = document.createElement('i');
+  traveller.className = 'mk-traveller';
+  traveller.setAttribute('aria-hidden', 'true');
+  document.body.append(traveller);
+  const box = (el) => {
+    const r = el.getBoundingClientRect();
+    const cr = getComputedStyle(el).borderTopLeftRadius;
+    const rad = cr.endsWith('%') ? (parseFloat(cr) / 100) * r.width : parseFloat(cr) || 0;
+    return { x: r.left, y: r.top, w: r.width, h: r.height, c: r.top + r.height / 2, rad };
+  };
+  const held = (el) => el.hasAttribute('data-hold') && progress(el.closest('[data-mark]')) < 1;
+  const travel = () => {
+    const line = innerHeight * 0.55; // an anchor is reached when its middle passes this line
+    const boxes = anchors.map(box);
+    let j = -1;
+    if (hero?.classList.contains('revealed') || progress(hero) >= 1) {
+      boxes.forEach((b, i) => { if (b.c <= line) j = i; });
+      j = Math.max(j, 0);
+    }
+    // a held anchor (still pinned) keeps it, and the one after it isn't reached yet either
+    const hold = j >= 0 && held(anchors[j]);
+    anchors.forEach((a, i) => a.classList.toggle('reached', i <= j));
+    let t = 0;
+    if (j >= 0 && j < boxes.length - 1 && !hold) {
+      const a = boxes[j];
+      const b = boxes[j + 1];
+      t = clamp((line - a.c) / Math.max(1, b.c - a.c), 0, 1);
+    }
+    dot?.classList.toggle('left', j > 0 || t > 0.001); // the full stop has broken loose
+    // resting on an anchor, the anchor itself shows (filled); only in the middle of the four, before they meet, does
+    // the square wait on its own, and then it becomes the star
+    const waiting = j >= 0 && anchors[j].classList.contains('mk-slot') && !meet?.classList.contains('met');
+    traveller.classList.toggle('on', j >= 0 && (t > 0.001 || waiting));
+    if (j < 0) return;
+    const a = boxes[j];
+    const b = boxes[Math.min(j + 1, boxes.length - 1)];
+    const e = ease(t);
+    traveller.style.transform = `translate(${lerp(a.x, b.x, e).toFixed(1)}px, ${lerp(a.y, b.y, e).toFixed(1)}px)`;
+    traveller.style.width = `${lerp(a.w, b.w, e).toFixed(1)}px`;
+    traveller.style.height = `${lerp(a.h, b.h, e).toFixed(1)}px`;
+    traveller.style.borderRadius = `${lerp(a.rad, b.rad, e).toFixed(1)}px`;
+  };
 
   const frame = () => {
     if (hero && logo && dot) {
@@ -96,6 +139,7 @@ export function initMark({ reduce }) {
       const n = Math.round(clamp((p - 0.45) / 0.35, 0, 1) * words.length); // complete by 80%, before the section lets go
       words.forEach((w, i) => w.classList.toggle('on', i < n));
     }
+    travel();
   };
   addEventListener('scroll', () => requestAnimationFrame(frame), { passive: true });
   addEventListener('resize', frame);

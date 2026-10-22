@@ -101,8 +101,8 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
   in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
   warm paper, no outlines or effects:
-  - **The hero** (pinned): one giant periwinkle corner glides in from the right, just clear of the headline, and drifts
-    a few pixels with the pointer. Window light moves through it (the theme clip in duotone: multiplied in light mode,
+  - **The hero** (pinned): one giant periwinkle corner glides in from the right, just clear of the headline, and then
+    holds still until you scroll. Window light moves through it (the theme clip in duotone: multiplied in light mode,
     screened in dark), with a glimpse of what you see on a card ("Your move · Live · Exchange this week"), and the
     headline ends on the same square, small. As you scroll it zooms out until you see what it is, the full stop of
     "alecto." (the light and the card fade), with "Everything comes down to one point: your move, done."
@@ -110,8 +110,12 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
     meet; the gap between their corners is the AI star, lit in periwinkle. "Where our people meet, our AI works."
     These four are rounder (30%) so the star reads.
   - **Squares that carry content:** the figures on solid squares in the brand colours, sliding into place.
+  - **The travelling square:** once the hero lets go, the full stop of "alecto." breaks loose and travels down the page
+    (one fixed square, `[data-dot]` anchors): into the middle of the four, where it waits and becomes the star, into
+    the first figure (which it fills), then from chapter to chapter, filling the small square beside each eyebrow.
+  - **The lower half in squares:** the journey stages and the front panels as flat soft-periwinkle squares, portraits
+    cropped in the dot's rounded square, reviews on soft squares with square photos, the FAQ just type and hairlines.
   - **The evening:** the giant corner again, on ink, as a bookend.
-  Then the front blocks, the journey, the team, reviews and FAQ, as on Story.
 - **The front, not the back (feedback):** show only what the client sees, not the lawyer's platform. On Story and
   Lines the case allocation demo (back office) is replaced by two blocks after the client's own prototype, in our
   style (`front.js`, `front.css`): "Fast by default. *Proactive* by nature." (Enquiries, Blockers and Paperwork
