@@ -3,7 +3,8 @@ import { clamp } from '../js/palette.js';
 /**
  * The two-tone statements fill in as you read them: every word starts pale and takes its own tone (the lead
  * sentence dark, the rest lighter) as the paragraph scrolls up the screen, word by word. With reduced motion
- * the statement is simply two-tone.
+ * the statement is simply two-tone. Inside a pinned section ([data-words-driven]) the paragraph doesn't move, so
+ * that section's script fills the words instead.
  */
 export function initWords({ reduce }) {
   if (reduce) return;
@@ -29,13 +30,14 @@ export function initWords({ reduce }) {
     };
     wrap(p, false);
     p.classList.add('filling');
-    return { p, words, done: -1 };
+    return { p, words, done: -1, driven: !!p.closest('[data-words-driven]') };
   });
   if (!items.length) return;
 
   const update = () => {
     const vh = innerHeight;
     items.forEach((it) => {
+      if (it.driven) return; // filled by its pinned section instead (e.g. mark.js)
       const r = it.p.getBoundingClientRect();
       // from its top at 88% of the screen to its bottom at 55%
       const k = clamp((vh * 0.88 - r.top) / (r.height + vh * 0.33), 0, 1);

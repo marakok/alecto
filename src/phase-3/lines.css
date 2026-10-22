@@ -43,22 +43,6 @@ html[data-l="grid"] .hero-grid .gl { stroke-dasharray: none; stroke-dashoffset: 
 
 /* ---------- one grid, one paper, through the whole page ---------- */
 .p3c :is(.proofs, .team-band, .ai-band, #reviews) { background: transparent; }
-/* the rest of the page: no grid at rest; a soft patch of it under the pointer (bodyGrid in lines.js) */
-.body-grid {
-  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease;
-  -webkit-mask-image: radial-gradient(circle 280px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / .45) 45%, transparent 100%);
-  mask-image: radial-gradient(circle 280px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / .45) 45%, transparent 100%);
-}
-.body-grid.on { opacity: 1; transition-duration: .6s; }
-.bg-lines {
-  position: absolute; inset: 0; opacity: .4;
-  background:
-    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) var(--gx, 0) 0 / var(--c, 200px) 100%,
-    linear-gradient(180deg, var(--grid-line) 1px, transparent 1px) 0 var(--gy, 0) / 100% var(--c, 200px);
-}
-.bg-tile { position: absolute; left: 0; top: 0; overflow: visible; transition: transform .9s cubic-bezier(.22, 1, .36, 1); }
-.bg-tile .bt { fill: color-mix(in srgb, var(--accent) 3%, transparent); stroke: color-mix(in srgb, var(--accent) 22%, transparent); stroke-width: 1; }
-.bg-tile .bs { fill: color-mix(in srgb, var(--accent) 30%, transparent); }
 .p3c .c2-hero { z-index: 0; }
 /* every section starts on a full-width line, with a "+" on each column */
 .p3c main .sec-head { position: relative; padding-top: 44px; }
