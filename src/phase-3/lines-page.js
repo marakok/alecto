@@ -17,3 +17,10 @@ if (spark) {
     io.disconnect();
   }, { threshold: 0.4 }).observe(spark);
 }
+
+// the background clips play at a third of their speed: slower light, calmer
+document.querySelectorAll('.hero-video, .cta-video').forEach((v) => {
+  v.defaultPlaybackRate = 1 / 3;
+  v.playbackRate = 1 / 3;
+  v.addEventListener('loadedmetadata', () => { v.playbackRate = 1 / 3; });
+});

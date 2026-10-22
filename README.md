@@ -16,6 +16,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
 | Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
+| Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
@@ -71,12 +72,36 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
     walks: the AI working around your move. The platform section shows it slowly: four tiles draw, the star appears
     between them ("Where our people meet, the AI works"). The AI icon (`#i-spark`) is now that same gap shape.
     On hover (mouse only) the tile under the pointer and its four stars light up, then fade slowly: a soft trail.
+  - **Update (example video):** the hero is dark, on a clip of window light moving across a wall
+    (`public/phase-3/light-wall.mp4`), with thin white outline tiles stepping down the diagonal, periwinkle ones beside
+    them (`data-accent`), lines running on and "+" marks at their corners. The evening has the light across a corner
+    (`light-corner.mp4`). Both play at a third of their speed (`lines-page.js`). Both clips are watermarked iStock previews: replace them with the licensed files before
+    launch. Lines is set in Geist throughout (the accent word leans in Geist instead of switching to the serif), and
+    ignores a type choice remembered from another page (`?f=` still works).
   - **The rest of the page:** one paper, no grid at rest; under the pointer a soft round patch of the grid fades in
     and follows with a little lag, on the hero's columns and rows, the tile you're over faintly outlined with its four
     stars (`bodyGrid`, mouse only); every section starts on a
     full-width line with a mark on each column; the figures are tiles on the grid with the review as the periwinkle
     tile; icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
     room between everything.
+- **Story, an extra iteration** (`/phase-3/story/`, `story.js`, `story.css`): the brand story, told by the brand's
+  own elements, one line per chapter. The hero is pinned on a dark, still stage while you scroll through seven
+  chapters; only one thing happens at a time, and only as you scroll:
+  1. "Alecto means 'never stops.'": one square, the dot, alone in the dark.
+  2. "The square is data: every document, date and detail of your move.": it multiplies into a field of squares,
+     a few labelled (Title register, Searches · 12 Mar, Lease p. 46, …).
+  3. "The lines connect it, step by step.": a line draws through the field, square to square.
+  4. "AI works quietly in the shadows, bringing light.": the window-light clip fades in behind the field.
+  5. "It reads every square so nothing stays hidden.": a band of light sweeps across; every square it passes is read.
+  6. "Our lawyer makes every decision together with you.": two squares come forward, the lawyer and you, one line
+     between them.
+  7. "Law that keeps you moving.": the dot writes the headline as you scroll; the buttons follow.
+  Seven small squares at the bottom show where you are. No page load and no travelling square; the journey's
+  cards still pin and swap as on the other pages (`journey.js`), its drawings keeping their own squares. Reduced motion: the chapters as a plain list.
+- **Quieter (feedback):** Home has no cycling status in the hero, a few slow data squares on the thread instead of a
+  stream, station labels that stay put (`data-thread-swap` brings the turns back), and leaves that sway less and
+  don't flutter. Lines has no data sliding along the grid (`data-bits` brings it back), your tile steps every five
+  seconds, its stars glow steadily, and the hover patch in the page is fainter.
 - **The square writes the text** (`src/js/write.js`, after "Alecto · Motion Experiment v1"): the page load is now
   `write` (`?l=write`, the default on phase 3; `?l=drop` still gives 2a's hop). The square pops up in the middle,
   hops to the start of the headline and writes it line by line, running just under the baseline like a cursor; the

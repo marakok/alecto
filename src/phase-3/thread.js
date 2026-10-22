@@ -10,14 +10,14 @@ import { afterIntro } from '../phase-2/concept-2/reveal.js';
  *  - The line draws itself as you read: it is drawn down to a little below the middle of the screen.
  *  - Squares of data travel along the drawn part at a calm pace. When one passes a station, the station blinks.
  *  - Stations ([data-thread="label one|label two|…"]): a node on the line and a label beside it, in the margin,
- *    showing what the AI just did. The labels take turns every few seconds.
+ *    showing what the AI just did (the first label; they take turns only with data-thread-swap).
  *  - The hero's status line ([data-ticker]) cycles through what it's working on right now.
  * Wide screens only (the line lives in the margin). Reduced motion: the whole line, no data, first labels.
  */
 const SVG = 'http://www.w3.org/2000/svg';
 const R = 28; // corner radius
-const SPEED = 70; // px per second
-const GAP = 260; // px between two squares of data
+const SPEED = 38; // px per second: slow
+const GAP = 900; // px between two squares of data: a few, not a stream
 
 export function initThread({ reduce }) {
   const main = document.getElementById('main');
@@ -130,7 +130,7 @@ export function initThread({ reduce }) {
   // the labels take turns
   const say = (l) => { l.el.textContent = l.items[l.i % l.items.length]; };
   labels.forEach(say);
-  if (!reduce) {
+  if (!reduce && labels.some((l) => l.station.hasAttribute('data-thread-swap'))) { // labels stay put unless asked
     setInterval(() => labels.forEach((l) => {
       if (!l.el.classList.contains('on')) return;
       l.el.classList.add('swap');
