@@ -81,8 +81,8 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   - **The rest of the page:** one paper, no grid at rest; under the pointer a soft round patch of the grid fades in
     and follows with a little lag, on the hero's columns and rows, the tile you're over faintly outlined with its four
     stars (`bodyGrid`, mouse only); every section starts on a
-    full-width line with a mark on each column; the figures are tiles on the grid with the review as the periwinkle
-    tile; icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
+    full-width line with a mark on each column; the figures are four cards with room between them, the review as the
+    periwinkle one (the hover grid stays off cards and content); icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
     room between everything.
 - **Story, an extra iteration** (`/phase-3/story/`, `story.js`, `story.css`): the brand story, told by the brand's
   own elements, one line per chapter. The hero is pinned on a dark, still stage while you scroll through seven
@@ -125,8 +125,8 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   "Aa" buttons, each in its own face): **Geist** (leads, with Geist Mono for labels), **Instrument Sans**, and **Inter**
   as it was in 2a, to compare. Geist and Instrument Sans are lighter: headings 500 instead of 800.
 - **Two-tone statements** (`.two-tone`): one paragraph, a dark lead sentence and a lighter rest, as in the reference.
-- **Fewer squares:** icons instead of the brand squares as bullets (the three proofs, "Your call", eyebrows), real
-  stars, round status dots and avatars, pill buttons, softer cards, no brand squares in the hero and CTA. The one square
+- **Fewer squares:** icons instead of the brand squares as bullets (the three proofs, "Your call", eyebrows), sparks
+  (the AI star) as review ratings, round status dots and avatars, pill buttons, softer cards, no brand squares in the hero and CTA. The one square
   stays where it means something: the logo dot and the headline's full stop that travels through the journey.
   Icons are a small inline sprite (`icons.js`, Lucide's shapes): `<svg class="icn"><use href="#i-user"/></svg>`.
 - **The living demo** (`demo.js`, `<div class="alloc" data-alloc="compact|full">`): case allocation playing itself,
