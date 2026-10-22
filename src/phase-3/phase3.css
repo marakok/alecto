@@ -1,0 +1,110 @@
+/* Phase 3, on top of 2a (journey.css, phase2.css, reveal.css). Feedback round 3:
+   - Type: lighter overall, in three options on the switcher (html[data-f]): Geist (leads), Instrument Sans,
+     and Inter as it was in 2a, to compare against.
+   - Fewer squares: icons instead of the brand squares as bullets, round status dots, real stars, pill
+     buttons and softer cards. The one square stays where it means something: the logo dot and the
+     headline's full stop that travels through the journey.
+   The platform section, the product screens and the living demo are in platform.css. */
+
+/* ---------- type options ---------- */
+html[data-f="geist"] .c2 {
+  --display: "Geist", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "Geist Mono", ui-monospace, "SFMono-Regular", Menlo, monospace;
+}
+html[data-f="instrument"] .c2 { --display: "Instrument Sans", ui-sans-serif, system-ui, -apple-system, "Segoe UI", sans-serif; }
+
+/* lighter: headings drop from 800 to 500, labels from 600 to 500 (Inter stays as it was, to compare) */
+html:not([data-f="inter"]) .p3 :is(h1, h2, h3, .facts b, .numbers dd, .intel-facts dd, .hannah-by b, .mate b, .rname, .clc-text b, .faq summary, .founder b) { font-weight: 500; }
+html:not([data-f="inter"]) .p3 .c2-hero h1 { letter-spacing: -.04em; }
+html:not([data-f="inter"]) .p3 h2 { letter-spacing: -.035em; }
+html:not([data-f="inter"]) .p3 .btn { font-weight: 500; }
+html:not([data-f="inter"]) .p3 .review blockquote { font-weight: 400; }
+html:not([data-f="inter"]) .p3 .hannah-quote { font-weight: 400; }
+html[data-f="instrument"] .p3 .c2-hero h1 { letter-spacing: -.035em; }
+html[data-f="geist"] .p3 .c2 .mono, html[data-f="geist"] .p3 :is(.eyebrow, .ceyebrow) { letter-spacing: .08em; }
+
+/* ---------- icons (icons.js) ---------- */
+.icn { width: 20px; height: 20px; flex: none; fill: none; stroke: currentColor; stroke-width: 1.75; stroke-linecap: round; stroke-linejoin: round; }
+.p-ic {
+  flex: none; display: grid; place-items: center; width: 44px; height: 44px; border-radius: 50%;
+  background: var(--soft); color: var(--accent-strong);
+}
+.p-ic .icn { width: 21px; height: 21px; }
+.p-ic.lg { width: 56px; height: 56px; }
+.p-ic.lg .icn { width: 26px; height: 26px; }
+.p3 .eyebrow .icn { width: 15px; height: 15px; color: var(--accent); }
+.p3 .btn .icn { width: 18px; height: 18px; margin-right: -4px; }
+
+/* the three proofs: an icon each instead of a square */
+.p3 .proof-row > div { gap: 12px; }
+.p3 .proof-row .p-ic { margin-bottom: 6px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--edge); }
+
+/* "Your call": a signpost instead of the square */
+.p3 .yourcall .icn { width: 19px; height: 19px; color: var(--accent-strong); }
+
+/* ---------- fewer squares ---------- */
+.p3 .online i { border-radius: 50%; }
+.p3 .mate-tile::after { display: none; }
+.p3 .face-tile { border-radius: 50%; }
+.p3 .announce-tag { border-radius: 999px; padding-inline: 10px; }
+.p3 .btn, .p3 .icon-btn { border-radius: 999px; }
+.p3 :is(.review, .step, .hannah-card, .hannah-tile, .mate-tile, .c2-cta, .cta-art img) { border-radius: 16px; }
+.p3 .clc-mark { border-radius: 50%; font-size: 12px; }
+.p3 .cta-art .c-meeting { left: 30%; top: 12%; width: 56%; transform: rotate(-3deg); }
+
+/* review ratings: five stars (they fill in one by one, reveal.css) */
+.p3 .rate { gap: 3px; }
+.p3 .rate i {
+  width: 16px; height: 16px; border-radius: 0;
+  clip-path: polygon(50% 0, 61.2% 34.5%, 97.6% 34.5%, 68.2% 55.9%, 79.4% 90.5%, 50% 69.1%, 20.6% 90.5%, 31.8% 55.9%, 2.4% 34.5%, 38.8% 34.5%);
+}
+html.rv .p3 .review .rate i { background: color-mix(in srgb, var(--accent) 22%, transparent); box-shadow: none; }
+html.rv .p3 .review.in .rate i { background: var(--accent); box-shadow: none; }
+
+/* people: round avatars (initials) in the product screens and the demo */
+.p3 .av {
+  margin: 0; flex: none; display: inline-grid; place-items: center; width: 32px; height: 32px; border-radius: 50%;
+  background: linear-gradient(135deg, #8290E8, #E8A982); color: #141416; font: 600 12px/1 var(--display); letter-spacing: 0;
+}
+.p3 .av.sm { width: 24px; height: 24px; font-size: 9.5px; }
+.p3 .av.lg { width: 52px; height: 52px; font-size: 17px; }
+
+/* the crumb on the platform page: a chevron, not a square */
+.p3 .crumb .icn { width: 14px; height: 14px; }
+
+/* ---------- the concept switcher: the type options, each "Aa" in its own face ---------- */
+.concepts a[data-f="geist"] { font-family: "Geist", sans-serif; }
+.concepts a[data-f="instrument"] { font-family: "Instrument Sans", sans-serif; }
+.concepts a[data-f="inter"] { font-family: "Inter", sans-serif; }
+.concepts a[data-f] { font-size: 14px; font-weight: 500; letter-spacing: -.01em; }
+
+/* ---------- paper: a fine grain over the whole page, so flat colour feels like a sheet of paper ---------- */
+.p3::after {
+  content: ""; position: fixed; inset: 0; z-index: 70; pointer-events: none; opacity: .07; mix-blend-mode: multiply;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .9 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3::after { mix-blend-mode: screen; opacity: .05; filter: invert(1); } }
+:root[data-theme="dark"] .p3::after { mix-blend-mode: screen; opacity: .05; filter: invert(1); }
+
+/* ---------- writing: the square as a cursor (write.js) ----------
+   Every word is masked: full colour up to 70px behind the cursor, fading to a faint ghost of itself at the
+   cursor (--x: how far the cursor is past the word's left edge). The hero headline is written on load (the
+   "write" page load, loader.js), section headings as they come into view (headings.js). */
+html[data-l="write"] .c2-hero h1 .w > span,
+.p3 h2.writing .w > span {
+  -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
+  mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
+}
+html[data-l="write"] .c2-hero h1 .w > span { animation: none; }
+html[data-l="write"].written .c2-hero h1 .w > span, .p3 h2.written .w > span { -webkit-mask-image: none; mask-image: none; }
+/* the rest of the hero waits until the headline is written */
+html.jl[data-l="write"] .c2-hero .hx { animation-delay: calc(var(--t, 0ms) + 1700ms); }
+/* section headings: no rise, the cursor writes them */
+html.motion .p3 h2.writing .w > span { transform: none; opacity: 1; transition: none; }
+.p3 h2.writing { position: relative; }
+.w-caret {
+  position: absolute; left: 0; top: 0; width: 9px; height: 9px; background: var(--accent); border-radius: var(--dot-r);
+  pointer-events: none; opacity: 0; transition: opacity .35s ease, scale .6s var(--ease-expo, ease-out);
+}
+.w-caret.on { opacity: 1; }
+.w-caret.gone { opacity: 0; scale: .2; transition-delay: .45s; }

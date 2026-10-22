@@ -1,7 +1,7 @@
 import { resolve } from 'node:path';
 import { defineConfig } from 'vite';
 
-// "/" redirects to phase 2 · concept 2a (leading). Concepts 1 to 4 sit at "/concept-1/" to "/concept-4/", hidden from the switcher.
+// "/" redirects to phase 3 (leading); phase 2 · 2a stays at "/phase-2/concept-2/". Concepts 1 to 4 sit at "/concept-1/" to "/concept-4/", hidden from the switcher.
 export default defineConfig({
   build: {
     rollupOptions: {
@@ -14,6 +14,8 @@ export default defineConfig({
         phase2concept2: resolve(import.meta.dirname, 'phase-2/concept-2/index.html'),
         phase2company: resolve(import.meta.dirname, 'phase-2/concept-2/company/index.html'),
         phase2careers: resolve(import.meta.dirname, 'phase-2/concept-2/careers/index.html'),
+        phase3home: resolve(import.meta.dirname, 'phase-3/index.html'),
+        phase3product: resolve(import.meta.dirname, 'phase-3/product/index.html'),
       },
     },
   },

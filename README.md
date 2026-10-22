@@ -2,8 +2,8 @@
 
 Marketing site concepts for Alecto Conveyancing.
 
-**Phase 2 · concept 2a is the one.** `/` opens it (`index.html` redirects to `/phase-2/concept-2/?v=a`). The concept
-switcher is gone: the phase 2 pages always show 2a and ignore `?v=`. Concepts 1 to 4 still work at their URLs.
+**Phase 3 leads.** `/` opens it (`index.html` redirects to `/phase-3/`). The concept switcher is back (bottom right):
+phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three type options. Concepts 1 to 4 still work at their URLs.
 
 | Concept | URL | Idea |
 | --- | --- | --- |
@@ -14,6 +14,8 @@ switcher is gone: the phase 2 pages always show 2a and ignore `?v=`. Concepts 1 
 | Phase 2 · 2a–2c | `/phase-2/concept-2/?v=a` … `?v=c` | Concept 2 in three flavors: the hero and portraits vary, the one square stays. 2a leads |
 | Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
+| Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
+| Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
 
@@ -30,6 +32,57 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 - **Your team:** four people with portrait, role and one personal line.
 - **Placeholders:** names, words and portraits are illustrative. Swap the initials `<span>` inside `.portrait` for an
   `<img>` when Alecto supplies photos.
+
+## Phase 3: the tech behind the people
+
+`phase-3/index.html` (Home) and `phase-3/product/index.html` (Platform), with their code in `src/phase-3/`. Built on 2a:
+they load the phase 2 styles and scripts, and add `phase3.css` and `platform.css` on top. Feedback round 3 (Bas, Will):
+lighter type, fewer squares, start showing the AI behind the people and the product, calm, home and movement.
+
+- **One element, the square of light** (`light.js`, `light.css`; feedback round 4, after the client's own prototype
+  with curtains and leaf shadows). The square is the brand's one element: the logo dot, the cursor that writes the
+  headlines, the full stop, and, big, a square of sunlight on a wall at home with leaf shadows and a sheer curtain
+  moving through it. Calm (soft light), home (a wall in your house), movement (shadows, and the day passing). The page
+  is one day of a move: **07:42 · Offer accepted** (morning light in the hero), **12:10 · Searches back** (midday, the
+  figures on a sunlit wall, like the client's leaf photo), **19:30 · Keys in hand** (evening, lamplight, "Let's get
+  you *home*"). Drawn in code, so it works in dark mode (evening at home) and costs nothing to load; a real clip
+  (for example a Pexels "window light shadows" video) can go behind it later. The accent word in a headline is
+  Instrument Serif italic, as in the client's prototype ("keep you *moving*").
+- **The thread: the square as a line** (`thread.js`). The light is the calm surface; underneath, the AI never stops
+  (Alēktō: unceasing). From the headline's full stop a fine line runs past the light, down the left margin and into
+  the evening at the end, drawing itself as you read. Small squares of data keep flowing along it. Where it passes a
+  section ([data-thread="label|label"]) there is a node and a vertical label in the margin with what the AI just
+  did, the times running on through the night ("03:12 · 3 things flagged for Hannah"); the labels take turns. The
+  hero shows "In the background" with what it's working on now ([data-ticker]). Wide screens only. All activity is
+  illustrative.
+- **The square writes the text** (`src/js/write.js`, after "Alecto · Motion Experiment v1"): the page load is now
+  `write` (`?l=write`, the default on phase 3; `?l=drop` still gives 2a's hop). The square pops up in the middle,
+  hops to the start of the headline and writes it line by line, running just under the baseline like a cursor; the
+  words go from a faint ghost to full colour just behind it, and it rises into place as the full stop. Section
+  headings are written the same way as they scroll into view, by a small square that fades away at the end
+  (`headings.js`).
+- **Statements fill in as you read** (`words.js`): each word of a two-tone statement starts pale and takes its tone
+  as it scrolls up the screen.
+- **Type, three options** (`?f=geist|instrument|inter`, remembered in `localStorage` key `alecto-font`; the switcher's
+  "Aa" buttons, each in its own face): **Geist** (leads, with Geist Mono for labels), **Instrument Sans**, and **Inter**
+  as it was in 2a, to compare. Geist and Instrument Sans are lighter: headings 500 instead of 800.
+- **Two-tone statements** (`.two-tone`): one paragraph, a dark lead sentence and a lighter rest, as in the reference.
+- **Fewer squares:** icons instead of the brand squares as bullets (the three proofs, "Your call", eyebrows), real
+  stars, round status dots and avatars, pill buttons, softer cards, no brand squares in the hero and CTA. The one square
+  stays where it means something: the logo dot and the headline's full stop that travels through the journey.
+  Icons are a small inline sprite (`icons.js`, Lucide's shapes): `<svg class="icn"><use href="#i-user"/></svg>`.
+- **The living demo** (`demo.js`, `<div class="alloc" data-alloc="compact|full">`): case allocation playing itself,
+  after the launch video "Case allocation". A new instruction comes in, three checks run (case type, room this week,
+  then the introducer's preference or the most room), people drop out with a reason, one conveyancer is assigned and
+  their load ticks up. Plays while on screen, with pause and next; with reduced motion it waits for next.
+- **Product screens** (`app.js`): the Case allocation screen from the video in HTML (sidebar, load, capacity, case
+  types, preferred by). Feature tabs (`features.js`): allocation, annual leave (Humaans), document review with AI
+  flags, client updates drafted for the conveyancer, and the client's live tracker.
+- **Platform page:** hero with the product screen, a statement, the feature tabs, the live demo, "AI that makes room
+  for people" (reads, matches and chases, explains, decides) and "Safe, secure and regulated".
+- **Placeholders:** every person, case, number, certification (ISO 27001, Cyber Essentials Plus, UK hosting) and the
+  three figures under the AI flow are illustrative until Alecto confirms them. Company and Careers still link to the
+  phase 2 pages.
 
 ## Phase 2
 

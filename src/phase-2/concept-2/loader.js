@@ -1,4 +1,5 @@
 import { clamp } from '../../js/palette.js';
+import { writeAt } from '../../js/write.js';
 
 /**
  * Page load, four ways. Each starts with the square alone in the middle of a blank screen (the veil) and
@@ -10,6 +11,9 @@ import { clamp } from '../../js/palette.js';
  *  count:    a counter runs to 100 while the square makes four quarter turns, then it hops onto "drama".
  *  wordmark: the wordmark builds around the square, the square goes up to the logo, then falls onto
  *            "drama" (the concept 2 drop).
+ *  write:    the square pops up in the middle, hops to the start of the headline and writes it, line by
+ *            line, like a cursor; the words appear behind it from a faint ghost (write.js). It ends as the
+ *            full stop. Phase 3.
  *
  * place(now, target) says where the square is (fixed px: x, y, size, rotation, colour) until the intro is
  * done; main.js draws it. The intro clock starts when the headline is ready (fonts loaded and split).
@@ -44,6 +48,7 @@ export function createIntro({ mode, prepared, navdot, onDone }) {
     if (done) return;
     reveal();
     done = true;
+    root.classList.add('written'); // the headline in full, whatever the cursor had reached
     if (mode === 'wordmark') {
       navdot.classList.remove('lent');
       navdot.classList.add('ping');
@@ -97,6 +102,22 @@ export function createIntro({ mode, prepared, navdot, onDone }) {
       const k = p(t, F, 1000);
       if (k >= 1) finish();
       return hop(centre(S0()), T, k);
+    }
+
+    if (mode === 'write') {
+      if (t < 700) return pop(0);
+      reveal(); // the page fades in with the headline as a ghost
+      const heading = [...document.querySelectorAll('.c2-hero h1 .w > span')];
+      const size = T.size;
+      const end = { x: T.x, y: T.y };
+      if (t < 1250) return hop(centre(S0()), { ...writeAt(heading, 0, { size, end, below: size * 1.2 }), size }, p(t, 700, 550));
+      const k = p(t, 1250, clamp(500 + heading.length * 260, 1400, 2600));
+      const e = 0.5 - Math.cos(Math.PI * k) / 2; // calm in, calm out
+      // it runs just under the baseline, and rises into the full stop's place at the very end
+      const below = size * 1.2 * (1 - clamp((k - 0.86) / 0.14, 0, 1));
+      const at = writeAt(heading, e, { size, end, below });
+      if (k >= 1) finish();
+      return { x: at.x, y: at.y, size, rot: 0 };
     }
 
     if (mode === 'curtain') {
