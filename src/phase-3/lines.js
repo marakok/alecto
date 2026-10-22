@@ -224,8 +224,8 @@ function bodyGrid() {
   main.addEventListener('pointermove', (e) => {
     mx = e.clientX;
     my = e.clientY;
-    // the hero and the evening have grids of their own
-    const own = e.target.closest('.c2-hero, .c2-cta');
+    // the hero and the evening have grids of their own; over cards and content it stays away
+    const own = e.target.closest('.c2-hero, .c2-cta, .grid-band, .step, .review, .mate, .fr-proactive, .fr-lawyer, .faq details, .proof-row > div');
     if (!on && !own) { x = mx; y = my; } // appear where the pointer is, then follow
     on = !own;
     layer.classList.toggle('on', on);
