@@ -11,6 +11,7 @@ import { writeAt } from '../../js/write.js';
  *  count:    a counter runs to 100 while the square makes four quarter turns, then it hops onto "drama".
  *  wordmark: the wordmark builds around the square, the square goes up to the logo, then falls onto
  *            "drama" (the concept 2 drop).
+ *  grid:     as write, but quicker, while hairlines draw a grid across the screen (Phase 3 · Lines).
  *  write:    the square pops up in the middle, hops to the start of the headline and writes it, line by
  *            line, like a cursor; the words appear behind it from a faint ghost (write.js). It ends as the
  *            full stop. Phase 3.
@@ -104,14 +105,18 @@ export function createIntro({ mode, prepared, navdot, onDone }) {
       return hop(centre(S0()), T, k);
     }
 
-    if (mode === 'write') {
-      if (t < 700) return pop(0);
+    if (mode === 'write' || mode === 'grid') {
+      // grid: short. The square pops up while the lines draw across the screen (lines.js), then it goes
+      const quick = mode === 'grid';
+      const P = quick ? 450 : 700; // the pop
+      const H = quick ? 420 : 550; // the hop to the headline
+      if (t < P) return pop(0, quick ? 380 : 480);
       reveal(); // the page fades in with the headline as a ghost
       const heading = [...document.querySelectorAll('.c2-hero h1 .w > span')];
       const size = T.size;
       const end = { x: T.x, y: T.y };
-      if (t < 1250) return hop(centre(S0()), { ...writeAt(heading, 0, { size, end, below: size * 1.2 }), size }, p(t, 700, 550));
-      const k = p(t, 1250, clamp(500 + heading.length * 260, 1400, 2600));
+      if (t < P + H) return hop(centre(S0()), { ...writeAt(heading, 0, { size, end, below: size * 1.2 }), size }, p(t, P, H));
+      const k = p(t, P + H, clamp(500 + heading.length * 260, 1400, 2600));
       const e = 0.5 - Math.cos(Math.PI * k) / 2; // calm in, calm out
       // it runs just under the baseline, and rises into the full stop's place at the very end
       const below = size * 1.2 * (1 - clamp((k - 0.86) / 0.14, 0, 1));

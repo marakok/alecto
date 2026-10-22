@@ -15,6 +15,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
 | Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
+| Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
@@ -55,6 +56,27 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   did, the times running on through the night ("03:12 · 3 things flagged for Hannah"); the labels take turns. The
   hero shows "In the background" with what it's working on now ([data-ticker]). Wide screens only. All activity is
   illustrative.
+- **Lines, an extra iteration** (`/phase-3/lines/`, `lines.js`, `lines.css`): the square as a system of lines, used
+  everywhere, the way Verve uses one shape for everything (Miro). One grid runs through the page: columns every
+  `--cell`, measured from the content's right edge.
+  - **Page load** (`?l=grid`, the default here): hairlines draw outward from the middle of the empty screen into the
+    grid, the square appears, and as the screen lifts the grid carries on in the hero, line for line. Then the square
+    writes the headline.
+  - **Hero** (`[data-grid]`): big rounded tiles on the grid, bleeding off the right, lines running on to the edges,
+    "+" where they cross. One periwinkle tile walks along `data-walk`, cell by cell, up the diagonal (your move,
+    going home); small squares of data slide along the lines (the AI at work), in place of Home's single thread.
+  - **The star:** where four rounded tiles meet, the space between their corners is a four-pointed star, the AI
+    sparkle, made by the squares themselves (`star()` in `lines.js`: four corner arcs). The hero is a field of
+    tiles (`data-fill`), so a faint star sits at every crossing; the four round your tile glow periwinkle as it
+    walks: the AI working around your move. The platform section shows it slowly: four tiles draw, the star appears
+    between them ("Where our people meet, the AI works"). The AI icon (`#i-spark`) is now that same gap shape.
+    On hover (mouse only) the tile under the pointer and its four stars light up, then fade slowly: a soft trail.
+  - **The rest of the page:** one paper, no grid at rest; under the pointer a soft round patch of the grid fades in
+    and follows with a little lag, on the hero's columns and rows, the tile you're over faintly outlined with its four
+    stars (`bodyGrid`, mouse only); every section starts on a
+    full-width line with a mark on each column; the figures are tiles on the grid with the review as the periwinkle
+    tile; icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
+    room between everything.
 - **The square writes the text** (`src/js/write.js`, after "Alecto · Motion Experiment v1"): the page load is now
   `write` (`?l=write`, the default on phase 3; `?l=drop` still gives 2a's hop). The square pops up in the middle,
   hops to the start of the headline and writes it line by line, running just under the baseline like a cursor; the

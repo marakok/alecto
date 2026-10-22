@@ -90,15 +90,16 @@ html.rv .p3 .review.in .rate i { background: var(--accent); box-shadow: none; }
    Every word is masked: full colour up to 70px behind the cursor, fading to a faint ghost of itself at the
    cursor (--x: how far the cursor is past the word's left edge). The hero headline is written on load (the
    "write" page load, loader.js), section headings as they come into view (headings.js). */
-html[data-l="write"] .c2-hero h1 .w > span,
+html:is([data-l="write"], [data-l="grid"]) .c2-hero h1 .w > span,
 .p3 h2.writing .w > span {
   -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
   mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
 }
-html[data-l="write"] .c2-hero h1 .w > span { animation: none; }
-html[data-l="write"].written .c2-hero h1 .w > span, .p3 h2.written .w > span { -webkit-mask-image: none; mask-image: none; }
+html:is([data-l="write"], [data-l="grid"]) .c2-hero h1 .w > span { animation: none; }
+html:is([data-l="write"], [data-l="grid"]).written .c2-hero h1 .w > span, .p3 h2.written .w > span { -webkit-mask-image: none; mask-image: none; }
 /* the rest of the hero waits until the headline is written */
 html.jl[data-l="write"] .c2-hero .hx { animation-delay: calc(var(--t, 0ms) + 1700ms); }
+html.jl[data-l="grid"] .c2-hero .hx { animation-delay: calc(var(--t, 0ms) + 1300ms); }
 /* section headings: no rise, the cursor writes them */
 html.motion .p3 h2.writing .w > span { transform: none; opacity: 1; transition: none; }
 .p3 h2.writing { position: relative; }

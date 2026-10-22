@@ -106,7 +106,7 @@ html.jl .hero-home .hero-foot .hx { --t: 1500ms; }
 .shade-panel .facts .quote span { color: var(--inv-muted); font-size: 13px; }
 
 /* ---------- evening: the lamp on, at the end ---------- */
-.c2-cta .cta-art.lit { position: absolute; inset: 0; width: auto; height: auto; margin: 0; aspect-ratio: auto; z-index: 0; }
+.c2-cta .cta-art.lit { position: absolute; inset: 0; width: auto; height: auto; margin: 0; aspect-ratio: auto; align-self: stretch; z-index: 0; } /* stretch: 2a sets flex-end below 1100px, which would shrink it to nothing */
 .c2-cta .cta-art.lit .light { border-radius: inherit; }
 .c2-cta:has(.cta-art.lit) { position: relative; isolation: isolate; overflow: hidden; }
 .c2-cta:has(.cta-art.lit) .cta-copy { position: relative; z-index: 1; }
