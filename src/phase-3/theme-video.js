@@ -12,7 +12,7 @@ const dark = () => {
 
 export function initThemeVideos() {
   // slowed clips glide instead of stepping (smooth-video.js)
-  document.querySelectorAll('video.hero-video, video.story-video, video.cta-video').forEach(smoothVideo);
+  document.querySelectorAll('video.hero-video, video.story-video, video.cta-video, video.mk-video').forEach(smoothVideo);
   const videos = [...document.querySelectorAll('video[data-src-light][data-src-dark]')];
   if (!videos.length) return;
   const pick = () => videos.forEach((v) => {

@@ -101,8 +101,11 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
   in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
   warm paper, no outlines or effects:
-  - **The hero** (pinned): one giant periwinkle corner enters the screen; as you scroll it zooms out until you see what
-    it is, the full stop of "alecto.", with "Everything comes down to one point: your move, done."
+  - **The hero** (pinned): one giant periwinkle corner glides in from the right, just clear of the headline, and drifts
+    a few pixels with the pointer. Window light moves through it (the theme clip in duotone: multiplied in light mode,
+    screened in dark), with a glimpse of what you see on a card ("Your move · Live · Exchange this week"), and the
+    headline ends on the same square, small. As you scroll it zooms out until you see what it is, the full stop of
+    "alecto." (the light and the card fade), with "Everything comes down to one point: your move, done."
   - **The aha** (pinned): four solid squares (ink and soft periwinkle, like a chessboard) slide in from the corners and
     meet; the gap between their corners is the AI star, lit in periwinkle. "Where our people meet, our AI works."
     These four are rounder (30%) so the star reads.

@@ -5,8 +5,10 @@ import { clamp } from '../js/palette.js';
  * strokes of its M). Alecto's DNA is the dot: a rounded square, the full stop of "alecto.". Used enormous and
  * cropped, in flat periwinkle and ink on warm paper, with one movement at a time.
  *
- *  - The hero ([data-mark="hero"], pinned): a single giant rounded corner of periwinkle enters the screen. As you
- *    scroll, it zooms out until you see what it is: the full stop of "alecto." The letters fade in as it shrinks.
+ *  - The hero ([data-mark="hero"], pinned): a single giant rounded corner of periwinkle glides in and settles, with
+ *    window light moving through it (duotone) and a glimpse of what you see on a card; it drifts with the pointer.
+ *    As you scroll, it zooms out until you see what it is: the full stop of "alecto." The letters fade in as it
+ *    shrinks, the light and the card fade out. The headline ends on the same square, small.
  *  - The aha ([data-mark="meet"], pinned): four solid squares slide in from the corners and meet; the gap between
  *    their corners is the AI star, and it lights up.
  *  - [data-mark-in]: squares that carry content slide into place when they come into view.
@@ -36,6 +38,17 @@ export function initMark({ reduce }) {
   const logo = hero?.querySelector('.mk-logo');
   const dot = logo?.querySelector('.mk-dot');
   const meet = document.querySelector('[data-mark="meet"]');
+  const stage = hero?.querySelector('.mk-stage');
+  const inside = hero?.querySelector('.mk-inside');
+  const copy = hero ? hero.querySelectorAll('.mk-copy h1, .mk-copy .sub') : [];
+  const ctas = hero?.querySelector('.mk-copy .ctas');
+
+  // the corner follows the pointer a few pixels, like a real object
+  hero?.addEventListener('pointermove', (e) => {
+    if (e.pointerType !== 'mouse') return;
+    stage.style.setProperty('--px', `${((e.clientX / innerWidth - 0.5) * -18).toFixed(1)}px`);
+    stage.style.setProperty('--py', `${((e.clientY / innerHeight - 0.5) * -12).toFixed(1)}px`);
+  });
 
   const frame = () => {
     if (hero && logo && dot) {
@@ -50,8 +63,12 @@ export function initMark({ reduce }) {
       const big = Math.max(W, H) * 1.5; // the dot at the start: far bigger than the screen
       const s0 = big / dr.width;
       const s = Math.exp(lerp(Math.log(s0), 0, k)); // zoom evenly
-      // the dot's top left corner: from just right of the middle (only one corner shows) to its place in the word
-      const start = W < 900 ? [W * 0.18, H * 0.58] : [W * 0.56, H * 0.32];
+      // the dot's top left corner: just clear of the headline (only one corner shows), or below the buttons on a
+      // phone, to its place in the word
+      const copyRight = Math.max(...[...copy].map((el) => el.getBoundingClientRect().right));
+      const start = W < 720
+        ? [W * 0.14, Math.min(H * 0.7, ctas.getBoundingClientRect().bottom + 40)]
+        : [Math.max(W * 0.5, copyRight + 48), H * 0.2];
       const tx = lerp(start[0], dr.left, k);
       const ty = lerp(start[1], dr.top, k);
       const ox = dr.left - lr.left;
@@ -59,6 +76,15 @@ export function initMark({ reduce }) {
       logo.style.transform = `translate(${(tx - lr.left - s * ox).toFixed(2)}px, ${(ty - lr.top - s * oy).toFixed(2)}px) scale(${s.toFixed(4)})`;
       hero.style.setProperty('--k', k.toFixed(3));
       hero.classList.toggle('revealed', k > 0.96);
+      // the light and the card ride on the dot (in the stage's own coordinates)
+      if (inside) {
+        const d = dot.getBoundingClientRect();
+        const st = stage.getBoundingClientRect();
+        inside.style.transform = `translate(${(d.left - st.left).toFixed(1)}px, ${(d.top - st.top).toFixed(1)}px)`;
+        inside.style.width = `${d.width.toFixed(1)}px`;
+        inside.style.height = `${d.height.toFixed(1)}px`;
+        inside.style.borderRadius = `${(d.width * 0.06).toFixed(1)}px`;
+      }
     }
     if (meet) {
       const p = progress(meet);
@@ -74,5 +100,9 @@ export function initMark({ reduce }) {
   addEventListener('scroll', () => requestAnimationFrame(frame), { passive: true });
   addEventListener('resize', frame);
   document.fonts?.ready.then(frame);
+  addEventListener('load', frame);
+  // the headline settles after the veil lifts; place the corner again once it has
+  if (hero) new ResizeObserver(frame).observe(hero.querySelector('.mk-copy'));
+  [400, 1200].forEach((t) => setTimeout(frame, t));
   frame();
 }

@@ -85,9 +85,17 @@
        cropped: one giant periwinkle corner, that zooms out as you scroll until it is the full stop of "alecto." -->
   <section class="mk-hero" data-mark="hero" aria-label="Alecto">
     <div class="mk-pin">
-      <div class="mk-stage" aria-hidden="true"><span class="mk-logo" aria-label="alecto."><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="mk-dot"></i></span></div>
+      <div class="mk-stage" aria-hidden="true">
+        <span class="mk-logo" aria-label="alecto."><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="mk-dot"></i></span>
+        <!-- Inside the giant corner: light moving across a wall, in periwinkle, and a glimpse of what you see (mark.js
+             keeps it on the dot). The clip is a watermarked iStock preview; the card is illustrative. -->
+        <div class="mk-inside">
+          <video class="mk-video" data-src-light="/phase-3/light-corner.mp4" data-src-dark="/phase-3/light-wall.mp4" data-rate=".25" autoplay muted loop playsinline preload="auto"></video>
+          <div class="mk-card"><p class="mono"><i></i>Your move · Live</p><b>Exchange this week</b><span>Nothing needed from you</span></div>
+        </div>
+      </div>
       <div class="wrap mk-copy">
-        <h1>Law that keeps you <em>moving</em>.</h1>
+        <h1 aria-label="Law that keeps you moving.">Law that keeps you <em>moving</em><span class="mk-period" aria-hidden="true"></span></h1>
         <p class="sub">One named lawyer, from offer accepted to keys in hand.</p>
         <div class="ctas"><a class="btn primary" href="#">Get a quote</a><a class="btn ghost" href="#journey">How it works</a></div>
       </div>
