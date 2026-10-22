@@ -1,0 +1,283 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alecto · Phase 3 · Platform</title>
+  <meta name="description" content="The platform behind your conveyancer: AI reads, matches and chases, so a real person has time to explain and you have time to decide.">
+  <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/phase-2/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- The three type options on the switcher (?f=): Geist (leads), Instrument Sans, and Inter as it was in 2a. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+  <script>
+    /* Before first paint: apply a saved theme, pick the type option (?f=geist|instrument|inter, remembered
+       in localStorage) and the page load (?l=), and decide whether motion is allowed (html.jl: the square
+       travels; html.veiled: the page waits behind the load screen). Phase 3 builds on 2a (data-v="a"). */
+    (function () {
+      var d = document.documentElement;
+      try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
+      var q = new URLSearchParams(location.search);
+      var F = /^(geist|instrument|inter)$/, f = q.get('f');
+      try { if (F.test(f)) localStorage.setItem('alecto-font', f); else f = localStorage.getItem('alecto-font'); } catch (e) {}
+      d.setAttribute('data-f', F.test(f) ? f : 'geist');
+      var l = /^(write|drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'write'; /* the square writes the headline */
+      d.setAttribute('data-v', 'a');
+      d.setAttribute('data-l', l);
+      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
+      if (!reduce) d.classList.add('jl', 'veiled'); /* journey-live: the square travels */
+      /* safety: show the page even if the intro script never runs */
+      if (!reduce) setTimeout(function () { d.classList.add('hero-go'); d.classList.remove('veiled'); }, 5000);
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/motion.css">
+  <link rel="stylesheet" href="/src/styles/brand.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/journey.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/phase2.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/pages.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/reveal.css">
+  <link rel="stylesheet" href="/src/phase-3/phase3.css">
+  <link rel="stylesheet" href="/src/phase-3/platform.css">
+</head>
+<body class="c2 p3">
+<a class="skip" href="#main">Skip to content</a>
+<!-- The wordmark letters, true Switzer outlines from the brand kit (svg/alecto-paper.svg). The dot is an
+     HTML element next to them, so the travelling square can take its place. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="alecto-letters" fill="currentColor" d="M202-360C209-402 237-431 289-431C348-431 377-400 377-341L377-329C294-328 227-321 157-298C72-268 30-212 30-139C30-36 106 16 208 16C272 16 336-9 378-67C379-41 382-18 387 0L545 0C536-28 530-64 530-134L530-340C530-465 450-555 296-555C158-555 65-481 49-360ZM183-149C183-199 222-237 377-240L377-219C377-145 323-90 255-90C210-90 183-113 183-149ZM594 0L747 0L747-720L594-720ZM1312-177L1152-177C1136-128 1102-106 1052-106C986-106 946-152 938-238L1308-238L1308-272C1308-448 1207-555 1046-555C886-555 782-452 782-269C782-92 885 16 1052 16C1184 16 1284-53 1312-177ZM1046-433C1102-433 1138-396 1150-326L941-326C953-396 989-433 1046-433ZM1827-344C1808-485 1709-555 1584-555C1426-555 1324-452 1324-269C1324-93 1424 16 1585 16C1710 16 1807-49 1830-184L1677-184C1666-134 1634-108 1588-108C1518-108 1481-165 1481-269C1481-374 1516-431 1584-431C1628-431 1664-407 1674-344ZM1883-175C1883-50 1938 16 2053 16C2094 16 2128 10 2145 2L2145-113L2116-113C2050-113 2036-142 2036-194L2036-422L2146-422L2146-538L2036-538L2036-663L1883-663L1883-538L1817-538L1817-422L1883-422ZM2411 16C2571 16 2676-87 2676-269C2676-445 2574-555 2411-555C2251-555 2147-452 2147-269C2147-92 2248 16 2411 16ZM2411-108C2342-108 2304-165 2304-269C2304-374 2341-431 2411-431C2481-431 2519-373 2519-269C2519-164 2482-108 2411-108Z"/></defs></svg>
+<!-- Load screen: the square starts here, in the middle (loader.js). -->
+<div class="veil" aria-hidden="true">
+  <div class="veil-word"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="veil-dot"></i></div>
+  <span class="veil-count mono">0</span>
+</div>
+<!-- News bar: the funding headline. The amount ($20M) is a placeholder; the link still needs the press release URL.
+     The long headline shows on wide screens, the short one on narrow screens (phase2.css). -->
+<a class="announce" href="#">
+  <span class="announce-tag">News</span>
+  <span class="announce-text"><span class="long">Alecto Announces $20 Million in Funding to Make the Law Accessible to Everyone on the Planet</span><span class="short">Alecto Raises $20M to Make Legal Help Accessible to Everyone, Everywhere</span></span>
+  <span class="announce-cta"><b>Read the press release</b><span aria-hidden="true">→</span></span>
+</a>
+
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="/phase-3/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i id="navdot"></i></a>
+    <div class="links"><a href="/phase-3/#journey">How it works</a><a href="/phase-3/product/" aria-current="page">Platform</a><a href="/phase-3/#team">Your team</a><a href="/phase-3/#reviews">Reviews</a><a href="/phase-2/concept-2/company/">Company</a><a href="/phase-2/concept-2/careers/">Careers</a></div>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn ghost track" href="#">Track my move</a>
+      <a class="btn primary" href="#">Get a quote</a>
+    </div>
+  </nav>
+</div>
+</header>
+
+<div class="actor" id="actor" aria-hidden="true"></div>
+
+<main id="main">
+  <!-- Platform (product) page, new in phase 3. The UIs are HTML mock-ups of Alecto's own software, after the
+       launch video "Case allocation" (app.js and demo.js draw them). Every name, case, number and certificate
+       on this page is illustrative until Alecto confirms it. -->
+  <section class="c2-hero page-hero prod-hero wrap">
+    <div class="hero-copy">
+      <p class="crumb mono hx"><a href="/phase-3/">Home</a><svg class="icn" aria-hidden="true"><use href="#i-chevron"/></svg>Platform</p>
+      <h1>The platform behind your <span class="nowrap">person<span class="period" id="k0"></span></span></h1>
+      <p class="sub hx">Alecto is a conveyancing firm that builds its own software. AI does the reading, matching and chasing, so every conveyancer has time to explain, and you have time to decide.</p>
+      <div class="ctas"><a class="btn primary hx" href="#live">Watch it work</a><a class="btn ghost hx" href="#">Get a quote</a></div>
+    </div>
+    <div class="shot hx" data-r-shot>
+      <div class="app" data-app="allocation" aria-label="Alecto’s case allocation screen, with each conveyancer’s load, capacity and case types"></div>
+    </div>
+  </section>
+
+  <!-- Statement: one paragraph in two tones (feedback round 3: calm, home, movement). -->
+  <section class="statement wrap" aria-label="What the platform does">
+    <p class="two-tone" data-reveal="fade"><strong>Calm on the surface, a lot of movement underneath.</strong> While you get on with packing for your new home, Alecto reads, matches and chases in the background, and your conveyancer tells you what it all means.</p>
+  </section>
+
+  <!-- Product UIs: one feature at a time, the list on the left picks the screen on the right (features.js). -->
+  <section class="sec wrap features" id="features" aria-label="What the platform does">
+    <div class="sec-head">
+      <div><p class="eyebrow">The product</p><h2>One platform, from instruction to keys</h2></div>
+      <p class="lede">The same software runs every move. Your conveyancer works in it, and you see your own part of it, live.</p>
+    </div>
+    <div class="feat" data-feat data-reveal="fade">
+      <div class="feat-list" role="tablist" aria-label="Features">
+        <button class="feat-tab" role="tab" id="ft-alloc" aria-controls="fp-alloc" aria-selected="true"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-route"/></svg></span><span class="ft-copy"><b>Case allocation</b><span>Every new instruction goes to a conveyancer with the right experience and room in their week.</span></span><i class="ft-bar" aria-hidden="true"></i></button>
+        <button class="feat-tab" role="tab" id="ft-leave" aria-controls="fp-leave" aria-selected="false"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-calendar"/></svg></span><span class="ft-copy"><b>Annual leave</b><span>Book leave in Humaans and no new cases land while you’re away. Your clients hear who covers.</span></span><i class="ft-bar" aria-hidden="true"></i></button>
+        <button class="feat-tab" role="tab" id="ft-docs" aria-controls="fp-docs" aria-selected="false"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-doc"/></svg></span><span class="ft-copy"><b>Document review</b><span>AI reads the title, searches and lease first and flags what matters. Your conveyancer checks every flag.</span></span><i class="ft-bar" aria-hidden="true"></i></button>
+        <button class="feat-tab" role="tab" id="ft-msg" aria-controls="fp-msg" aria-selected="false"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-message"/></svg></span><span class="ft-copy"><b>Client updates</b><span>Updates drafted in plain English, read and sent by your conveyancer. Never by a bot.</span></span><i class="ft-bar" aria-hidden="true"></i></button>
+        <button class="feat-tab" role="tab" id="ft-track" aria-controls="fp-track" aria-selected="false"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-eye"/></svg></span><span class="ft-copy"><b>Your move, live</b><span>Where your move is, what’s next and what we need from you, at any hour.</span></span><i class="ft-bar" aria-hidden="true"></i></button>
+      </div>
+      <div class="feat-stage">
+        <div class="feat-panel" role="tabpanel" id="fp-alloc" aria-labelledby="ft-alloc"><div class="app" data-app="allocation-mini"></div></div>
+
+        <div class="feat-panel" role="tabpanel" id="fp-leave" aria-labelledby="ft-leave" hidden>
+          <div class="ui-card leave">
+            <header><span class="av">GA</span><p><b>Grace Adeyemi</b><small>Solicitor</small></p><span class="pill warn">No new instructions 21–23 Oct</span></header>
+            <ol class="week">
+              <li><b>Mon</b><small>19 Oct</small><span class="load">3 new cases</span></li>
+              <li><b>Tue</b><small>20 Oct</small><span class="load">2 new cases</span></li>
+              <li class="off"><b>Wed</b><small>21 Oct</small><span class="tag">On leave<small>Booked in Humaans</small></span></li>
+              <li class="off"><b>Thu</b><small>22 Oct</small><span class="tag">On leave<small>Booked in Humaans</small></span></li>
+              <li class="off"><b>Fri</b><small>23 Oct</small><span class="tag">On leave<small>Booked in Humaans</small></span></li>
+            </ol>
+            <p class="ui-note"><svg class="icn" aria-hidden="true"><use href="#i-user"/></svg>Sophie Clarke covers Grace’s 31 open cases. Her clients got a message from Grace on Monday.</p>
+          </div>
+        </div>
+
+        <div class="feat-panel" role="tabpanel" id="fp-docs" aria-labelledby="ft-docs" hidden>
+          <div class="ui-card docs">
+            <div class="doc">
+              <p class="doc-kick mono">Lease · Flat 3, 22 Harbour Street</p>
+              <p>The Lessee shall pay the ground rent of <mark data-flag="1">£250 per annum, doubling on every tenth anniversary</mark> of the term commencement date.</p>
+              <p>The Lessee covenants to pay a fair proportion of the Service Charge, <mark data-flag="2">estimated at £2,400 for the current year</mark>, in two equal instalments.</p>
+              <p>The Lessee shall not <mark data-flag="3">sublet the whole or any part of the Premises</mark> without the prior written consent of the Lessor.</p>
+              <p class="doc-fade">The Lessor covenants to keep the structure, roof and main walls in good and substantial repair…</p>
+            </div>
+            <aside class="flags">
+              <p class="flags-head"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg><b>3 things for Hannah</b><small>AI read 46 pages</small></p>
+              <div class="flag hi" data-flag="1"><b>Doubling ground rent</b><span>Lenders may refuse it. Suggest a deed of variation.</span></div>
+              <div class="flag" data-flag="2"><b>Service charge</b><span>£2,400 a year. Ask for the last three years’ accounts.</span></div>
+              <div class="flag" data-flag="3"><b>No subletting</b><span>Check the buyer’s plans before exchange.</span></div>
+              <p class="flags-foot"><span class="av sm">HR</span>Hannah reviewed all three · 09:12</p>
+            </aside>
+          </div>
+        </div>
+
+        <div class="feat-panel" role="tabpanel" id="fp-msg" aria-labelledby="ft-msg" hidden>
+          <div class="ui-card msg">
+            <div class="draft">
+              <p class="draft-head"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg>Draft for Hannah<small>from today’s search results</small></p>
+              <p>Good news: the local searches came back clear. One thing to know: the road is due to be resurfaced in spring. It won’t affect your purchase.</p>
+              <div class="draft-actions"><span class="chip">Edit</span><span class="chip on"><svg class="icn" aria-hidden="true"><use href="#i-check"/></svg>Approve and send</span></div>
+            </div>
+            <div class="thread">
+              <p class="bubble-in"><span class="av sm">HR</span><span>Good news, Laura: the local searches came back clear. One thing to know: the road is due to be resurfaced in spring. It won’t affect your purchase. Call me if you’d like to talk it through.<small>Hannah · 09:14</small></span></p>
+              <p class="bubble-out"><span>Brilliant, thank you! What happens next?<small>Laura · 09:21</small></span></p>
+            </div>
+          </div>
+        </div>
+
+        <div class="feat-panel" role="tabpanel" id="fp-track" aria-labelledby="ft-track" hidden>
+          <div class="ui-card track">
+            <header><p><small class="mono">Your move</small><b>14 Elm Road, Bristol</b></p><span class="pill ok"><i></i>On track</span></header>
+            <ol class="stages">
+              <li class="done"><b>Instruct</b><small>Done · 2 Sep</small></li>
+              <li class="done"><b>Investigate</b><small>Done · 30 Sep</small></li>
+              <li class="now"><b>Exchange</b><small>This week</small></li>
+              <li><b>Complete</b><small>Planned 6 Nov</small></li>
+              <li><b>Moving day</b><small>Planned 6 Nov</small></li>
+            </ol>
+            <div class="track-foot">
+              <div><small class="mono">Needed from you</small><p>Nothing right now. We’ll let you know.</p></div>
+              <div><small class="mono">Your conveyancer</small><p class="who"><span class="av sm">HR</span>Hannah Reid · replies within 2 hours</p></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- The living demo: the allocation logic running on dummy data (demo.js). -->
+  <section class="ai-band" id="live">
+    <div class="sec wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow"><span class="live-dot" aria-hidden="true"></span>Live demo</p><h2>Watch a new move find its person</h2></div>
+        <p class="lede">A new instruction comes in. Alecto checks who takes that kind of case, who the introducer prefers, who has room and who is away, then hands it to one named conveyancer.</p>
+      </div>
+      <div class="alloc" data-reveal="fade" data-alloc="full" aria-label="Live demo: new instructions are matched to conveyancers"></div>
+    </div>
+  </section>
+
+  <!-- Intelligence: what the AI does and what the people do. -->
+  <section class="sec wrap intel" id="intelligence">
+    <div class="sec-head">
+      <div><p class="eyebrow">Intelligence</p><h2>AI that makes room for people</h2></div>
+      <p class="lede">The software does the reading, matching and chasing. People do the explaining and the deciding. That split is the whole idea.</p>
+    </div>
+    <ol class="flow" data-reveal="fade">
+      <li class="ai"><span class="who mono"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg>AI</span><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-doc"/></svg></span><h3>Reads</h3><p>Title, searches, lease and enquiries, every page, the moment they arrive.</p></li>
+      <li class="ai"><span class="who mono"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg>AI</span><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-route"/></svg></span><h3>Matches and chases</h3><p>The right conveyancer for each move, and a nudge to whoever the chain is waiting on.</p></li>
+      <li class="person"><span class="who mono"><svg class="icn" aria-hidden="true"><use href="#i-user"/></svg>Your conveyancer</span><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-message"/></svg></span><h3>Explains</h3><p>Checks every flag, then tells you what it means for you, in plain English.</p></li>
+      <li class="you"><span class="who mono"><svg class="icn" aria-hidden="true"><use href="#i-home"/></svg>You</span><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-signpost"/></svg></span><h3>Decide</h3><p>Your options are laid out first. The call is always yours.</p></li>
+    </ol>
+    <!-- Dummy figures: confirm with Alecto. -->
+    <dl class="intel-facts" data-reveal="fade">
+      <div><dt>pages read per move, on average</dt><dd>180</dd></div>
+      <div><dt>to match a new instruction</dt><dd>&lt; 1 min</dd></div>
+      <div><dt>of flags checked by a person</dt><dd>100%</dd></div>
+    </dl>
+  </section>
+
+  <!-- Trust: safe and secure. Certifications and hosting details are placeholders until Alecto confirms them. -->
+  <section class="trust-band" id="trust">
+    <div class="sec wrap">
+      <div class="sec-head">
+        <div><p class="eyebrow">Trust</p><h2>Safe, secure and regulated</h2></div>
+        <p class="lede">Your home is the biggest thing you’ll ever buy. We treat your money, your documents and your data that way.</p>
+      </div>
+      <div class="trust" data-reveal="fade">
+        <article class="trust-main">
+          <span class="p-ic lg"><svg class="icn" aria-hidden="true"><use href="#i-landmark"/></svg></span>
+          <h3>Regulated by the Council for Licensed Conveyancers</h3>
+          <p>Alecto is a licensed conveyancing firm, not just software. We hold professional indemnity insurance and your money sits in a protected client account.</p>
+          <p class="clc line"><span class="clc-mark" aria-hidden="true">CLC</span><span class="clc-text"><b>Licence 14351</b><small class="mono">Check it on the CLC register</small></span></p>
+        </article>
+        <div class="trust-grid">
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-lock"/></svg></span><h3>Encrypted, always</h3><p>Documents and messages are encrypted in transit and at rest.</p></div>
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-pin"/></svg></span><h3>Your data stays in the UK</h3><p>Hosted in UK data centres, handled under UK GDPR.</p></div>
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-badge"/></svg></span><h3>Independently audited</h3><p>ISO 27001 and Cyber Essentials Plus, tested by outside experts every year.</p></div>
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-shield"/></svg></span><h3>Fraud checks on every payment</h3><p>Bank details are verified before a penny moves. We never change them by email.</p></div>
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-eye"/></svg></span><h3>A person signs off</h3><p>AI never sends advice or moves money. A qualified conveyancer checks every step.</p></div>
+          <div class="trust-item"><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-key"/></svg></span><h3>Only who needs it</h3><p>Your file is open to your conveyancer and their team, and every view is logged.</p></div>
+        </div>
+      </div>
+      <ul class="badges" data-reveal="fade" aria-label="Certifications">
+        <li>CLC regulated</li><li>ISO 27001</li><li>Cyber Essentials Plus</li><li>UK GDPR</li><li>UK hosted</li><li>Lender panels</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wrap">
+  <section class="cta c2-cta">
+    <div class="cta-copy">
+      <h2>A person for your move, and the platform behind them</h2>
+      <p>Get a clear, fixed quote in two minutes. No obligation.</p>
+      <div class="ctas"><a class="btn accent" href="#">Get a quote</a><a class="btn ghost" href="#">Talk to us</a></div>
+    </div>
+    <div class="cta-art" aria-hidden="true">
+      <img class="c-meeting" src="/concept-2/cta-meeting.jpg" alt="">
+    </div>
+  </section>
+  </div>
+</main>
+
+<footer class="site">
+  <div class="wrap">
+    <div class="fgrid">
+      <div><a class="logo" href="/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i></i></a><p>Property conveyancing without the stress.</p></div>
+      <div class="fcols">
+        <div><h4>Company</h4><a href="/phase-2/concept-2/company/">About Alecto</a><a href="/phase-2/concept-2/careers/">Careers</a><a href="#">Blog</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+        <div><h4>Platform</h4><a href="/phase-3/product/">How it works</a><a href="/phase-3/product/#live">Live demo</a><a href="/phase-3/product/#trust">Security</a></div>
+        <div><h4>Support</h4><a href="#">Contact</a><a href="#">Complaints</a><a href="#">Track my move</a></div>
+        <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a><a href="#">Cookie preferences</a></div>
+      </div>
+    </div>
+    <div class="legal"><span>Authorised and regulated by the Council for Licensed Conveyancers, licence 14351.<br>Registered in England and Wales, company 13303626.</span><span>© 2026 Alecto Conveyancing Ltd</span></div>
+  </div>
+</footer>
+
+
+<!-- Concept switcher (review builds only): phase 2 · 2a, the phase 3 pages and the type options (switcher.js). -->
+<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a">2a</a><span class="phase">Phase 3</span><a href="/phase-3/" title="Phase 3 · Home">Home</a><a href="/phase-3/lines/" title="Phase 3 · Lines">Lines</a><a href="/phase-3/product/" title="Phase 3 · Platform" aria-current="page">Platform</a><span class="phase">Type</span><a data-f="geist" title="Geist">Aa</a><a data-f="instrument" title="Instrument Sans">Aa</a><a data-f="inter" title="Inter (as in 2a)">Aa</a></nav>
+
+<script type="module" src="/src/phase-3/product.js"></script>
+</body>
+</html>

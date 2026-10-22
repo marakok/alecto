@@ -1,0 +1,149 @@
+/* Phase 3 · Lines (lines.js): the square as a system of lines, used everywhere, the way Verve uses one shape for
+   everything. One grid for the page (--cell, measured from the content's right edge), one paper, room to
+   breathe. On top of the phase 3 home. */
+
+.p3c { --cell: clamp(150px, 14.2vw, 210px); --gut: calc(max(0px, (100vw - 1440px) / 2) + clamp(16px, 8.33vw, 120px)); --grid-line: color-mix(in srgb, var(--fg) 13%, transparent); }
+@media (max-width: 900px) { .p3c { --cell: calc(100vw / 3.2); } }
+
+/* ---------- the page load: the grid draws on the empty screen ---------- */
+.veil-grid { position: absolute; inset: 0; width: 100%; height: 100%; }
+.veil-grid line { stroke: var(--grid-line); stroke-width: 1; stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.veil-go .veil-grid line { animation: g-draw .7s cubic-bezier(.45, 0, .2, 1) calc(var(--d, 0ms) * .4) forwards; }
+@keyframes g-draw { to { stroke-dashoffset: 0; } }
+
+/* ---------- a grid with tiles ([data-grid]) ---------- */
+.grid-art { position: absolute; inset: 0; pointer-events: none; overflow: hidden; }
+.grid-art svg { display: block; overflow: visible; }
+.grid-art .gl { stroke: var(--grid-line); stroke-width: 1; }
+.grid-art .g-plus { fill: none; stroke: color-mix(in srgb, var(--fg) 38%, transparent); stroke-width: 1; }
+.grid-art .tile { fill: color-mix(in srgb, var(--surface) 8%, transparent); stroke: color-mix(in srgb, var(--fg) 50%, transparent); stroke-width: 1.2; transition: stroke 1.2s ease, fill 1.2s ease; }
+.grid-art .tile.lit { stroke: color-mix(in srgb, var(--accent) 55%, transparent); }
+.grid-art .tile.you {
+  fill: color-mix(in srgb, var(--accent) 10%, transparent); stroke: var(--accent); stroke-width: 1.6;
+  transition: transform 1.6s cubic-bezier(.65, 0, .25, 1), opacity 1s ease;
+}
+.grid-art .bit { fill: var(--accent); opacity: 0; }
+.grid-art.drawn .bit.h { animation: bit-h var(--t) linear var(--o) infinite; }
+.grid-art.drawn .bit.v { animation: bit-v var(--t) linear var(--o) infinite; }
+@keyframes bit-h { 0% { transform: translate(-10px, var(--y)); opacity: 0; } 8%, 88% { opacity: 1; } 100% { transform: translate(var(--w), var(--y)); opacity: 0; } }
+@keyframes bit-v { 0% { transform: translate(var(--x), -10px); opacity: 0; } 8%, 88% { opacity: 1; } 100% { transform: translate(var(--x), var(--h)); opacity: 0; } }
+/* drawing on: the lines first, then the tiles, then your tile */
+.grid-art:not(.still) .gl, .grid-art:not(.still) .tile:not(.you) { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+.grid-art:not(.still) .g-plus, .grid-art:not(.still) .you { opacity: 0; }
+.grid-art.drawn .gl { animation: g-draw 1.2s cubic-bezier(.45, 0, .2, 1) var(--d, 0ms) forwards; }
+.grid-art.drawn .tile:not(.you) { animation: g-draw 1.6s cubic-bezier(.45, 0, .2, 1) var(--d, 0ms) forwards; }
+.grid-art.drawn .g-plus { opacity: 1; transition: opacity 1.4s ease .9s; }
+.grid-art.drawn .you { opacity: 1; transition: transform 1.6s cubic-bezier(.65, 0, .25, 1), opacity 1s ease 1.4s; }
+/* hero: the grid lives on the right, fading out under the words */
+.hero-grid { -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent 30%, #000 58%); mask-image: linear-gradient(90deg, transparent 0, transparent 30%, #000 58%); }
+/* the hero grid is there from the first frame on the grid load, so the veil's lines hand over to it */
+html[data-l="grid"] .hero-grid .gl { stroke-dasharray: none; stroke-dashoffset: 0; animation: none; }
+.p3c .hero-light .leaves.near { opacity: .6; }
+.p3c .hero-light .sun { opacity: .75; }
+
+/* ---------- one grid, one paper, through the whole page ---------- */
+.p3c :is(.proofs, .team-band, .ai-band, #reviews) { background: transparent; }
+/* the rest of the page: no grid at rest; a soft patch of it under the pointer (bodyGrid in lines.js) */
+.body-grid {
+  position: fixed; inset: 0; z-index: -1; pointer-events: none; opacity: 0; transition: opacity 1.2s ease;
+  -webkit-mask-image: radial-gradient(circle 280px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / .45) 45%, transparent 100%);
+  mask-image: radial-gradient(circle 280px at var(--mx, -999px) var(--my, -999px), #000 0%, rgb(0 0 0 / .45) 45%, transparent 100%);
+}
+.body-grid.on { opacity: 1; transition-duration: .6s; }
+.bg-lines {
+  position: absolute; inset: 0; opacity: .7;
+  background:
+    linear-gradient(90deg, var(--grid-line) 1px, transparent 1px) var(--gx, 0) 0 / var(--c, 200px) 100%,
+    linear-gradient(180deg, var(--grid-line) 1px, transparent 1px) 0 var(--gy, 0) / 100% var(--c, 200px);
+}
+.bg-tile { position: absolute; left: 0; top: 0; overflow: visible; transition: transform .9s cubic-bezier(.22, 1, .36, 1); }
+.bg-tile .bt { fill: color-mix(in srgb, var(--accent) 4%, transparent); stroke: color-mix(in srgb, var(--accent) 35%, transparent); stroke-width: 1; }
+.bg-tile .bs { fill: color-mix(in srgb, var(--accent) 45%, transparent); }
+.p3c .c2-hero { z-index: 0; }
+/* every section starts on a full-width line, with a "+" on each column */
+.p3c main .sec-head { position: relative; padding-top: 44px; }
+.p3c main .sec-head::before {
+  content: ""; position: absolute; top: -7px; left: calc(50% - 50vw); width: 100vw; height: 15px; pointer-events: none;
+  background:
+    linear-gradient(var(--grid-line), var(--grid-line)) 0 7px / 100% 1px no-repeat,
+    linear-gradient(color-mix(in srgb, var(--fg) 45%, transparent), color-mix(in srgb, var(--fg) 45%, transparent)) calc(100vw - var(--gut) - 5px) 7px / 11px 1px no-repeat,
+    linear-gradient(90deg, color-mix(in srgb, var(--fg) 45%, transparent) 1px, transparent 1px) calc(100vw - var(--gut)) 2px / var(--cell) 11px repeat-x;
+}
+.p3c main .wrap .sec-head::before { left: calc(-1 * var(--gut)); width: 100vw; }
+/* icons in tiles */
+.p3c .p-ic { border-radius: 14px; background: transparent !important; box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--fg) 24%, transparent) !important; }
+/* pictures take the tile's shape, and get the tile's line */
+.p3c :is(.mate-tile, .review, .rphoto) { border-radius: 24px; }
+.p3c .mate-tile { box-shadow: inset 0 0 0 1px var(--grid-line); transition: box-shadow .6s ease; }
+.p3c .mate:hover .mate-tile { box-shadow: inset 0 0 0 1.5px var(--accent); }
+
+/* ---------- the figures, as tiles on the grid ---------- */
+.grid-band { position: relative; margin-top: 88px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 0; }
+.grid-band::before, .grid-band::after {
+  content: ""; position: absolute; left: calc(-1 * var(--gut)); width: 100vw; height: 1px; background: var(--grid-line);
+}
+.grid-band::before { top: 0; }
+.grid-band::after { bottom: 0; }
+.gb-cell {
+  display: flex; flex-direction: column; justify-content: space-between; gap: 32px; min-height: 240px; padding: 26px 26px 24px;
+  border: 1px solid color-mix(in srgb, var(--fg) 30%, transparent); border-radius: 28px; margin: -0.5px;
+}
+.gb-cell b { font-size: clamp(34px, 3.3vw, 48px); font-weight: 500; line-height: 1.05; letter-spacing: -.035em; }
+.gb-cell span { color: var(--muted); font-size: 15px; line-height: 1.45; }
+.gb-cell.quote { border-color: var(--accent); background: color-mix(in srgb, var(--accent) 7%, transparent); }
+.gb-cell.quote p { margin: 0; font-size: 18px; line-height: 1.4; letter-spacing: -.01em; }
+
+/* ---------- evening: a small grid, your tile home ---------- */
+.cta-grid { -webkit-mask-image: linear-gradient(90deg, transparent 20%, #000 60%); mask-image: linear-gradient(90deg, transparent 20%, #000 60%); }
+.c2-cta .cta-grid { --fg: var(--inv-fg); --surface: transparent; --grid-line: color-mix(in srgb, var(--inv-fg) 14%, transparent); }
+
+/* ---------- breathing room ---------- */
+.p3c .sec { padding-block: clamp(104px, 13vw, 184px); }
+.p3c .proofs { padding-block: 128px 136px; }
+.p3c .statement { padding-block: clamp(120px, 14vw, 200px) clamp(40px, 5vw, 72px); }
+.p3c .two-tone { max-width: 20em; }
+
+@media (max-width: 1100px) { .grid-band { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 900px) {
+  .hero-grid { -webkit-mask-image: linear-gradient(180deg, transparent 40%, #000 75%); mask-image: linear-gradient(180deg, transparent 40%, #000 75%); }
+  .cta-grid { display: none; }
+}
+@media (max-width: 560px) { .grid-band { grid-template-columns: minmax(0, 1fr); } .gb-cell { min-height: 0; } }
+
+/* ---------- the star: where four tiles meet, the AI sparkle appears between their corners ---------- */
+.grid-art .star { fill: color-mix(in srgb, var(--fg) 7%, transparent); transform-box: fill-box; transform-origin: center; transition: fill 1.2s ease, scale 1.4s cubic-bezier(.34, 1.4, .64, 1); }
+.grid-art:not(.still) .star { scale: 0; }
+.grid-art.drawn .star { scale: 1; transition-delay: var(--d, 0ms); }
+.grid-art .star.hot { fill: var(--accent); scale: 1.08; transition-delay: 0ms; animation: star-glow 2.6s ease-in-out infinite; }
+@keyframes star-glow { 50% { filter: drop-shadow(0 0 6px color-mix(in srgb, var(--accent) 70%, transparent)); } }
+/* with a whole field of tiles the lines can be quieter */
+.hero-grid .tile:not(.you):not(.lit) { stroke: color-mix(in srgb, var(--fg) 30%, transparent); }
+
+/* ---------- the spark moment (platform section) ---------- */
+.p3c .ai-band .sec-head { grid-template-columns: minmax(0, 1fr) auto; align-items: center; column-gap: 64px; }
+.p3c .ai-band .sec-head > :not(.spark-art) { grid-column: 1; }
+.spark-art { grid-column: 2; grid-row: 1 / span 2; margin: 0; display: grid; gap: 14px; justify-items: center; }
+.spark-art svg { width: clamp(180px, 18vw, 250px); height: auto; overflow: visible; }
+.spark-art figcaption { color: var(--muted) !important; font-size: 10.5px !important; }
+.sa-line { fill: none; stroke: var(--grid-line); stroke-width: 1; }
+.sa-tile { fill: none; stroke: color-mix(in srgb, var(--fg) 45%, transparent); stroke-width: 1.2; }
+.sa-star { fill: var(--accent); transform-box: fill-box; transform-origin: center; }
+html.rv .sa-tile { stroke-dasharray: 1 1; stroke-dashoffset: 1; }
+html.rv .sa-star { scale: 0; }
+html.rv .spark-art.in .sa-tile { animation: g-draw 1.4s cubic-bezier(.45, 0, .2, 1) forwards; }
+html.rv .spark-art.in .sa-tile:nth-of-type(2) { animation-delay: .12s; }
+html.rv .spark-art.in .sa-tile:nth-of-type(3) { animation-delay: .24s; }
+html.rv .spark-art.in .sa-tile:nth-of-type(4) { animation-delay: .36s; }
+html.rv .spark-art.in .sa-star { scale: 1; transition: scale 1.2s cubic-bezier(.34, 1.5, .64, 1) 1.3s; animation: star-breathe 5s ease-in-out 2.6s infinite; }
+@keyframes star-breathe { 50% { scale: 1.12; filter: drop-shadow(0 0 10px color-mix(in srgb, var(--accent) 60%, transparent)); } }
+@media (max-width: 900px) {
+  .p3c .ai-band .sec-head { grid-template-columns: minmax(0, 1fr); }
+  .spark-art { grid-column: 1; grid-row: auto; justify-items: start; }
+}
+.grid-art[data-fill] .g-plus { display: none; }
+
+/* hover: the tile under the pointer and its stars light up; they fade slowly after, so you leave a soft trail */
+.grid-art .tile.hover { stroke: color-mix(in srgb, var(--accent) 80%, transparent); fill: color-mix(in srgb, var(--accent) 9%, transparent); transition: stroke .25s ease, fill .25s ease; }
+.grid-art .star.glint { fill: color-mix(in srgb, var(--accent) 85%, transparent); scale: 1.1; transition: fill .25s ease, scale .5s cubic-bezier(.34, 1.4, .64, 1); }
+.grid-art .tile:not(.hover):not(.you) { transition: stroke 1.8s ease, fill 1.8s ease; }
+.grid-art .star:not(.glint):not(.hot) { transition: fill 1.8s ease, scale 1.4s ease var(--d, 0ms); }
