@@ -9,12 +9,12 @@ import { afterIntro } from '../phase-2/concept-2/reveal.js';
  *    into the grid, the square appears, and as the screen lifts the grid carries on in the hero, line for line.
  *  - [data-grid] (hero, evening CTA): big rounded tiles on the grid (data-tiles, or a field with data-fill), the lines running on to the edges, "+" where
  *    they cross. One periwinkle tile walks along data-walk, cell by cell (your move, going home), and small
- *    squares of data slide along the lines (the AI at work, never stopping).
+ *    squares of data can slide along the lines (only with data-bits: off by default, to keep it quiet).
  *  - Where four tiles meet, the gap between their corners is a four-pointed star: the AI sparkle, made by the
  *    squares themselves. Faint at every crossing; the four round your tile light up as it walks.
  *  - Hover (mouse only): the tile under the pointer and its four stars light up, then fade slowly behind you.
  *  - The rest of the page shows no grid at rest; under the pointer a soft patch of it fades in (bodyGrid).
- *  Cells are "col,row": col from data-x0 (that many cells left of the content's right edge), row from data-y0
+ *  data-accent: tiles drawn in periwinkle. Cells are "col,row": col from data-x0 (that many cells left of the content's right edge), row from data-y0
  *  (a fraction of the height). Reduced motion: drawn, still, the periwinkle tile at the end of its path.
  */
 const NS = 'http://www.w3.org/2000/svg';
@@ -52,9 +52,17 @@ function draw(el, reduce) {
     ...xs.map((x, i) => `<line class="gl" style="--d:${i * 60}ms" x1="${x}" y1="0" x2="${x}" y2="${H}" pathLength="1"/>`),
     ...ys.map((y, i) => `<line class="gl" style="--d:${i * 60 + 120}ms" x1="0" y1="${y}" x2="${W}" y2="${y}" pathLength="1"/>`),
   ];
-  let plus = '';
-  xs.forEach((x) => ys.forEach((y) => { plus += `M${x - 5} ${y}h10M${x} ${y - 5}v10`; }));
   const at = ([c, r]) => [x0 + c * C, y0 + r * C];
+  // "+" at every crossing, or with a few tiles (no field) only at their corners, like the example
+  let plus = '';
+  const mark = (x, y) => { plus += `M${x - 6} ${y}h12M${x} ${y - 6}v12`; };
+  if (el.dataset.fill) xs.forEach((x) => ys.forEach((y) => mark(x, y)));
+  else {
+    const corners = new Set();
+    cells(el.dataset.tiles).forEach(([c, r]) => [[c, r], [c + 1, r], [c, r + 1], [c + 1, r + 1]].forEach((k) => corners.add(k.join(','))));
+    corners.forEach((k) => mark(...at(k.split(',').map(Number))));
+  }
+  const accent = new Set(cells(el.dataset.accent).map((t) => t.join(',')));
   // tiles: the listed ones, plus a whole field (data-fill="c0 r0 c1 r1")
   const list = cells(el.dataset.tiles);
   const [f0, g0, f1, g1] = (el.dataset.fill || '').split(/\s+/).map(Number);
@@ -63,7 +71,7 @@ function draw(el, reduce) {
   const seen = new Set();
   const tiles = list.filter((t) => !seen.has(t.join(',')) && seen.add(t.join(','))).map((t, i) => {
     const [x, y] = at(t);
-    return `<rect class="tile" data-cell="${t.join(',')}" style="--d:${400 + (i % 12) * 90}ms" x="${x}" y="${y}" width="${C}" height="${C}" rx="${R}" pathLength="1"/>`;
+    return `<rect class="tile${accent.has(t.join(',')) ? ' acc' : ''}" data-cell="${t.join(',')}" style="--d:${400 + (i % 12) * 90}ms" x="${x}" y="${y}" width="${C}" height="${C}" rx="${R}" pathLength="1"/>`;
   });
   // stars: at every crossing with a tile on all four sides
   const stars = [];
@@ -83,7 +91,7 @@ function draw(el, reduce) {
     <g class="g-tiles">${tiles.join('')}</g>
     <g class="g-stars">${stars.join('')}</g>
     <rect class="tile you" width="${C}" height="${C}" rx="${R}"/>
-    <g class="g-bits">${reduce ? '' : bits.join('')}</g>
+    <g class="g-bits">${reduce || el.dataset.bits === undefined ? '' : bits.join('')}</g>
   </svg>`;
 
   el._geo = { x0, y0, C };
@@ -125,7 +133,7 @@ export function initLines({ reduce }) {
     e.target.classList.add('drawn');
     const w = e.target._walk;
     if (!w) return;
-    setTimeout(() => setInterval(() => { w.i = (w.i + 1) % w.n; w.put(w.i); }, 2600), 1600);
+    setTimeout(() => setInterval(() => { w.i = (w.i + 1) % w.n; w.put(w.i); }, 5200), 2400); // slow: one step every five seconds
   }), { threshold: 0.2 });
   afterIntro(() => grids.forEach((g) => io.observe(g)));
 }
