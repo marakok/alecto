@@ -39,6 +39,7 @@
   <link rel="stylesheet" href="/src/phase-2/concept-2/reveal.css">
   <link rel="stylesheet" href="/src/phase-3/phase3.css">
   <link rel="stylesheet" href="/src/phase-3/platform.css">
+  <link rel="stylesheet" href="/src/phase-3/front.css">
   <link rel="stylesheet" href="/src/phase-3/light.css">
   <link rel="stylesheet" href="/src/phase-3/story.css">
 </head>
@@ -83,8 +84,9 @@
        The square is data, the lines connect it, the AI brings light, the lawyer decides with you. -->
   <section class="story" aria-label="Our story">
     <div class="story-pin">
-      <!-- Window light moving across a wall. iStock preview (watermarked): replace with the licensed clip. -->
-      <video class="story-video" src="/phase-3/light-wall.mp4" muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <!-- Light moving, following the theme (theme-video.js): the white clip in light mode, the black one in dark mode.
+           iStock previews (watermarked): replace with the licensed clips. -->
+      <video class="story-video" data-src-light="/phase-3/light-corner.mp4" data-src-dark="/phase-3/light-wall.mp4" data-rate=".3333" muted loop playsinline preload="auto" aria-hidden="true"></video>
       <div class="story-field" aria-hidden="true"></div>
       <!-- Illustrative person: replace with a real Alecto lawyer. -->
       <div class="story-duo" aria-hidden="true">
@@ -314,24 +316,40 @@
     </div>
   </section>
 
-  <!-- New in phase 3: the tech behind the people. A live demo of case allocation (demo.js), built from the
-       product launch video "Case allocation". Names, cases and numbers are illustrative. -->
-  <section class="ai-band" id="platform">
-    <div class="sec wrap">
-      <div class="sec-head">
-        <div><p class="eyebrow"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg>The platform</p><h2>The intelligence behind your person</h2></div>
-        <p class="two-tone sm"><strong>Hannah does the part that needs a person.</strong> Our own platform does the rest: it reads, matches, checks and chases, so your move keeps moving and she has time for you.</p>
+  <!-- The front: what you, the client, see (after the client's prototype, in our style). Not the lawyer's platform.
+       Updates, names and times are illustrative (front.js). -->
+  <section class="sec wrap front" id="proactive" aria-labelledby="proactive-h">
+    <div class="sec-head">
+      <div><p class="eyebrow">Proactive</p><h2 id="proactive-h">Fast by default. <em><span class="w" aria-hidden="true"><span>Proactive</span></span></em> by nature.</h2></div>
+      <p class="lede">We take responsibility for moving your transaction forward and solve problems before they become delays. If something changes, you hear it from us first.</p>
+    </div>
+    <div class="fr-proactive" data-front="tabs">
+      <div class="fr-tabs" role="tablist" aria-label="What we do for you">
+        <button class="fr-tab" role="tab" aria-selected="true" aria-controls="fr-move" data-k="enquiries"><b>Enquiries</b><span>Chased until every one is answered.</span><i class="fr-bar" aria-hidden="true"></i></button>
+        <button class="fr-tab" role="tab" aria-selected="false" aria-controls="fr-move" data-k="blockers"><b>Blockers</b><span>Spotted early and moved out of the way.</span><i class="fr-bar" aria-hidden="true"></i></button>
+        <button class="fr-tab" role="tab" aria-selected="false" aria-controls="fr-move" data-k="paperwork"><b>Paperwork</b><span>Filed for you once you’ve completed.</span><i class="fr-bar" aria-hidden="true"></i></button>
       </div>
-      <div class="ai-grid">
-        <div class="alloc" data-reveal="fade" data-alloc="compact" aria-label="Live demo: a new instruction is matched to a conveyancer"></div>
-        <div class="ai-side" data-reveal="fade" style="--d:150ms">
-          <ul class="ai-points">
-            <li><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-route"/></svg></span><div><h3>Matched to the right person</h3><p>Every new move goes to a conveyancer who knows that kind of case and has room for it. Never to someone on leave.</p></div></li>
-            <li><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-doc"/></svg></span><div><h3>Every page read twice</h3><p>AI reads the title, searches and lease first and flags what needs Hannah’s eye. She reads it too, and decides.</p></div></li>
-            <li><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-bell"/></svg></span><div><h3>Nothing waits on a chase</h3><p>Reminders, the chain and every update are tracked for you, day and night, in one live view.</p></div></li>
-          </ul>
-          <a class="btn ghost" href="/phase-3/product/">See the platform <svg class="icn" aria-hidden="true"><use href="#i-arrow"/></svg></a>
-        </div>
+      <div class="fr-move" id="fr-move" role="tabpanel" aria-live="polite">
+        <header><b>Your move</b><span class="mono"><i class="live-dot" aria-hidden="true"></i>Live</span></header>
+        <ul class="fr-updates"></ul>
+        <footer class="mono"><i aria-hidden="true"></i>Nothing needed from you</footer>
+      </div>
+    </div>
+  </section>
+
+  <section class="sec wrap front" id="lawyer" aria-labelledby="lawyer-h">
+    <div class="sec-head">
+      <div><p class="eyebrow">Your lawyer</p><p class="two-tone sm" id="lawyer-h"><strong>Meet your lawyer.</strong> One qualified conveyancer who knows your file, answers your calls, and gets you over the line.</p></div>
+    </div>
+    <div class="fr-lawyer" data-front="accordion">
+      <div class="fr-acc">
+        <button class="fr-q" aria-expanded="true" data-k="phone"><b>They pick up the phone.</b><span>Call or message the person actually doing the work. No call centre, no handoffs, no “passed to a colleague”.</span><i aria-hidden="true"></i></button>
+        <button class="fr-q" aria-expanded="false" data-k="first"><b>They move first.</b><span>Enquiries get chased, blockers get spotted early, and you hear about changes from us before you think to ask.</span><i aria-hidden="true"></i></button>
+        <button class="fr-q" aria-expanded="false" data-k="outcome"><b>They own the outcome.</b><span>From offer accepted to keys in hand, one person is responsible for getting you there.</span><i aria-hidden="true"></i></button>
+      </div>
+      <div class="fr-chat" aria-live="polite">
+        <header><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b>Hannah</b><span>Your conveyancer</span></p></header>
+        <div class="fr-msgs"></div>
       </div>
     </div>
   </section>

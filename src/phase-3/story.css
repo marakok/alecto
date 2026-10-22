@@ -2,24 +2,40 @@
    connect it), the light (the AI) and two squares (the lawyer and you). A dark, still stage; only one thing
    happens at a time, and only as you scroll. */
 
-.story { --ink: #F4F2EE; --dim: rgb(244 242 238 / .5); position: relative; height: 760vh; background: #121110; color: var(--ink); }
+.story {
+  /* light by default (the white clip), dark in dark mode (the black clip): theme-video.js swaps the clip */
+  --stage: #EFEAE3; --stage-rgb: 239 234 227; --ink: #141416; --dim: rgb(20 20 22 / .48); --sq: rgb(20 20 22 / .34); --sq-path: rgb(20 20 22 / .75);
+  --read: color-mix(in srgb, var(--accent) 34%, #FFFFFF); --read-line: color-mix(in srgb, var(--accent) 70%, #FFFFFF); --band: #FFFFFF;
+  --video: saturate(.9) brightness(1.02); --btn-bg: var(--accent); --btn-fg: #FFFFFF; --ghost-bg: rgb(255 255 255 / .55); --ghost-fg: #141416; --ghost-line: rgb(20 20 22 / .18);
+  position: relative; height: 760vh; background: var(--stage); color: var(--ink);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .story {
+  --stage: #121110; --stage-rgb: 18 17 16; --ink: #F4F2EE; --dim: rgb(244 242 238 / .5); --sq: rgb(244 242 238 / .38); --sq-path: rgb(244 242 238 / .8);
+  --read: rgb(255 246 230 / .85); --read-line: rgb(255 246 230 / .9); --band: #FFF6E6;
+  --video: saturate(.8) brightness(.7); --btn-bg: #F4F2EE; --btn-fg: #141416; --ghost-bg: rgb(255 255 255 / .06); --ghost-fg: #F4F2EE; --ghost-line: rgb(255 255 255 / .28);
+} }
+:root[data-theme="dark"] .story {
+  --stage: #121110; --stage-rgb: 18 17 16; --ink: #F4F2EE; --dim: rgb(244 242 238 / .5); --sq: rgb(244 242 238 / .38); --sq-path: rgb(244 242 238 / .8);
+  --read: rgb(255 246 230 / .85); --read-line: rgb(255 246 230 / .9); --band: #FFF6E6;
+  --video: saturate(.8) brightness(.7); --btn-bg: #F4F2EE; --btn-fg: #141416; --ghost-bg: rgb(255 255 255 / .06); --ghost-fg: #F4F2EE; --ghost-line: rgb(255 255 255 / .28);
+}
 .story-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; }
-.story-video { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: saturate(.8) brightness(.7); transition: opacity .6s linear; }
+.story-video { position: absolute; inset: 0; z-index: -1; width: 100%; height: 100%; object-fit: cover; opacity: 0; filter: var(--video); transition: opacity .6s linear; }
 .story-pin::after { /* the words keep their dark */
   content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
-  background: linear-gradient(90deg, rgb(18 17 16 / .9) 0%, rgb(18 17 16 / .55) 42%, rgb(18 17 16 / .15) 80%);
+  background: linear-gradient(90deg, rgb(var(--stage-rgb) / .9) 0%, rgb(var(--stage-rgb) / .55) 42%, rgb(var(--stage-rgb) / .15) 80%);
 }
 
 /* ---------- the field: squares, the line through them, the light band ---------- */
 .story-field { position: absolute; top: 12%; bottom: 10%; right: max(16px, calc((100% - 1440px) / 2 + 60px)); width: min(52vw, 760px); }
 .story-field svg { display: block; overflow: visible; }
-.sf-sq { fill: transparent; stroke: rgb(244 242 238 / .38); stroke-width: 1; transition: fill .9s ease, stroke .9s ease, opacity .5s ease; }
+.sf-sq { fill: transparent; stroke: var(--sq); stroke-width: 1; transition: fill .9s ease, stroke .9s ease, opacity .5s ease; }
 .sf-sq[data-k="4,3"] { fill: var(--accent); stroke: var(--accent); } /* the first square: the dot */
-.sf-sq.path { stroke: rgb(244 242 238 / .8); }
-.sf-sq.read { fill: rgb(255 246 230 / .85); stroke: rgb(255 246 230 / .9); }
+.sf-sq.path { stroke: var(--sq-path); }
+.sf-sq.read { fill: var(--read); stroke: var(--read-line); }
 .sf-sq.read[data-k="4,3"] { fill: var(--accent); stroke: var(--accent); }
 .sf-path { fill: none; stroke: color-mix(in srgb, #8290E8 85%, transparent); stroke-width: 1.2; stroke-dasharray: 1 1; stroke-dashoffset: 1; stroke-linejoin: round; }
-.sf-label { font: 500 9.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; fill: rgb(244 242 238 / .7); paint-order: stroke; stroke: #121110; stroke-width: 5px; stroke-linejoin: round; opacity: 0; transition: opacity .6s ease; }
+.sf-label { font: 500 9.5px var(--mono); letter-spacing: .1em; text-transform: uppercase; fill: var(--dim); paint-order: stroke; stroke: var(--stage); stroke-width: 5px; stroke-linejoin: round; opacity: 0; transition: opacity .6s ease; }
 .sf-band { fill: url(#sf-band-g); transition: opacity .6s ease; }
 
 /* ---------- the lawyer and you ---------- */
@@ -29,7 +45,7 @@
   opacity: var(--k); pointer-events: none;
 }
 .duo-tile { position: relative; margin: 0; width: clamp(140px, 15vw, 210px); aspect-ratio: 1; border-radius: 6%; scale: calc(.85 + var(--k) * .15); }
-.duo-lawyer { overflow: visible; background: #1C1C20; box-shadow: inset 0 0 0 1px rgb(244 242 238 / .5); }
+.duo-lawyer { overflow: visible; background: #1C1C20; box-shadow: inset 0 0 0 1px var(--sq-path); }
 .duo-lawyer img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 20%; border-radius: inherit; }
 .duo-you { display: grid; place-items: center; background: var(--accent); }
 .duo-you > span { font-size: clamp(24px, 2.4vw, 34px); font-weight: 500; letter-spacing: -.02em; color: #FFFFFF; }
@@ -50,7 +66,7 @@
 .story-kick span { font-family: "Instrument Serif", Georgia, serif; font-style: italic; font-size: 22px; letter-spacing: 0; text-transform: none; color: var(--ink); }
 .story-hint { position: absolute; left: 50%; bottom: 26px; translate: -50% 0; margin: 0; color: var(--dim) !important; opacity: calc(1 - var(--p, 0) * 20); }
 .story-dots { position: absolute; left: max(16px, calc((100% - 1440px) / 2 + clamp(16px, 8.33vw, 120px))); bottom: 32px; display: flex; gap: 10px; list-style: none; margin: 0; padding: 0; }
-.story-dots li { width: 7px; height: 7px; border-radius: 1px; box-shadow: inset 0 0 0 1px rgb(244 242 238 / .4); transition: background .4s ease, box-shadow .4s ease; }
+.story-dots li { width: 7px; height: 7px; border-radius: 1px; box-shadow: inset 0 0 0 1px var(--sq); transition: background .4s ease, box-shadow .4s ease; }
 
 /* ---------- the last chapter: the dot writes the headline ---------- */
 .story-end .story-title { position: relative; margin: 0 0 26px; color: var(--ink); font-size: clamp(48px, 6vw, 92px); line-height: 1; letter-spacing: -.04em; font-weight: 500; max-width: 9em; }
@@ -69,8 +85,8 @@
 .story-end .sub { color: var(--dim); max-width: 30em; margin: 0 0 28px; }
 .story-end .sub, .story-end .ctas { opacity: 0; translate: 0 14px; transition: opacity .8s ease, translate 1s var(--ease-expo, ease-out); }
 .story.ctas-on .story-end :is(.sub, .ctas) { opacity: 1; translate: none; }
-.story .btn.primary { background: #F4F2EE; color: #141416; }
-.story .btn.ghost { background: rgb(255 255 255 / .06); color: #F4F2EE; border-color: rgb(255 255 255 / .28); }
+.story .btn.primary { background: var(--btn-bg); color: var(--btn-fg); }
+.story .btn.ghost { background: var(--ghost-bg); color: var(--ghost-fg); border-color: var(--ghost-line); }
 
 /* ---------- still (reduced motion): the chapters as a list, the field drawn and read ---------- */
 .story.still { height: auto; }
@@ -94,7 +110,7 @@
   .story-lines { width: 100%; min-height: 34svh; }
   .story-lines > li { top: 0; translate: 0 18px; }
   .story-lines > li.on { translate: none; }
-  .story-pin::after { background: linear-gradient(180deg, rgb(18 17 16 / .92) 0%, rgb(18 17 16 / .6) 45%, rgb(18 17 16 / .2)); }
+  .story-pin::after { background: linear-gradient(180deg, rgb(var(--stage-rgb) / .92) 0%, rgb(var(--stage-rgb) / .6) 45%, rgb(var(--stage-rgb) / .2)); }
 }
 .story-dots li.on { background: var(--accent); box-shadow: none; }
 

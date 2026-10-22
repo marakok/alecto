@@ -1,0 +1,30 @@
+/* Phase 3 · a hero on a background clip that follows the theme (theme-video.js): the white clip in light mode,
+   the black one in dark mode. Shared by Home and Lines: <section class="… hero-home on-video"> with
+   <video class="hero-video" data-src-light data-src-dark data-rate>. */
+
+/* the hero follows the theme, with the clip (theme-video.js): light on the white clip, dark on the black one */
+.hero-home.on-video {
+  --h-bg: #EFEAE3; --h-ink: #141416; --h-muted: rgb(20 20 22 / .66); --h-line: rgb(20 20 22 / .12); --h-tile: rgb(20 20 22 / .5);
+  --h-shade: 244 240 234; --h-video: saturate(.9) brightness(1.02);
+  --h-btn-bg: var(--accent); --h-btn-fg: #FFFFFF; --h-ghost-bg: rgb(255 255 255 / .55); --h-ghost-fg: #141416; --h-ghost-line: rgb(20 20 22 / .18);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .hero-home.on-video {
+  --h-bg: #121110; --h-ink: #F4F2EE; --h-muted: rgb(244 242 238 / .72); --h-line: rgb(244 242 238 / .12); --h-tile: rgb(255 255 255 / .62);
+  --h-shade: 14 13 12; --h-video: saturate(.8) brightness(.78);
+  --h-btn-bg: #F4F2EE; --h-btn-fg: #141416; --h-ghost-bg: rgb(255 255 255 / .06); --h-ghost-fg: #F4F2EE; --h-ghost-line: rgb(255 255 255 / .28);
+} }
+:root[data-theme="dark"] .hero-home.on-video {
+  --h-bg: #121110; --h-ink: #F4F2EE; --h-muted: rgb(244 242 238 / .72); --h-line: rgb(244 242 238 / .12); --h-tile: rgb(255 255 255 / .62);
+  --h-shade: 14 13 12; --h-video: saturate(.8) brightness(.78);
+  --h-btn-bg: #F4F2EE; --h-btn-fg: #141416; --h-ghost-bg: rgb(255 255 255 / .06); --h-ghost-fg: #F4F2EE; --h-ghost-line: rgb(255 255 255 / .28);
+}
+.hero-home.on-video { background: var(--h-bg); color: var(--h-ink); --fg: var(--h-ink); --muted: var(--h-muted); --grid-line: var(--h-line); }
+.hero-video { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; object-fit: cover; filter: var(--h-video, none); }
+.hero-home.on-video::before { /* the words keep their ground on the left, the light stays open on the right */
+  content: ""; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: linear-gradient(90deg, rgb(var(--h-shade) / .84) 0%, rgb(var(--h-shade) / .55) 40%, rgb(var(--h-shade) / .14) 75%), linear-gradient(0deg, rgb(var(--h-shade) / .5), transparent 30%);
+}
+.hero-home.on-video h1, .hero-home.on-video .hello-by b { color: var(--h-ink); }
+.hero-home.on-video .btn.primary { background: var(--h-btn-bg); color: var(--h-btn-fg); }
+.hero-home.on-video .btn.ghost { background: var(--h-ghost-bg); color: var(--h-ghost-fg); border-color: var(--h-ghost-line); -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+.hero-home.on-video .hello { --line: var(--h-line); }
