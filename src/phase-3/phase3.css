@@ -110,3 +110,6 @@ html.motion .p3 h2.writing .w > span { transform: none; opacity: 1; transition: 
 }
 .w-caret.on { opacity: 1; }
 .w-caret.gone { opacity: 0; scale: .2; transition-delay: .45s; }
+
+/* slowed clips are drawn smoothly on a canvas in their place (smooth-video.js); the video plays on, hidden */
+video.is-source { opacity: 0 !important; }

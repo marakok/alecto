@@ -1,0 +1,98 @@
+/* Phase 3 · Mark (mark.js): the dot as the whole visual language. Flat periwinkle and ink on warm paper, the
+   rounded square (6% corners, like the logo dot) used enormous and cropped, one movement at a time. */
+
+.p3m {
+  --m-pw: #5E6AD2; --m-soft: #C9CEF4; --m-ink: #141416; --m-paper: #F4F1EC; --m-on-pw: #FFFFFF;
+  background: var(--m-paper);
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3m { --m-pw: #8290E8; --m-soft: #2A2F57; --m-ink: #F4F1EC; --m-paper: #141416; --m-on-pw: #141416; } }
+:root[data-theme="dark"] .p3m { --m-pw: #8290E8; --m-soft: #2A2F57; --m-ink: #F4F1EC; --m-paper: #141416; --m-on-pw: #141416; }
+
+/* ---------- the hero: a giant corner that becomes the full stop of "alecto." ---------- */
+.mk-hero { position: relative; height: 260vh; background: var(--m-paper); color: var(--m-ink); }
+.mk-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; isolation: isolate; }
+.mk-stage { position: absolute; inset: 0; display: grid; place-items: center; z-index: 0; pointer-events: none; }
+.mk-logo {
+  display: inline-flex; align-items: flex-end; line-height: 0; font-size: clamp(64px, 12vw, 180px); color: var(--m-ink);
+  transform-origin: 0 0; translate: 0 6vh;
+}
+.mk-logo .wm { display: block; height: 1em; width: calc(2700em / 746); opacity: calc((var(--k, 0) - .7) * 3.4); }
+.mk-dot { display: block; width: calc(150em / 746); height: calc(150em / 746); margin: 0 0 calc(16em / 746) calc(80em / 746); background: var(--m-pw); border-radius: 6%; }
+.mk-copy { position: relative; z-index: 1; height: 100%; display: flex; flex-direction: column; justify-content: center; gap: 26px; }
+.mk-copy > * { max-width: min(560px, 48vw); }
+.mk-copy h1 { margin: 0; font-size: clamp(52px, 6.4vw, 104px); line-height: 1; letter-spacing: -.045em; font-weight: 500; color: var(--m-ink); max-width: 8.6em; }
+.mk-copy h1 em { font-style: italic; }
+.mk-copy .sub { margin: 0; color: color-mix(in srgb, var(--m-ink) 62%, transparent); }
+.mk-copy { opacity: calc(1 - var(--k, 0) * 2.6); translate: 0 calc(var(--k, 0) * -40px); }
+.mk-tag {
+  position: absolute; left: 50%; bottom: 16vh; translate: -50% 12px; z-index: 1; margin: 0; width: min(90vw, 760px); text-align: center;
+  font-size: clamp(20px, 2vw, 28px); letter-spacing: -.015em; color: color-mix(in srgb, var(--m-ink) 50%, transparent);
+  opacity: 0; transition: opacity 1s ease, translate 1.2s var(--ease-expo, ease-out);
+}
+.mk-tag strong { color: var(--m-ink); font-weight: 500; }
+.mk-hero.revealed .mk-tag { opacity: 1; translate: -50% 0; }
+.p3m .btn.primary { background: var(--m-pw); color: var(--m-on-pw); }
+.p3m .btn.ghost { background: transparent; color: var(--m-ink); border-color: color-mix(in srgb, var(--m-ink) 22%, transparent); }
+
+/* ---------- the aha: four squares meet, the star appears between their corners ---------- */
+.mk-meet { position: relative; height: 220vh; background: var(--m-paper); color: var(--m-ink); }
+.mk-meet .mk-pin { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+.mk-four { --s: min(19vw, 30vh); --gap: calc((1 - var(--m, 0)) * 34vw); position: relative; justify-self: center; width: calc(var(--s) * 2); height: calc(var(--s) * 2); grid-column: 2; grid-row: 1; }
+.mk-four i { position: absolute; width: var(--s); height: var(--s); border-radius: 30%; } /* rounder here, so the star between them reads */
+.mk-four i:nth-child(1) { left: 0; top: 0; background: var(--m-ink); translate: calc(var(--gap) * -1) calc(var(--gap) * -.6); }
+.mk-four i:nth-child(2) { right: 0; top: 0; background: var(--m-soft); translate: var(--gap) calc(var(--gap) * -.6); }
+.mk-four i:nth-child(3) { left: 0; bottom: 0; background: var(--m-soft); translate: calc(var(--gap) * -1) calc(var(--gap) * .6); }
+.mk-four i:nth-child(4) { right: 0; bottom: 0; background: var(--m-ink); translate: var(--gap) calc(var(--gap) * .6); }
+/* the star: exactly the gap between the four corners (30% of the side), lit once they meet */
+.mk-star { position: absolute; left: 50%; top: 50%; width: calc(var(--s) * .6); height: calc(var(--s) * .6); translate: -50% -50%; overflow: visible; scale: 0; transition: scale 1.2s cubic-bezier(.34, 1.5, .64, 1); }
+.mk-star path { fill: var(--m-pw); } /* the AI's spark: the only periwinkle, between ink and soft squares */
+.mk-meet.met .mk-star { scale: 1; filter: drop-shadow(0 0 16px color-mix(in srgb, var(--m-pw) 70%, transparent)); }
+.mk-meet-copy { grid-column: 1; grid-row: 1; opacity: calc((var(--m, 0) - .6) * 2.5); }
+.mk-meet-copy .eyebrow { margin-bottom: 22px; }
+
+/* ---------- squares that carry content: the figures ---------- */
+.mk-squares { margin-top: 96px; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 16px; }
+.mk-sq {
+  aspect-ratio: 1; display: flex; flex-direction: column; justify-content: space-between; padding: clamp(20px, 2.4vw, 32px); border-radius: 6%;
+  translate: 0 40px; opacity: 0; transition: translate 1.2s var(--ease-expo, ease-out), opacity .9s ease;
+}
+.mk-squares.in .mk-sq { translate: none; opacity: 1; }
+.mk-squares.in .mk-sq:nth-child(2) { transition-delay: .1s; }
+.mk-squares.in .mk-sq:nth-child(3) { transition-delay: .2s; }
+.mk-squares.in .mk-sq:nth-child(4) { transition-delay: .3s; }
+.mk-sq b { font-size: clamp(30px, 3.2vw, 48px); font-weight: 500; line-height: 1.02; letter-spacing: -.035em; }
+.mk-sq span { font-size: 14px; line-height: 1.4; opacity: .75; }
+.mk-sq p { margin: 0; font-size: clamp(17px, 1.5vw, 21px); line-height: 1.35; letter-spacing: -.01em; }
+.mk-sq.pw { background: var(--m-pw); color: var(--m-on-pw); }
+.mk-sq.ink { background: var(--m-ink); color: var(--m-paper); }
+.mk-sq.soft { background: var(--m-soft); color: var(--m-ink); }
+.mk-sq.paper { background: var(--m-paper); color: var(--m-ink); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--m-ink) 16%, transparent); }
+
+/* ---------- calm, flat sections ---------- */
+.p3m :is(.proofs, .team-band, #reviews) { background: transparent; }
+.p3m .sec { padding-block: clamp(112px, 13vw, 184px); }
+
+/* ---------- the evening: the giant corner again, a bookend ---------- */
+.p3m .c2-cta { background: var(--m-ink); color: var(--m-paper); overflow: hidden; position: relative; isolation: isolate; }
+.p3m .c2-cta h2, .p3m .c2-cta p { color: inherit; }
+.p3m .c2-cta .btn.primary { background: var(--m-pw); color: var(--m-on-pw); }
+.p3m .c2-cta .btn.ghost { color: var(--m-paper); border-color: color-mix(in srgb, var(--m-paper) 30%, transparent); }
+.mk-corner { position: absolute; inset: 0; width: auto; height: auto; margin: 0; aspect-ratio: auto; align-self: stretch; z-index: -1; }
+.mk-corner i { position: absolute; left: 58%; top: 34%; width: 120vh; height: 120vh; border-radius: 6%; background: var(--m-pw); }
+
+/* ---------- still (reduced motion): everything in its place ---------- */
+html.mark-still .mk-hero, html.mark-still .mk-meet { height: auto; }
+html.mark-still .mk-pin { position: relative; height: auto; min-height: 90svh; }
+html.mark-still .mk-hero { --k: 0; }
+html.mark-still .mk-meet { --m: 1; }
+html.mark-still .mk-meet .mk-star { scale: 1; }
+html.mark-still .mk-logo { translate: 30vw 30vh; transform: scale(8); }
+
+@media (max-width: 900px) {
+  .mk-copy { justify-content: flex-start; padding-top: 14svh; }
+  .mk-copy > * { max-width: 100%; }
+  .mk-meet .mk-pin { grid-template-columns: minmax(0, 1fr); align-content: center; gap: 48px; }
+  .mk-four, .mk-meet-copy { grid-column: 1; grid-row: auto; }
+  .mk-four { --s: 34vw; }
+  .mk-squares { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}

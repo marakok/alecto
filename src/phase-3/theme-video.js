@@ -3,12 +3,16 @@
  * mode, the black one in dark mode, swapped the moment the theme changes (the toggle sets html[data-theme]; without
  * it the OS setting decides). Clips keep their playback rate (data-rate, e.g. 0.333) across a swap.
  */
+import { smoothVideo } from './smooth-video.js';
+
 const dark = () => {
   const t = document.documentElement.dataset.theme;
   return t ? t === 'dark' : matchMedia('(prefers-color-scheme: dark)').matches;
 };
 
 export function initThemeVideos() {
+  // slowed clips glide instead of stepping (smooth-video.js)
+  document.querySelectorAll('video.hero-video, video.story-video, video.cta-video').forEach(smoothVideo);
   const videos = [...document.querySelectorAll('video[data-src-light][data-src-dark]')];
   if (!videos.length) return;
   const pick = () => videos.forEach((v) => {

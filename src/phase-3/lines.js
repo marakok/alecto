@@ -13,7 +13,6 @@ import { afterIntro } from '../phase-2/concept-2/reveal.js';
  *  - Where four tiles meet, the gap between their corners is a four-pointed star: the AI sparkle, made by the
  *    squares themselves. Faint at every crossing; the four round your tile light up as it walks.
  *  - Hover (mouse only): the tile under the pointer and its four stars light up, then fade slowly behind you.
- *  - The rest of the page shows no grid at rest; under the pointer a soft patch of it fades in (bodyGrid).
  *  data-accent: tiles drawn in periwinkle. Cells are "col,row": col from data-x0 (that many cells left of the content's right edge), row from data-y0
  *  (a fraction of the height). Reduced motion: drawn, still, the periwinkle tile at the end of its path.
  */
@@ -126,7 +125,6 @@ export function initLines({ reduce }) {
 
   if (reduce) { grids.forEach((g) => g.classList.add('drawn', 'still')); return; }
   grids.forEach(hover);
-  bodyGrid();
   const io = new IntersectionObserver((entries) => entries.forEach((e) => {
     if (!e.isIntersecting) return;
     io.unobserve(e.target);
@@ -161,78 +159,6 @@ function hover(el) {
     last = '';
     el.querySelectorAll('.tile.hover, .star.glint').forEach((t) => t.classList.remove('hover', 'glint'));
   });
-}
-
-// The rest of the page: no grid at rest. Under the pointer a soft round patch of it fades in and follows with a
-// little lag, on the same columns and rows as the hero's, with the tile you're over (and its four stars) faintly
-// outlined. One fixed layer behind the content, so only the screen repaints.
-function bodyGrid() {
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
-  const main = document.getElementById('main');
-  const hero = document.querySelector('.hero-grid');
-  if (!main || !hero) return;
-  const layer = document.createElement('div');
-  layer.className = 'body-grid';
-  layer.setAttribute('aria-hidden', 'true');
-  layer.innerHTML = `<i class="bg-lines"></i><svg class="bg-tile" aria-hidden="true"><rect class="bt"/><path class="bs"/></svg>`;
-  document.body.append(layer);
-  const tile = layer.querySelector('.bg-tile');
-  const rect = tile.querySelector('.bt');
-  const stars = tile.querySelector('.bs');
-
-  let mx = 0; let my = 0; // where the pointer is
-  let x = 0; let y = 0; // where the patch is (follows, softly)
-  let on = false;
-  let raf = 0;
-  let lastC = 0;
-  const frame = () => {
-    raf = 0;
-    const g = hero._geo;
-    if (!g) return;
-    const { cell: C, right } = measures(document.documentElement.clientWidth);
-    // the hero grid's first row, in page px, carried on down the page
-    const oy = hero.getBoundingClientRect().top + g.y0;
-    const gx = ((right % C) + C) % C;
-    const gy = ((oy % C) + C) % C;
-    x += (mx - x) * 0.14;
-    y += (my - y) * 0.14;
-    layer.style.setProperty('--mx', `${x.toFixed(1)}px`);
-    layer.style.setProperty('--my', `${y.toFixed(1)}px`);
-    layer.style.setProperty('--gx', `${gx}px`);
-    layer.style.setProperty('--gy', `${gy}px`);
-    layer.style.setProperty('--c', `${C}px`);
-    // the tile under the pointer, snapped to the grid; it glides from cell to cell
-    const tx = gx + Math.floor((mx - gx) / C) * C;
-    const ty = gy + Math.floor((my - gy) / C) * C;
-    tile.style.transform = `translate(${tx}px, ${ty}px)`;
-    if (C !== lastC) {
-      lastC = C;
-      const R = Math.round(C * 0.16);
-      tile.setAttribute('width', C + 2 * R);
-      tile.setAttribute('height', C + 2 * R);
-      tile.setAttribute('viewBox', `${-R} ${-R} ${C + 2 * R} ${C + 2 * R}`);
-      tile.style.margin = `${-R}px 0 0 ${-R}px`;
-      rect.setAttribute('width', C);
-      rect.setAttribute('height', C);
-      rect.setAttribute('rx', R);
-      stars.setAttribute('d', [[0, 0], [C, 0], [0, C], [C, C]].map(([sx, sy]) => star(sx, sy, R)).join(''));
-    }
-    if (on || Math.abs(mx - x) > 0.5 || Math.abs(my - y) > 0.5) raf = requestAnimationFrame(frame);
-  };
-  const go = () => { if (!raf) raf = requestAnimationFrame(frame); };
-
-  main.addEventListener('pointermove', (e) => {
-    mx = e.clientX;
-    my = e.clientY;
-    // the hero and the evening have grids of their own; over cards and content it stays away
-    const own = e.target.closest('.c2-hero, .c2-cta, .grid-band, .step, .review, .mate, .fr-proactive, .fr-lawyer, .faq details, .proof-row > div');
-    if (!on && !own) { x = mx; y = my; } // appear where the pointer is, then follow
-    on = !own;
-    layer.classList.toggle('on', on);
-    go();
-  });
-  main.addEventListener('pointerleave', () => { on = false; layer.classList.remove('on'); });
-  addEventListener('scroll', () => { if (on) go(); }, { passive: true });
 }
 
 // the page load: the same grid, drawn on the empty screen from the middle out (html[data-l="grid"])

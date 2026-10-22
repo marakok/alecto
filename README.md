@@ -17,6 +17,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
+| Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
 Plain HTML, CSS and JavaScript, bundled with [Vite](https://vitejs.dev). No framework.
@@ -78,11 +79,9 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
     (`light-corner.mp4`). The hero clip plays at a sixth of its speed, the evening's at a third (`data-rate`). Both clips are watermarked iStock previews: replace them with the licensed files before
     launch. Lines is set in Geist throughout (the accent word leans in Geist instead of switching to the serif), and
     ignores a type choice remembered from another page (`?f=` still works).
-  - **The rest of the page:** one paper, no grid at rest; under the pointer a soft round patch of the grid fades in
-    and follows with a little lag, on the hero's columns and rows, the tile you're over faintly outlined with its four
-    stars (`bodyGrid`, mouse only); every section starts on a
+  - **The rest of the page:** one paper, no grid in the body (only the hero's tiles react to hover); every section starts on a
     full-width line with a mark on each column; the figures are four cards with room between them, the review as the
-    periwinkle one (the hover grid stays off cards and content); icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
+    periwinkle one; icons, portraits and photos take the tile's shape; a small grid in the evening CTA, your tile home. More
     room between everything.
 - **Story, an extra iteration** (`/phase-3/story/`, `story.js`, `story.css`): the brand story, told by the brand's
   own elements, one line per chapter. The hero is pinned on a dark, still stage while you scroll through seven
@@ -98,12 +97,28 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   7. "Law that keeps you moving.": the dot writes the headline as you scroll; the buttons follow.
   Seven small squares at the bottom show where you are. No page load and no travelling square; the journey's
   cards still pin and swap as on the other pages (`journey.js`), its drawings keeping their own squares. Reduced motion: the chapters as a plain list.
+- **Mark, an extra iteration** (`/phase-3/mark/`, `mark.js`, `mark.css`), after Verve's Miro rebrand: they took one
+  piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
+  in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
+  warm paper, no outlines or effects:
+  - **The hero** (pinned): one giant periwinkle corner enters the screen; as you scroll it zooms out until you see what
+    it is, the full stop of "alecto.", with "Everything comes down to one point: your move, done."
+  - **The aha** (pinned): four solid squares (ink and soft periwinkle, like a chessboard) slide in from the corners and
+    meet; the gap between their corners is the AI star, lit in periwinkle. "Where our people meet, our AI works."
+    These four are rounder (30%) so the star reads.
+  - **Squares that carry content:** the figures on solid squares in the brand colours, sliding into place.
+  - **The evening:** the giant corner again, on ink, as a bookend.
+  Then the front blocks, the journey, the team, reviews and FAQ, as on Story.
 - **The front, not the back (feedback):** show only what the client sees, not the lawyer's platform. On Story and
   Lines the case allocation demo (back office) is replaced by two blocks after the client's own prototype, in our
   style (`front.js`, `front.css`): "Fast by default. *Proactive* by nature." (Enquiries, Blockers and Paperwork
   beside a live "Your move" panel whose updates arrive one by one; it moves on every eight seconds until you choose)
   and "Meet your lawyer." (they pick up the phone, they move first, they own the outcome, each with its own short
   chat with your lawyer). Updates, messages and times are illustrative.
+- **Slowed clips glide** (`smooth-video.js`): at a third or a sixth of their speed each frame stays up longer, so the
+  light moved in small steps. Each clip is now drawn on a canvas in its place, and every new frame is crossfaded in
+  over the time it is on screen, so the light glides. The video plays on, hidden, and stays in charge (source, speed,
+  opacity). Browsers without `requestVideoFrameCallback` show the video as it is.
 - **Clips follow the theme** (`theme-video.js`, `data-src-light` / `data-src-dark`): the white clip (light across a
   corner) in light mode, the black one (light across a dark wall) in dark mode, swapped the moment the theme
   changes. Home and Lines share the video hero (`video-hero.css`, `.hero-home.on-video`); on Home it replaces the

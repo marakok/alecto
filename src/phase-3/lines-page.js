@@ -21,7 +21,7 @@ if (spark) {
 }
 
 // the background clips play slowly: each at its own data-rate (the hero at a sixth), else a third
-document.querySelectorAll('.hero-video, .cta-video').forEach((v) => {
+document.querySelectorAll('video.hero-video, video.cta-video').forEach((v) => {
   const rate = Number(v.dataset.rate) || 1 / 3;
   v.defaultPlaybackRate = rate;
   v.playbackRate = rate;
