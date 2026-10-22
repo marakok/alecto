@@ -71,7 +71,7 @@ export function initStory({ reduce }) {
       }
     }
     html += `<rect class="sf-band" x="0" y="0" width="${(pitch * 1.6).toFixed(1)}" height="${H}"/>`;
-    svg.innerHTML = `<defs><linearGradient id="sf-band-g" x1="0" x2="1"><stop offset="0" stop-color="#FFF6E6" stop-opacity="0"/><stop offset=".5" stop-color="#FFF6E6" stop-opacity=".22"/><stop offset="1" stop-color="#FFF6E6" stop-opacity="0"/></linearGradient></defs>${html}`;
+    svg.innerHTML = `<defs><linearGradient id="sf-band-g" x1="0" x2="1"><stop offset="0" style="stop-color:var(--band)" stop-opacity="0"/><stop offset=".5" style="stop-color:var(--band)" stop-opacity=".35"/><stop offset="1" style="stop-color:var(--band)" stop-opacity="0"/></linearGradient></defs>${html}`;
     field.replaceChildren(svg);
     sq = [...svg.querySelectorAll('.sf-sq')].map((el) => ({ el, d: Number(el.dataset.d), x: Number(el.getAttribute('x')) + s / 2, k: el.dataset.k }));
     path = svg.querySelector('.sf-path');

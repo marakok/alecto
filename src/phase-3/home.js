@@ -7,6 +7,7 @@ import { initThread } from './thread.js';
 import { initHeadings } from './headings.js';
 import { initWords } from './words.js';
 import { initSwitcher } from './switcher.js';
+import { initThemeVideos } from './theme-video.js';
 
 /**
  * Phase 3 · Home: 2a with light through a window in place of the photo (light.js), lighter type (three options on the
@@ -15,6 +16,7 @@ import { initSwitcher } from './switcher.js';
  */
 const reduce = prefersReducedMotion();
 initSwitcher();
+initThemeVideos(); // the hero's clip: white in light mode, black in dark mode
 initLight({ reduce });
 initThread({ reduce });
 initWords({ reduce });

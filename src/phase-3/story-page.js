@@ -4,12 +4,13 @@ import { initMotion } from '../js/motion.js';
 import { prefersReducedMotion } from '../js/palette.js';
 import { initRadius } from '../phase-2/concept-2/radius.js';
 import { initReveal } from '../phase-2/concept-2/reveal.js';
-import { initAlloc } from './demo.js';
+import { initFront } from './front.js';
 import { initHeadings } from './headings.js';
 import { initJourney } from './journey.js';
 import { initLight } from './light.js';
 import { initStory } from './story.js';
 import { initSwitcher } from './switcher.js';
+import { initThemeVideos } from './theme-video.js';
 import { initWords } from './words.js';
 
 /**
@@ -23,9 +24,10 @@ initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
 initReveal({ reduce });
 initSwitcher();
+initThemeVideos(); // the white clip in light mode, the black one in dark mode
 initStory({ reduce });
 initJourney({ reduce });
 initLight({ reduce });
 initWords({ reduce });
 initHeadings({ reduce });
-initAlloc({ reduce });
+initFront({ reduce }); // the front: what the client sees, not the lawyer's platform

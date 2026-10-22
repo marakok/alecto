@@ -42,6 +42,7 @@
   <link rel="stylesheet" href="/src/phase-3/phase3.css">
   <link rel="stylesheet" href="/src/phase-3/platform.css">
   <link rel="stylesheet" href="/src/phase-3/light.css">
+  <link rel="stylesheet" href="/src/phase-3/video-hero.css">
 </head>
 <body class="c2 p3">
 <a class="skip" href="#main">Skip to content</a>
@@ -81,11 +82,13 @@
 <div class="actor" id="actor" aria-hidden="true"></div>
 
 <main id="main">
-  <!-- The hero: morning. A square of sunlight on a wall at home, leaf shadows moving through it (light.js).
+  <!-- The hero: morning light moving across a wall, the same clip as Lines (video-hero.css).
        The square is the one element: the logo dot, the cursor that writes the headline, its full stop, and
        here, big, the light. -->
-  <section class="c2-hero hero-home" data-v="a">
-    <div class="light hero-light" data-light="morning" aria-hidden="true"></div>
+  <section class="c2-hero hero-home on-video" data-v="a">
+    <!-- Background, following the theme (theme-video.js): the white clip (light across a corner) in light mode, the
+         black one (light across a dark wall) in dark mode. iStock previews (watermarked): replace with the licensed clips. -->
+    <video class="hero-video" data-src-light="/phase-3/light-corner.mp4" data-src-dark="/phase-3/light-wall.mp4" data-rate=".3333" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1>Law that keeps you <span class="nowrap"><em>moving</em><span class="period" id="k0"></span></span></h1>

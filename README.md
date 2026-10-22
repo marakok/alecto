@@ -75,7 +75,7 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   - **Update (example video):** the hero is dark, on a clip of window light moving across a wall
     (`public/phase-3/light-wall.mp4`), with thin white outline tiles stepping down the diagonal, periwinkle ones beside
     them (`data-accent`), lines running on and "+" marks at their corners. The evening has the light across a corner
-    (`light-corner.mp4`). Both play at a third of their speed (`lines-page.js`). Both clips are watermarked iStock previews: replace them with the licensed files before
+    (`light-corner.mp4`). The hero clip plays at a sixth of its speed, the evening's at a third (`data-rate`). Both clips are watermarked iStock previews: replace them with the licensed files before
     launch. Lines is set in Geist throughout (the accent word leans in Geist instead of switching to the serif), and
     ignores a type choice remembered from another page (`?f=` still works).
   - **The rest of the page:** one paper, no grid at rest; under the pointer a soft round patch of the grid fades in
@@ -98,6 +98,17 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   7. "Law that keeps you moving.": the dot writes the headline as you scroll; the buttons follow.
   Seven small squares at the bottom show where you are. No page load and no travelling square; the journey's
   cards still pin and swap as on the other pages (`journey.js`), its drawings keeping their own squares. Reduced motion: the chapters as a plain list.
+- **The front, not the back (feedback):** show only what the client sees, not the lawyer's platform. On Story and
+  Lines the case allocation demo (back office) is replaced by two blocks after the client's own prototype, in our
+  style (`front.js`, `front.css`): "Fast by default. *Proactive* by nature." (Enquiries, Blockers and Paperwork
+  beside a live "Your move" panel whose updates arrive one by one; it moves on every eight seconds until you choose)
+  and "Meet your lawyer." (they pick up the phone, they move first, they own the outcome, each with its own short
+  chat with your lawyer). Updates, messages and times are illustrative.
+- **Clips follow the theme** (`theme-video.js`, `data-src-light` / `data-src-dark`): the white clip (light across a
+  corner) in light mode, the black one (light across a dark wall) in dark mode, swapped the moment the theme
+  changes. Home and Lines share the video hero (`video-hero.css`, `.hero-home.on-video`); on Home it replaces the
+  drawn light behind the headline. The Lines and Home heroes and the Story stage are light in light mode and dark in dark mode; the evening is dark in
+  both, on the black clip.
 - **Quieter (feedback):** Home has no cycling status in the hero, a few slow data squares on the thread instead of a
   stream, station labels that stay put (`data-thread-swap` brings the turns back), and leaves that sway less and
   don't flutter. Lines has no data sliding along the grid (`data-bits` brings it back), your tile steps every five
