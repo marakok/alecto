@@ -27,6 +27,11 @@ html.rv .p3l3 .review.in .rate i, .p3l3 .rate i { background: var(--fg); }
 .grid-art .tile.done { fill: color-mix(in srgb, var(--fg) 4%, transparent); stroke: color-mix(in srgb, var(--fg) 55%, transparent); }
 .l3-bit { fill: var(--star); }
 
+/* once the tiles have met, the long lines across the hero fade away slowly: the words get calm ground, and only
+   the four tiles, their corner marks and the star stay */
+.l3-hero .hero-grid .gl { transition: opacity 4s ease 1.2s; }
+.l3-hero .hero-grid.met .gl { opacity: 0; }
+
 /* the hero: no clip, the words on the left, the four tiles on the right */
 .l3-hero .hero-grid { -webkit-mask-image: none; mask-image: none; }
 .l3-status { position: absolute; inset: 0; z-index: 1; pointer-events: none; }
