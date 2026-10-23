@@ -99,19 +99,24 @@ export function initMark({ reduce }) {
       const k = ease(clamp(p / 0.85, 0, 1));
       // where the dot sits when the logo is at rest (its own box, without the transform)
       logo.style.transform = 'none';
-      const lr = logo.getBoundingClientRect();
-      const dr = dot.getBoundingClientRect();
+      // measured without the stage's entrance glide (mark.css), which plays on top of this
+      const glide = new DOMMatrix(getComputedStyle(stage).transform);
+      const unglide = (r) => ({ left: r.left - glide.e, top: r.top - glide.f, width: r.width });
+      const lr = unglide(logo.getBoundingClientRect());
+      const dr = unglide(dot.getBoundingClientRect());
       const W = innerWidth;
       const H = innerHeight;
       const big = Math.max(W, H) * 1.5; // the dot at the start: far bigger than the screen
       const s0 = big / dr.width;
       const s = Math.exp(lerp(Math.log(s0), 0, k)); // zoom evenly
-      // the dot's top left corner: just clear of the headline (only one corner shows), or below the buttons on a
-      // phone, to its place in the word
+      // the dot's top left corner: just clear of the headline (only one corner shows), or below the buttons where
+      // there's no room beside it (phones, tablets), to its place in the word
       const copyRight = Math.max(...[...copy].map((el) => el.getBoundingClientRect().right));
-      const start = W < 720
-        ? [W * 0.14, Math.min(H * 0.7, ctas.getBoundingClientRect().bottom + 40)]
-        : [Math.max(W * 0.5, copyRight + 48), H * 0.2];
+      const beside = Math.max(W * 0.5, copyRight + 48);
+      const below = ctas.getBoundingClientRect().bottom + 40;
+      const start = W - beside >= Math.min(360, H * 0.92 - below) // whichever leaves more of it in view
+        ? [beside, H * 0.2]
+        : [W * 0.14, Math.min(H * 0.8, below)];
       const tx = lerp(start[0], dr.left, k);
       const ty = lerp(start[1], dr.top, k);
       const ox = dr.left - lr.left;
