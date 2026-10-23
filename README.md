@@ -17,6 +17,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
+| Phase 3 · Lines 2 | `/phase-3/lines-2/` | Lines, with the hero clip shown only through a few of the grid's tiles, like windows in a wall; one slowly closes as another opens |
 | Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
@@ -97,6 +98,10 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   7. "Law that keeps you moving.": the dot writes the headline as you scroll; the buttons follow.
   Seven small squares at the bottom show where you are. No page load and no travelling square; the journey's
   cards still pin and swap as on the other pages (`journey.js`), its drawings keeping their own squares. Reduced motion: the chapters as a plain list.
+- **Lines 2** (`/phase-3/lines-2/`, `windows.js`, `windows.css`): Lines with the hero clip clipped to rounded squares
+  just inside a few of the grid's tiles (`data-windows`, `data-open`), the rest of the hero plain ground. Every few
+  seconds one window shrinks shut while another opens elsewhere. Windows never open behind the headline, the buttons or
+  Hannah's line, so on a phone, where the words fill the hero, they mostly stay shut.
 - **Mark, an extra iteration** (`/phase-3/mark/`, `mark.js`, `mark.css`), after Verve's Miro rebrand: they took one
   piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
   in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
