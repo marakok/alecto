@@ -85,6 +85,10 @@ html.jl .p3min #k0 { visibility: visible; }
 .p3min .cta-curtain .cta-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; filter: var(--cream-grade); }
 .p3min .cta-curtain .cta-art::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgb(244 240 234 / .85) 0%, rgb(244 240 234 / .5) 45%, rgb(244 240 234 / .06) 80%); }
 .p3min .cta-curtain .btn.accent { background: #141416; color: #FFFFFF; }
+.p3min .cta-curtain.lw .cta-art::after { display: none; } /* Option 2: the curtains only in the windows, on plain ground */
+.p3min .cta-curtain { --h-tile: rgb(20 20 22 / .5); --grid-line: rgb(20 20 22 / .12); } /* ink tiles and lines, as in the header */
+/* the grid fades out behind the words on the left, as in the header */
+.p3min .cta-curtain .cta-tiles { -webkit-mask-image: linear-gradient(90deg, transparent 0, transparent 28%, #000 50%); mask-image: linear-gradient(90deg, transparent 0, transparent 28%, #000 50%); }
 .p3min .cta-curtain .btn.ghost { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
 
 /* ---------- the AI, without words: the four tiles, centred, and the star at work ---------- */
