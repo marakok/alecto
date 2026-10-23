@@ -18,6 +18,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
 | Phase 3 · Lines 2 | `/phase-3/lines-2/` | Lines, with the hero clip shown only through a few of the grid's tiles, like windows in a wall; one slowly closes as another opens |
+| Phase 3 · Lines 3 | `/phase-3/lines-3/` | Lines with one rule: squares are people and your move, the star appears only where squares meet, and that is the AI. Only the star is periwinkle |
 | Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
@@ -102,6 +103,18 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   just inside a few of the grid's tiles (`data-windows`, `data-open`), the rest of the hero plain ground. Every few
   seconds one window shrinks shut while another opens elsewhere. Windows never open behind the headline, the buttons or
   Hannah's line, so on a phone, where the words fill the hero, they mostly stay shut.
+- **Lines 3** (`/phase-3/lines-3/`, `lines3.js`, `lines3.css`): one rule, used everywhere. Squares are people and
+  your move; the star only appears where squares meet, and that is where the AI works. No clips; ink lines on paper.
+  Periwinkle is kept for the brand's own square (the logo dot, the full stop, the announcement bar) and the star, and
+  only the star glows; buttons, avatars, review ratings and the "Your call" strip are ink.
+  - **The hero** teaches the rule: four tiles slide together (`data-meet`), the gap between their corners lights up as
+    a big star (`data-r=".3"` on the grid: rounder corners, a bigger star), then it works (`data-work`): a small square
+    of data runs from it along the line between two tiles, and that tile fills with what got done ("AI · 02:14,
+    Searches ordered"), clockwise, one at a time, without end. On narrow screens the tiles sit below the words.
+  - **A key** under the hero: a square for your lawyer and you, a star for the AI in the background.
+  - **The star as a mark in the UI:** each journey step says what the AI did beside what Hannah does; the "Your move"
+    panel (`data-ai`, front.js) shows the AI's work with the star and Hannah's with her square.
+  - **The evening:** four tiles come home and meet round one last star.
 - **Mark, an extra iteration** (`/phase-3/mark/`, `mark.js`, `mark.css`), after Verve's Miro rebrand: they took one
   piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
   in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
