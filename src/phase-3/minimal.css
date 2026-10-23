@@ -77,6 +77,15 @@ html.jl .p3min #k0 { visibility: visible; }
 .p3min { --cream-grade: grayscale(1) sepia(.38) saturate(1.15) brightness(1.08) contrast(.9); }
 .p3min .hero-home.on-video { --h-video: var(--cream-grade); }
 
+/* ---------- Option 2's header: calm ground around the words. Each text block hugs its text and carries a soft halo
+   in the header's own colour, so the lines and tiles fade out behind it instead of running through. ---------- */
+.p3min .c2-hero.p3c .hero-copy > :is(h1, .sub, .ctas, .hello) {
+  width: fit-content; max-width: 100%; border-radius: 28px;
+  background: var(--h-bg); box-shadow: 0 0 44px 34px var(--h-bg);
+}
+.p3min .c2-hero.p3c .hero-copy > h1:not(.x) { max-width: 8.4em; } /* still two lines (outranks the :is() above) */
+.p3min .c2-hero.p3c .hero-copy { position: relative; z-index: 1; }
+
 /* ---------- the closing section on the curtains: light, like the header, instead of the dark evening ---------- */
 .p3min .cta-curtain {
   --inv-fg: #141416; --inv-muted: rgb(20 20 22 / .62); --inv-line: rgb(20 20 22 / .18); --inv-surface: rgb(255 255 255 / .55); --inv-bg: #F4F1EC;

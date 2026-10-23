@@ -69,6 +69,8 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
 - **The clips in the page's own colours** (`--cream-grade` in minimal.css): the curtains are olive green-grey, so a CSS
   grade takes out the green and warms them to the cream of the drawn light (greyscale, a little sepia, a touch
   lighter and softer). It runs on every clip: Home 2's header, the windows in the Lines headers, the closing sections.
+- **Calm ground around Option 2's header text:** each text block hugs its text and carries a soft halo in the header's
+  own colour, so the lines and tiles fade out behind the words instead of running through them.
 - **Option 2's closing section with its header's brand elements** (Lines 2 only): the grid of tiles, the lines and the
   "+" marks, the curtains seen through a few tiles, one slowly closing as another opens. `windows.js` now handles any
   number of grids per page, each with its own clip (`--lw-clip`).
