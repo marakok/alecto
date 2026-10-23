@@ -1,5 +1,5 @@
-/* Titles that rise into place instead of being written by the dot (rise.js), on <body class="… p3rise">: Home 2
-   and Lines 2. Each word comes up out of its own mask, from a soft blur into focus, just after the one before. */
+/* Titles that rise into place (rise.js), on <body class="… p3rise">: every phase 3 page. Each word comes up out of
+   its own mask, from a soft blur into focus, just after the one before; then the purple full stop lands. */
 
 html.motion .p3rise :is(h2[data-split], .rise) .w { display: inline-block; overflow: hidden; vertical-align: top; padding: 0 .06em .14em; margin: 0 -.06em -.14em; }
 html.motion .p3rise :is(h2[data-split], .rise) .w > span {
@@ -13,5 +13,9 @@ html.motion .p3rise :is(h2[data-split], .rise).in .w > span { transform: none; o
 html.motion .p3rise .rise .period { opacity: 0; scale: .4; transition: opacity .5s ease, scale .7s cubic-bezier(.34, 1.5, .64, 1); transition-delay: calc(var(--n, 6) * 45ms + 250ms); }
 html.motion .p3rise .rise.in .period { opacity: 1; scale: 1; }
 .p3rise .hero-home h1:not(.in) #k0 { opacity: 0; } /* no lone dot before the words arrive */
+.p3rise .story-caret { display: none; }
 html.rise-still .p3rise .hero-home h1 #k0 { opacity: 1; }
 html.rise-still .p3rise .rise .w > span { transform: none; opacity: 1; filter: none; }
+/* the full stop of a section title (stops.js): it lands once the words are in, small and soft, with a little give */
+html.motion .p3rise h2[data-split] .stop { opacity: 0; scale: .2; transform-origin: 50% 80%; transition: opacity .45s ease, scale .7s cubic-bezier(.34, 1.56, .64, 1); transition-delay: calc(var(--n, 4) * 45ms + 420ms); }
+html.motion .p3rise h2[data-split].in .stop { opacity: 1; scale: 1; }

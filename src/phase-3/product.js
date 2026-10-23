@@ -4,8 +4,8 @@ import '../phase-2/concept-2/page.js'; // the page load: the square lands as the
 import { prefersReducedMotion } from '../js/palette.js';
 import { initAlloc } from './demo.js';
 import { initFeatures } from './features.js';
+import { initStops } from './stops.js';
 import { initSwitcher } from './switcher.js';
-import { initHeadings } from './headings.js';
 import { initWords } from './words.js';
 
 /**
@@ -14,8 +14,8 @@ import { initWords } from './words.js';
  */
 const reduce = prefersReducedMotion();
 initSwitcher();
+initStops(); // every title ends on the purple square, landing after the words (rise.css)
 initApps();
 initFeatures({ reduce });
 initAlloc({ reduce });
 initWords({ reduce });
-initHeadings({ reduce });

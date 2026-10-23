@@ -21,9 +21,6 @@ html[data-v] .p3min.c2 .announce-tag { color: var(--bg); border-color: color-mix
 .p3min .hero-home h1 { text-wrap: balance; }
 .p3min .story-end .story-title { max-width: 6.8em; width: max-content; } /* Story: the same two lines */
 
-/* every title ends on the brand's square (stops.js), as the headline does */
-.stop { display: inline-block; width: .15em; height: .15em; margin-left: .05em; border-radius: 6%; background: var(--accent); vertical-align: baseline; }
-
 /* no travelling square here, so the headline keeps its own full stop: the purple one */
 html.jl .p3min #k0 { visibility: visible; }
 

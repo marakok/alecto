@@ -5,13 +5,13 @@ import { prefersReducedMotion } from '../js/palette.js';
 import { initRadius } from '../phase-2/concept-2/radius.js';
 import { initReveal } from '../phase-2/concept-2/reveal.js';
 import { initFront } from './front.js';
-import { initHeadings } from './headings.js';
 import { initLines } from './lines.js';
 import { initLines3 } from './lines3.js';
 import { initPrototype } from './prototype.js';
 import { initSwitcher } from './switcher.js';
 import { initWords } from './words.js';
 import { initStops } from './stops.js';
+import { initRise } from './rise.js';
 
 /**
  * Phase 3 · Prototype: everything from the client's own prototype (its sections, copy and order), built in the
@@ -22,11 +22,11 @@ initRadius();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
 initStops(); // every title ends on the purple square
+initRise({ reduce }); // titles rise in word by word; the full stop lands last
 initReveal({ reduce });
 initSwitcher();
 initLines({ reduce });
 initLines3({ reduce });
 initPrototype({ reduce });
 initWords({ reduce });
-initHeadings({ reduce });
 initFront({ reduce });

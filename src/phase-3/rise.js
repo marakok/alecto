@@ -1,8 +1,10 @@
 /**
- * Phase 3 · Home 2 and Lines 2: titles rise into place instead of being written by the dot. Minimal and quick:
- * each word comes up out of its own mask, from a soft blur into focus, a few hundredths of a second after the one before (rise.css).
+ * Phase 3: titles rise into place, nothing writes them. Minimal and quick: each word comes up out of its own mask,
+ * from a soft blur into focus, a few hundredths of a second after the one before; the purple full stop lands last
+ * (rise.css).
  *  - the hero headline: on load
  *  - section headings (h2, split into words by motion.js): as they scroll into view (motion.js adds .in)
+ *  - the Story page's last line: when its chapter arrives (story.js)
  * Reduced motion: everything is simply there.
  */
 function split(el) {
@@ -30,6 +32,11 @@ function split(el) {
 }
 
 export function initRise({ reduce }) {
+  document.querySelectorAll('.story-title').forEach((t) => {
+    t.querySelectorAll('.w > span').forEach((s, i) => s.style.setProperty('--i', i));
+    t.style.setProperty('--n', t.querySelectorAll('.w > span').length);
+    t.classList.add('rise');
+  });
   if (reduce) { document.documentElement.classList.add('rise-still'); return; }
   const h1 = document.querySelector('.hero-home h1');
   if (!h1) return;

@@ -11,7 +11,7 @@ import { writeAt } from '../js/write.js';
  *  3  AI works quietly in the shadows …      the window-light clip fades in behind the field
  *  4  It reads every square …                a band of light sweeps across; every square it passes is read
  *  5  Our lawyer makes every decision …      two squares come forward: the lawyer and you, one line between
- *  6  Law that keeps you moving.             the dot writes the headline as you scroll; the buttons follow
+ *  6  Law that keeps you moving.             the headline rises in, word by word (rise.css); the buttons follow
  *
  * Only one thing happens at a time, and only as you scroll. Reduced motion: the chapters as a plain list.
  */
@@ -124,6 +124,13 @@ export function initStory({ reduce }) {
 
     // 6: the dot writes the headline as you scroll
     const write = ch < 6 ? 0 : ease(seg(t, 0.05, 0.75));
+    // 6: the headline rises in as its chapter arrives (no dot writing it)
+    if (title.classList.contains('rise')) {
+      title.classList.toggle('in', ch === 6);
+      story.classList.toggle('written', ch === 6);
+      story.classList.toggle('ctas-on', ch === 6 && t > 0.3);
+      return;
+    }
     story.classList.toggle('writing', ch === 6);
     if (ch === 6) {
       const sr = stop.getBoundingClientRect();

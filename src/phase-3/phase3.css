@@ -90,26 +90,18 @@ html.rv .p3 .review.in .rate i { background: var(--accent); box-shadow: none; }
 /* ---------- writing: the square as a cursor (write.js) ----------
    Every word is masked: full colour up to 70px behind the cursor, fading to a faint ghost of itself at the
    cursor (--x: how far the cursor is past the word's left edge). The hero headline is written on load (the
-   "write" page load, loader.js), section headings as they come into view (headings.js). */
-html:is([data-l="write"], [data-l="grid"]) .c2-hero h1 .w > span,
-.p3 h2.writing .w > span {
+   "write" page load, loader.js, on Platform). Section headings rise in instead (rise.css). */
+html:is([data-l="write"], [data-l="grid"]) .c2-hero h1 .w > span {
   -webkit-mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
   mask-image: linear-gradient(90deg, #000 calc(var(--x, -99999px) - 70px), rgb(0 0 0 / .1) var(--x, -99999px));
 }
 html:is([data-l="write"], [data-l="grid"]) .c2-hero h1 .w > span { animation: none; }
-html:is([data-l="write"], [data-l="grid"]).written .c2-hero h1 .w > span, .p3 h2.written .w > span { -webkit-mask-image: none; mask-image: none; }
+html:is([data-l="write"], [data-l="grid"]).written .c2-hero h1 .w > span { -webkit-mask-image: none; mask-image: none; }
 /* the rest of the hero waits until the headline is written */
 html.jl[data-l="write"] .c2-hero .hx { animation-delay: calc(var(--t, 0ms) + 1700ms); }
 html.jl[data-l="grid"] .c2-hero .hx { animation-delay: calc(var(--t, 0ms) + 1300ms); }
-/* section headings: no rise, the cursor writes them */
-html.motion .p3 h2.writing .w > span { transform: none; opacity: 1; transition: none; }
-.p3 h2.writing { position: relative; }
-.w-caret {
-  position: absolute; left: 0; top: 0; width: 9px; height: 9px; background: var(--accent); border-radius: var(--dot-r);
-  pointer-events: none; opacity: 0; transition: opacity .35s ease, scale .6s var(--ease-expo, ease-out);
-}
-.w-caret.on { opacity: 1; }
-.w-caret.gone { opacity: 0; scale: .2; transition-delay: .45s; }
+/* every title ends on the brand's square (stops.js), as the headline does; it lands after the words (rise.css) */
+.stop { display: inline-block; width: .15em; height: .15em; margin-left: .05em; border-radius: 6%; background: var(--accent); vertical-align: baseline; }
 
 /* slowed clips are drawn smoothly on a canvas in their place (smooth-video.js); the video plays on, hidden */
 video.is-source { opacity: 0 !important; }
