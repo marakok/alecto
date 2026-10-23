@@ -293,3 +293,14 @@ h2 .period{width:.14em;height:.14em}
 .concepts a[aria-current]{background:var(--accent);color:#fff}
 .concepts a:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
 @media (max-width:640px){ .concepts{left:max(16px,env(safe-area-inset-left));justify-content:flex-start;max-width:max-content;margin-left:auto;overflow-x:auto;scrollbar-width:none} .concepts a{flex:none} .concepts span{display:none} .concepts .phase{display:block;width:1px;height:20px;margin:0 4px;padding:0;font-size:0;border-left:1px solid var(--line)} }
+
+/* the switcher tucked into the header behind one button (versions.js): a small menu, not a bar */
+.versions{position:relative}
+.versions-btn svg{fill:none;stroke:currentColor;stroke-width:1.4}
+.versions-btn[aria-expanded="true"]{background:var(--tile-empty)}
+.versions .concepts{position:absolute;top:calc(100% + 10px);right:0;bottom:auto;left:auto;z-index:60;width:228px;max-width:none;margin:0;overflow:visible;flex-wrap:wrap;align-items:center;gap:4px;padding:10px;border-radius:16px}
+.versions .concepts[hidden]{display:none}
+.versions .concepts span{display:block;flex-basis:100%;padding:6px 6px 2px;font-size:10.5px}
+.versions .concepts .phase{margin:6px 0 0;padding:10px 6px 2px;border-left:0;border-top:1px solid var(--line);width:auto;height:auto;font-size:10.5px}
+.versions .concepts a{flex:none}
+.versions .concepts a[aria-current]{background:var(--fg);color:var(--bg)}

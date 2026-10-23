@@ -1,0 +1,113 @@
+/* Phase 3 · minimal (feedback round 6), on every version (<body class="… p3min">): stripped back and strict. Ink on
+   paper; purple only for the brand's own square (the logo dot, the full stop; and on Lines 3, the AI star). No lines
+   through the page, no stars in the reviews, no drawings: the six steps show the person doing each one and their
+   message to you. */
+
+/* buttons in ink (2a sets its own per theme, so the overrides go in each theme) */
+.p3min, :root[data-theme] .p3min { --btn-bg: var(--fg); --btn-fg: var(--bg); --soft: color-mix(in srgb, var(--fg) 4%, transparent); }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3min { --btn-bg: var(--fg); --btn-fg: var(--bg); --soft: color-mix(in srgb, var(--fg) 5%, transparent); } }
+:root[data-theme="dark"] .p3min { --btn-bg: var(--fg); --btn-fg: var(--bg); --soft: color-mix(in srgb, var(--fg) 5%, transparent); }
+.p3min :is(.btn.primary, .btn.accent) { background: var(--fg); color: var(--bg); }
+.p3min .hero-home.on-video { --h-btn-bg: #141416; --h-btn-fg: #FFFFFF; } /* the hero on a clip sets its own */
+.p3min .c2-cta .btn.accent { background: #F4F2EE; color: #141416; } /* the evening is always dark */
+
+/* the news bar: ink, not purple (white on ink in light mode, ink on white in dark) */
+html[data-v] .p3min.c2 .announce { background: var(--fg); color: var(--bg); }
+html[data-v] .p3min.c2 .announce-tag { color: var(--bg); border-color: color-mix(in srgb, var(--bg) 45%, transparent); }
+
+/* the headline on two lines ("Law that keeps / you moving."): a little more room for it, the rest stays as wide */
+.p3min .hero-home .hero-copy { max-width: 740px; }
+.p3min .hero-home .hero-copy > :not(h1) { max-width: 640px; }
+.p3min .hero-home h1 { text-wrap: balance; }
+.p3min .story-end .story-title { max-width: 6.8em; width: max-content; } /* Story: the same two lines */
+
+/* no travelling square here, so the headline keeps its own full stop: the purple one */
+html.jl .p3min #k0 { visibility: visible; }
+
+/* small marks in ink: eyebrows, Your call, the reading bar */
+.p3min :is(.eyebrow i, .yourcall i), .p3min .progress { background: var(--fg); }
+.p3min :is(.yourcall b, .ceyebrow b) { color: var(--fg); }
+
+/* the six steps: no card, no drawing; the step on the left, the person and their message on the right */
+.p3min .step-card { background: transparent; border: 0; box-shadow: inset 0 0 0 1px var(--line); }
+.p3min .st-chat { flex: 1; max-width: 460px; margin: 0; min-height: 0; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
+.p3min .st-chat header .face-tile { width: 40px; }
+.p3min .fr-msg.out { background: var(--fg); color: var(--bg); } /* your replies in ink, not purple */
+.p3min .st-chat .fr-msgs { display: grid; gap: 8px; }
+
+/* reviews: no stars, just the words */
+.p3min .review .rbody { padding-top: 24px; }
+
+/* ---------- the hero, calm (feedback: no purple distraction, no lines, no interactive line; enough movement) ---------- */
+.p3min { --star: #5E6AD2; }
+.p3min .hero-light .bar { display: none; } /* no window cross: no lines */
+/* the leaves move more: a wider, quicker sway and a soft flutter, the sun drifting a little further */
+.p3min .hero-light .br { animation: sway-more 9s ease-in-out var(--bd, 0s) infinite alternate; }
+.p3min .hero-light .lf { animation: flutter 4.5s ease-in-out var(--fd, 0s) infinite alternate; }
+.p3min .hero-light .sun { animation-duration: 26s; }
+.p3min .hero-light .sheer { animation-duration: 18s; }
+@keyframes sway-more { from { rotate: -2.6deg; translate: -7px -2px; } to { rotate: 2.8deg; translate: 9px 4px; } }
+.p3min .l3-hero .gl { display: none; } /* Lines 3: the tiles and the star, without the lines */
+
+/* the brand story after the hero (story.js): a little shorter than on the Story page */
+.p3min .story-in { height: 620vh; }
+
+/* ---------- the AI, as a story: the words on the left, the four tiles and the star at work on the right ---------- */
+.p3min .ai-story { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
+.p3min .ai-copy .eyebrow { margin-bottom: 22px; }
+.p3min .ai-art { position: relative; height: calc(clamp(150px, 14.2vw, 210px) * 2.35); }
+.p3min .ai-tiles .gl { transition: opacity 4s ease 1.2s; }
+.p3min .ai-tiles.met .gl { opacity: 0; } /* once the tiles meet, only they and the star stay */
+.p3min .ai-tiles { -webkit-mask-image: none; mask-image: none; }
+
+/* ---------- Proactive, on ink: a change of pace ---------- */
+.p3min .pro-band {
+  --fg: #F4F2EE; --muted: rgb(244 242 238 / .62); --line: rgb(255 255 255 / .12); --surface: #1D1D21;
+  color: var(--fg); background: #141416; box-shadow: 0 0 0 100vmax #141416; clip-path: inset(0 -100vmax);
+}
+.p3min .pro-band h2 { color: var(--fg); }
+.p3min .av.ai { background: transparent; box-shadow: none; color: var(--star); }
+.p3min .av.ai .icn { width: 18px; height: 18px; }
+.p3min .av:not(.ai) { background: color-mix(in srgb, var(--fg) 10%, transparent); color: var(--fg); }
+
+/* ---------- a smaller type scale (feedback: "modern sites set smaller type; downsize everything a bit"): about
+   three quarters for the display sizes, a step down for text ---------- */
+body.p3min { font-size: 15px; }
+body.p3min :is(.hero-home h1, .mk-copy h1) { font-size: clamp(44px, 5.6vw, 80px); }
+body.p3min .story-end .story-title { font-size: clamp(42px, 5vw, 72px); }
+body.p3min .pr-hero h1 { font-size: clamp(38px, 4.4vw, 66px); }
+body.p3min :is(.sec-head h2, .c2-cta h2, .pr-center h2, .pr-lights h2, .pr-moves h2) { font-size: clamp(32px, 3.4vw, 48px); }
+body.p3min .two-tone { font-size: clamp(24px, 2.3vw, 32px); }
+body.p3min .sl { font-size: clamp(24px, 2.6vw, 40px); }
+body.p3min .step-card h3 { font-size: clamp(26px, 2.4vw, 34px); }
+body.p3min :is(.shade-panel .facts b, .gb-cell b, .mk-sq b) { font-size: clamp(28px, 2.6vw, 38px); }
+body.p3min .pr-tile b { font-size: clamp(34px, 3.6vw, 52px); }
+body.p3min :is(.pr-say blockquote) { font-size: clamp(21px, 2vw, 30px); }
+body.p3min .pr-help { font-size: clamp(21px, 2vw, 28px); }
+body.p3min :is(.hero-home .sub, .mk-copy .sub, .sec-head .lede, .cbody, .c2-cta p, .faq details p, .pr-sub, .lede) { font-size: 16px; }
+body.p3min :is(.faq summary, .faq-list summary) { font-size: 16px; }
+body.p3min :is(.review blockquote, .pr-story blockquote) { font-size: 17px; }
+body.p3min :is(.hello-quote, .yourcall, .fr-msg, .facts span, .gb-cell span) { font-size: 14px; }
+body.p3min :is(.btn, .site-head .links a) { font-size: 14px; }
+body.p3min .announce { font-size: 13px; padding-block: 9px; }
+
+@media (max-width: 600px) {
+  body.p3min :is(.hero-home, .mk-copy) h1, body.p3min .story-end .story-title { font-size: 11vw; } /* two lines on a phone too */
+  body.p3min .pr-hero h1 { font-size: 8.6vw; max-width: none; }
+}
+@media (max-width: 900px) {
+  .p3min .ai-story { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .p3min .ai-art { height: calc(100vw / 3.2 * 2.35); }
+  .p3min .step-card { flex-direction: column; align-items: stretch; } /* the step first, then the person */
+  .p3min .st-chat { max-width: none; padding: 14px; gap: 10px; }
+  .p3min .st-chat header .face-tile { width: 32px; }
+  .p3min .st-chat .fr-msg { max-width: 88%; padding: 9px 12px; font-size: 14px; }
+  html.jl .p3min .step-card .cbody { font-size: 15px; }
+}
+
+/* Prototype: their quotes and checks in ink too */
+.p3min .pr-say.pw { background: color-mix(in srgb, var(--fg) 5%, transparent); color: var(--fg); }
+.p3min .pr-say.pw .pr-corner { background: color-mix(in srgb, var(--fg) 5%, transparent); }
+.p3min .pr-plan li::before { background-color: var(--fg); }
+.p3min .pr-plan.ink li::before { background-color: transparent; box-shadow: inset 0 0 0 1.5px currentColor; }
+.p3min .pr-story .pr-chip::before { background: var(--fg); }

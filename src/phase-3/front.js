@@ -7,7 +7,7 @@
  *  - "Meet your lawyer." ([data-front="accordion"]): three promises beside a chat with your lawyer; each promise
  *    shows its own short conversation.
  * With data-ai on the tabs block (Lines 3), the updates show who did what: the AI's work in the background marked
- * with the star, Hannah's with her square.
+ * with the star, Hannah's with her square. data-lawyer="Jemima" puts another lawyer's name on the updates.
  * All updates, messages and times are illustrative. Reduced motion: everything is there at once, nothing moves
  * by itself.
  */
@@ -80,9 +80,10 @@ function tabs(reduce) {
     btns.forEach((b, k) => { b.setAttribute('aria-selected', String(k === cur)); b.tabIndex = k === cur ? 0 : -1; });
     const items = (box.dataset.ai !== undefined ? UPDATES_AI : UPDATES)[btns[cur].dataset.k].map(([t, by, st, who]) => {
       const li = document.createElement('li');
-      const av = who === 'ai' ? '<span class="av sm ai"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg></span>' : '<span class="av sm">H</span>';
+      const lawyer = box.dataset.lawyer || 'Hannah';
+      const av = who === 'ai' ? '<span class="av sm ai"><svg class="icn" aria-hidden="true"><use href="#i-spark"/></svg></span>' : `<span class="av sm">${lawyer[0]}</span>`;
       if (who === 'ai') li.className = 'ai';
-      li.innerHTML = `${av}<p><b>${t}</b><small>${by}</small></p><span class="fr-pill ${st.toLowerCase()}">${st}</span>`;
+      li.innerHTML = `${av}<p><b>${t}</b><small>${by.replace('Hannah', lawyer)}</small></p><span class="fr-pill ${st.toLowerCase()}">${st}</span>`;
       return li;
     });
     stagger(list, items, reduce);

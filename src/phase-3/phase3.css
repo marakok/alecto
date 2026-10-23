@@ -113,3 +113,6 @@ html.motion .p3 h2.writing .w > span { transform: none; opacity: 1; transition: 
 
 /* slowed clips are drawn smoothly on a canvas in their place (smooth-video.js); the video plays on, hidden */
 video.is-source { opacity: 0 !important; }
+
+/* dark mode hidden for now (feedback round 6): the pages set data-theme="light" and data-theme-lock in <head> */
+html[data-theme-lock] #theme { display: none; }
