@@ -1,0 +1,299 @@
+<!doctype html>
+<html lang="en-GB">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Alecto · Phase 3 · Prototype</title>
+  <meta name="description" content="Property conveyancing without the stress. One dedicated conveyancer, a fixed quote and a live view of every step, from offer accepted to keys in hand.">
+  <meta name="theme-color" content="#FBFAF7" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#141416" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="/phase-2/favicon.svg" type="image/svg+xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <!-- The three type options on the switcher (?f=): Geist (leads), Instrument Sans, and Inter as it was in 2a. -->
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@300..700&family=Geist+Mono:wght@400;500&family=Instrument+Sans:wght@400..700&family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@500&display=swap">
+  <script>
+    /* Before first paint: apply a saved theme, pick the type option (?f=geist|instrument|inter, remembered
+       in localStorage) and the page load (?l=), and decide whether motion is allowed (html.jl: the square
+       travels; html.veiled: the page waits behind the load screen). Phase 3 builds on 2a (data-v="a"). */
+    (function () {
+      var d = document.documentElement;
+      d.setAttribute('data-theme', 'light'); d.setAttribute('data-theme-lock', ''); /* dark mode hidden for now */
+      var q = new URLSearchParams(location.search);
+      var F = /^(geist|instrument|inter)$/, f = q.get('f');
+      d.setAttribute('data-f', F.test(f) ? f : 'geist'); /* The prototype is Geist; ?f= still tries the others */
+      var l = /^(write|drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'write'; /* the square writes the headline */
+      d.setAttribute('data-v', 'a');
+      d.setAttribute('data-l', l);
+      /* Story: no page load and no travelling square; the story sets the pace. html.jl only turns on the
+         journey's pinned, swapping step cards (journey.js). */
+      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) d.classList.add('jl', 'hero-go');
+    })();
+  </script>
+  <link rel="stylesheet" href="/src/styles/tokens.css">
+  <link rel="stylesheet" href="/src/styles/main.css">
+  <link rel="stylesheet" href="/src/styles/motion.css">
+  <link rel="stylesheet" href="/src/styles/brand.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/journey.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/phase2.css">
+  <link rel="stylesheet" href="/src/phase-2/concept-2/reveal.css">
+  <link rel="stylesheet" href="/src/phase-3/phase3.css">
+  <link rel="stylesheet" href="/src/phase-3/platform.css">
+  <link rel="stylesheet" href="/src/phase-3/front.css">
+  <link rel="stylesheet" href="/src/phase-3/light.css">
+  <link rel="stylesheet" href="/src/phase-3/lines.css">
+  <link rel="stylesheet" href="/src/phase-3/lines3.css">
+  <link rel="stylesheet" href="/src/phase-3/prototype.css">
+  <link rel="stylesheet" href="/src/phase-3/minimal.css">
+</head>
+<body class="c2 p3 p3c p3l3 p3p p3min">
+<a class="skip" href="#main">Skip to content</a>
+<!-- The wordmark letters, true Switzer outlines from the brand kit (svg/alecto-paper.svg). The dot is an
+     HTML element next to them, so the travelling square can take its place. -->
+<svg width="0" height="0" style="position:absolute" aria-hidden="true"><defs><path id="alecto-letters" fill="currentColor" d="M202-360C209-402 237-431 289-431C348-431 377-400 377-341L377-329C294-328 227-321 157-298C72-268 30-212 30-139C30-36 106 16 208 16C272 16 336-9 378-67C379-41 382-18 387 0L545 0C536-28 530-64 530-134L530-340C530-465 450-555 296-555C158-555 65-481 49-360ZM183-149C183-199 222-237 377-240L377-219C377-145 323-90 255-90C210-90 183-113 183-149ZM594 0L747 0L747-720L594-720ZM1312-177L1152-177C1136-128 1102-106 1052-106C986-106 946-152 938-238L1308-238L1308-272C1308-448 1207-555 1046-555C886-555 782-452 782-269C782-92 885 16 1052 16C1184 16 1284-53 1312-177ZM1046-433C1102-433 1138-396 1150-326L941-326C953-396 989-433 1046-433ZM1827-344C1808-485 1709-555 1584-555C1426-555 1324-452 1324-269C1324-93 1424 16 1585 16C1710 16 1807-49 1830-184L1677-184C1666-134 1634-108 1588-108C1518-108 1481-165 1481-269C1481-374 1516-431 1584-431C1628-431 1664-407 1674-344ZM1883-175C1883-50 1938 16 2053 16C2094 16 2128 10 2145 2L2145-113L2116-113C2050-113 2036-142 2036-194L2036-422L2146-422L2146-538L2036-538L2036-663L1883-663L1883-538L1817-538L1817-422L1883-422ZM2411 16C2571 16 2676-87 2676-269C2676-445 2574-555 2411-555C2251-555 2147-452 2147-269C2147-92 2248 16 2411 16ZM2411-108C2342-108 2304-165 2304-269C2304-374 2341-431 2411-431C2481-431 2519-373 2519-269C2519-164 2482-108 2411-108Z"/></defs></svg>
+<!-- Load screen: the square starts here, in the middle (loader.js). -->
+<div class="veil" aria-hidden="true">
+  <div class="veil-word"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i class="veil-dot"></i></div>
+  <span class="veil-count mono">0</span>
+</div>
+<!-- News bar: the funding headline. The amount ($20M) is a placeholder; the link still needs the press release URL.
+     The long headline shows on wide screens, the short one on narrow screens (phase2.css). -->
+<a class="announce" href="#">
+  <span class="announce-tag">News</span>
+  <span class="announce-text"><span class="long">Alecto Announces $20 Million in Funding to Make the Law Accessible to Everyone on the Planet</span><span class="short">Alecto Raises $20M to Make Legal Help Accessible to Everyone, Everywhere</span></span>
+  <span class="announce-cta"><b>Read the press release</b><span aria-hidden="true">→</span></span>
+</a>
+
+<div class="progress" aria-hidden="true"></div>
+<header class="site-head">
+<div class="wrap">
+  <nav aria-label="Main">
+    <a class="logo" href="/phase-3/prototype/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i id="navdot"></i></a>
+    <div class="links"><a href="#how">How we work</a><a href="#your-lawyer">Your lawyer</a><a href="#pricing">Pricing</a><a href="#faq">FAQ</a></div>
+    <div class="actions">
+      <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
+      </button>
+      <a class="btn ghost track" href="#">Log in</a>
+      <a class="btn primary" href="#pricing">Get your quote</a>
+    </div>
+  </nav>
+</div>
+</header>
+
+
+<main id="main">
+  <!-- Phase 3 · Prototype: everything from the client's own prototype (its sections, copy and order), built in the
+       Lines 3 language: the grid, the purple dot, and the star only where squares meet, which is the AI. Names,
+       figures, reviews and times are theirs or illustrative. -->
+
+  <!-- The hero: their headline and promise; our four tiles meet round the AI star and fill with what got done. -->
+  <section class="c2-hero hero-home l3-hero pr-hero" data-v="a">
+    <div class="grid-art hero-grid" data-grid data-x0="3" data-y0="0.2" data-r=".3" data-tiles="1,0 2,0 1,1 2,1" data-meet data-work aria-hidden="true"></div>
+    <div class="l3-status" aria-hidden="true"></div>
+    <div class="wrap hero-inner">
+      <div class="hero-copy">
+        <h1>Law, made to keep you <span class="nowrap"><em>moving</em><span class="period"></span></span></h1>
+        <p class="sub">One dedicated lawyer runs your purchase or sale from offer accepted to keys in hand. We chase, we explain, you never wait to hear.</p>
+        <div class="ctas"><a class="btn primary" href="#pricing">Get your quote</a><a class="btn ghost" href="#how">How we work</a></div>
+      </div>
+    </div>
+    <div class="wrap hero-foot pr-foot">
+      <p class="pr-promise">Fixed quote up front. One lawyer throughout.</p>
+      <p class="l3-key mono"><span><i class="sq" aria-hidden="true"></i>Your lawyer and you</span><span><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg>AI in the background</span></p>
+    </div>
+  </section>
+
+  <!-- Proactive by default -->
+  <section class="sec wrap pr-statement" id="how" aria-label="Proactive by default">
+    <p class="eyebrow"><i></i>Proactive by default</p>
+    <p class="two-tone"><strong>Here, you stop chasing your conveyancer and start hearing from them first.</strong> We run the legal side of your move with one lawyer who owns your file, and plain-English updates before you think to ask.</p>
+  </section>
+
+  <!-- The figures, as tiles on the grid; the quote on ink -->
+  <section class="wrap pr-figures" aria-label="Alecto in numbers">
+    <div class="pr-tiles" data-mark-in>
+      <div class="pr-tile"><b>798+</b><span>homeowners have handed us their move</span></div>
+      <div class="pr-tile"><b>£293m</b><span>of property seen through to completion</span></div>
+      <div class="pr-tile"><b>4.9</b><span>average rating from 112 Google reviews</span></div>
+      <figure class="pr-tile ink"><blockquote>“Even our seller’s agent said it was a breath of fresh air to receive such good communication from solicitors.”</blockquote><figcaption><span class="av sm">J</span>JF · Buyer, September 2026</figcaption></figure>
+    </div>
+  </section>
+
+  <!-- The usual way, then the lights come on (prototype.js): in the dark the cards hang crooked and say nothing
+       useful; as you scroll the room lights up, the AI star in the middle comes on, and every card turns over to
+       the Alecto way and squares up to the grid. -->
+  <section class="pr-lights" data-lights aria-label="The usual way, and the Alecto way">
+    <div class="pr-pin">
+      <div class="pr-room" aria-hidden="true"></div>
+      <div class="wrap pr-lights-copy">
+        <div class="pr-swap">
+          <div class="pr-was">
+            <p class="pr-pill mono">The usual way</p>
+            <h2>Buying a home shouldn’t leave you <em>in the dark</em></h2>
+            <p class="pr-sub">Yet that’s how it usually goes. Weeks of silence, emails that go unanswered, and a bill that only makes sense at the end.</p>
+            <p class="pr-cue mono"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg>Scroll to turn the lights on</p>
+          </div>
+          <div class="pr-now" aria-hidden="true">
+            <p class="pr-pill mono"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg>This is the Alecto way</p>
+            <h2>With Alecto, you see <em>everything</em></h2>
+            <p class="pr-sub">Every step, every cost and every update, in plain English. Nothing happens to your move that you can’t see.</p>
+          </div>
+        </div>
+        <div class="pr-cards">
+          <div class="pr-card" style="--r:-3deg;--y:10px">
+            <div class="was"><p class="pr-from mono"><svg class="icn" aria-hidden="true"><use href="#i-message"/></svg>To: your lawyer</p><b>Any news on the searches?</b><span class="pr-chip red">9 days · No reply</span></div>
+            <div class="now"><p class="pr-from mono"><span class="av sm">J</span>From: your lawyer</p><b>Your searches are back. All clear.</b><span class="pr-chip ok">Sent before you asked</span></div>
+          </div>
+          <div class="pr-card" style="--r:1.6deg;--y:-6px">
+            <div class="was"><b>Requisitions on title have been raised with the vendor’s solicitors.</b><small>You: “What does that mean?”</small></div>
+            <div class="now"><b>We’ve asked the seller’s lawyer three questions about the lease.</b><small>Nothing needed from you</small></div>
+          </div>
+          <div class="pr-card bill" style="--r:-1.2deg;--y:18px">
+            <div class="was"><p class="pr-line"><span>Legal fees</span><em>TBC</em></p><p class="pr-line"><span>Disbursements</span><em>TBC</em></p><span class="pr-chip red">Final bill to follow</span></div>
+            <div class="now"><p class="pr-line"><span>Legal fee</span><em>Fixed</em></p><p class="pr-line"><span>Searches</span><em>At cost</em></p><span class="pr-chip ok">Agreed up front</span></div>
+          </div>
+          <div class="pr-card" style="--r:2.4deg;--y:2px">
+            <div class="was"><p class="pr-who" aria-hidden="true"><span class="av sm">?</span><span class="av sm">?</span><span class="av sm">?</span></p><b>Your file has been passed to a colleague.</b></div>
+            <div class="now"><p class="pr-who"><span class="av sm">J</span></p><b>Same lawyer from offer to keys.</b></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+<section class="sec wrap front" id="proactive" aria-labelledby="proactive-h">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Proactive</p><h2 id="proactive-h">Fast by default. <em><span class="w" aria-hidden="true"><span>Proactive</span></span></em> by nature.</h2></div>
+      <p class="lede">We take responsibility for moving your transaction forward and solve problems before they become delays. If something changes, you hear it from us first.</p>
+    </div>
+    <div class="fr-proactive" data-front="tabs" data-ai data-lawyer="Jemima">
+      <div class="fr-tabs" role="tablist" aria-label="What we do for you">
+        <button class="fr-tab" role="tab" aria-selected="true" aria-controls="fr-move" data-k="enquiries"><b>Enquiries</b><span>Chased until every one is answered.</span><i class="fr-bar" aria-hidden="true"></i></button>
+        <button class="fr-tab" role="tab" aria-selected="false" aria-controls="fr-move" data-k="blockers"><b>Blockers</b><span>Spotted early and moved out of the way.</span><i class="fr-bar" aria-hidden="true"></i></button>
+        <button class="fr-tab" role="tab" aria-selected="false" aria-controls="fr-move" data-k="paperwork"><b>Paperwork</b><span>Filed for you once you’ve completed.</span><i class="fr-bar" aria-hidden="true"></i></button>
+      </div>
+      <div class="fr-move" id="fr-move" role="tabpanel" aria-live="polite">
+        <header><b>Your move</b><span class="mono"><i class="live-dot" aria-hidden="true"></i>Live</span></header>
+        <ul class="fr-updates"></ul>
+        <footer class="mono"><i aria-hidden="true"></i>Nothing needed from you</footer>
+      </div>
+    </div>
+  </section>
+
+<section class="sec wrap front" id="your-lawyer" aria-labelledby="lawyer-h">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Your lawyer</p><p class="two-tone sm" id="lawyer-h"><strong>Meet your lawyer.</strong> One qualified conveyancer who knows your file, answers your calls, and gets you over the line.</p></div>
+    </div>
+    <div class="fr-lawyer" data-front="accordion">
+      <div class="fr-acc">
+        <button class="fr-q" aria-expanded="true" data-k="phone"><b>They pick up the phone.</b><span>Call or message the person actually doing the work. No call centre, no handoffs, no “passed to a colleague”.</span><i aria-hidden="true"></i></button>
+        <button class="fr-q" aria-expanded="false" data-k="first"><b>They move first.</b><span>Enquiries get chased, blockers get spotted early, and you hear about changes from us before you think to ask.</span><i aria-hidden="true"></i></button>
+        <button class="fr-q" aria-expanded="false" data-k="outcome"><b>They own the outcome.</b><span>From offer accepted to keys in hand, one person is responsible for getting you there.</span><i aria-hidden="true"></i></button>
+      </div>
+      <div class="fr-chat" aria-live="polite">
+        <header><span class="av">J</span><p><b>Jemima</b><span>Your conveyancer</span></p></header>
+        <div class="fr-msgs"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- For moves that should just happen: the four tiles meet round the star once more -->
+  <section class="wrap pr-moves-wrap" aria-label="Whatever you’re moving">
+    <div class="pr-moves">
+      <div class="grid-art pr-moves-grid" data-grid data-x0="2.3" data-y0="0.18" data-r=".3" data-tiles="0,0 1,0 0,1 1,1" data-meet aria-hidden="true"></div>
+      <div class="pr-moves-copy">
+        <h2>For moves that should just <em>happen</em>.</h2>
+        <a class="btn accent" href="#pricing">Get your quote</a>
+      </div>
+      <div class="pr-moves-foot">
+        <p>Whatever you’re moving, we’ve got it.</p>
+        <ul class="pr-kinds"><li>Freehold</li><li>Leasehold</li><li>New build</li><li>Shared ownership</li><li>Auction</li><li>Buy-to-let</li></ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- Pricing -->
+  <section class="sec wrap pr-pricing" id="pricing" aria-labelledby="pricing-h">
+    <div class="pr-center">
+      <h2 id="pricing-h">Your move, your <em>price</em></h2>
+      <p class="lede">A clear quote before you commit to anything.</p>
+    </div>
+    <div class="pr-plans">
+      <article class="pr-plan">
+        <h3>Buying</h3><p class="pr-plan-sub">From accepted offer to keys in your hand.</p>
+        <ul><li>Fixed legal fee, itemised up front</li><li>One dedicated lawyer</li><li>Start with £250 plus searches</li><li>Nothing further if it falls through</li></ul>
+        <a class="btn primary" href="#">Get a purchase quote</a>
+      </article>
+      <article class="pr-plan ink">
+        <h3>Selling</h3><p class="pr-plan-sub">From instruction to funds in your account.</p>
+        <ul><li>Fixed legal fee, itemised up front</li><li>One dedicated lawyer</li><li>Start with £250 plus searches</li><li>Nothing further if it falls through</li></ul>
+        <a class="btn primary" href="#">Get a sale quote</a>
+      </article>
+    </div>
+    <figure class="pr-quote"><blockquote>“I was quoted a price at the beginning, and it was that exact cost at the end. No hidden surprises!”</blockquote><figcaption><b>Stephanie Hayes</b> · Google review, April 2025</figcaption></figure>
+  </section>
+
+  <!-- Reviews: their quotes and stories -->
+  <section class="sec wrap pr-reviews" id="reviews" aria-labelledby="reviews-h">
+    <div class="sec-head">
+      <div><p class="eyebrow"><i></i>Reviews</p><h2 id="reviews-h">Moves we’ve seen <em>through</em></h2></div>
+      <p class="lede">Rated 4.9 from 112 reviews on Google. Here’s how a few of those moves went.</p>
+    </div>
+    <div class="pr-big">
+      <figure class="pr-say pw"><i class="pr-corner" aria-hidden="true"></i><blockquote>“Most of the time, I didn’t even need to ask for updates because they were provided proactively.”</blockquote><figcaption><span class="av sm">H</span><b>Hazel Molleda</b> · First-time buyer, August 2026</figcaption></figure>
+      <figure class="pr-say ink"><blockquote>“As a mortgage broker myself, this is the best service I’ve ever experienced as a client and a broker.”</blockquote><figcaption><span class="av sm">L</span><b>Lisa Haines</b> · Buyer, August 2026</figcaption></figure>
+    </div>
+    <div class="pr-stories" data-stories tabindex="0" aria-label="Stories from our clients">
+      <figure class="pr-story"><span class="pr-chip">Under 2 months</span><blockquote>Callum’s old firm shut down mid-move. Alecto started again and completed his sale and purchase in under 2 months.</blockquote><figcaption><b>Callum Doherty</b> · Seller and buyer, March 2026</figcaption></figure>
+      <figure class="pr-story"><span class="pr-chip">45 days</span><blockquote>Rhys went from offer accepted to moving in within 45 days, on his birthday.</blockquote><figcaption><b>Rhys Coates</b> · Buyer, August 2026</figcaption></figure>
+      <figure class="pr-story"><span class="pr-chip">Months early</span><blockquote>Jay and Sophie got same-day replies, even on a Sunday evening, and moved into their first home months earlier than expected.</blockquote><figcaption><b>Jay Kirk</b> · First-time buyers, August 2026</figcaption></figure>
+      <figure class="pr-story"><span class="pr-chip">Before the deadline</span><blockquote>William only started in mid-February and still completed ahead of the stamp duty deadline.</blockquote><figcaption><b>William Marchant</b> · Buyer, May 2025</figcaption></figure>
+      <figure class="pr-story"><span class="pr-chip">5 weeks</span><blockquote>After two broken chains, the Odejes completed their final purchase within 5 weeks.</blockquote><figcaption><b>Mr and Mrs Odeje</b> · Buyers, November 2025</figcaption></figure>
+    </div>
+    <div class="pr-arrows"><button class="icon-btn" data-dir="-1" aria-label="Previous stories">←</button><button class="icon-btn" data-dir="1" aria-label="Next stories">→</button></div>
+  </section>
+
+  <!-- FAQ -->
+  <section class="sec wrap pr-faq" id="faq" aria-labelledby="faq-h">
+    <div class="pr-faq-head">
+      <p class="eyebrow"><i></i>FAQ</p>
+      <p class="pr-help" id="faq-h">We’re here to help. If your question isn’t answered here, <a href="#">talk to us</a> anytime.</p>
+    </div>
+    <div class="faq-list">
+      <details><summary>What transactions do you handle?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>Do you handle remortgages?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>What about Buy-to-Let?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>Do you act on Building Safety Act properties?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>Where do you operate?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+      <details><summary>Which lenders are you on panel with?<span class="pm"></span></summary><p>Answer to be supplied by Alecto.</p></details>
+    </div>
+  </section>
+</main>
+
+<!-- Footer: the wordmark, big, half behind the ink card (as in their version) -->
+<footer class="pr-footer">
+  <div class="wrap">
+    <p class="pr-giant" aria-hidden="true"><svg class="wm" viewBox="0 -730 2700 746"><use href="#alecto-letters"/></svg><i></i></p>
+    <div class="pr-card-foot">
+      <div class="pr-foot-top">
+        <div><a class="logo" href="/phase-3/prototype/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i></i></a><p>Property conveyancing with one lawyer and no surprises.</p><a class="btn accent" href="#pricing">Get your quote</a></div>
+        <div class="pr-foot-cols">
+          <div><h4>Company</h4><a href="/phase-2/concept-2/company/">Company</a><a href="#">Blog</a><a href="#">Introducers</a><a href="#">Lender panel</a></div>
+          <div><h4>Support</h4><a href="#">Contact</a><a href="#">Complaints</a></div>
+          <div><h4>Legal</h4><a href="#">Terms of service</a><a href="#">Privacy policy</a></div>
+        </div>
+      </div>
+      <div class="pr-legal"><p>Alecto Conveyancing Ltd is authorised and regulated by the Council for Licensed Conveyancers (CLC), Licence Number 14351.</p><p>© 2026 Alecto Conveyancing Ltd · <a href="#">Cookie preferences</a></p></div>
+    </div>
+  </div>
+</footer>
+
+
+<!-- Concept switcher (review builds only): phase 2 · 2a, the phase 3 pages and the type options (switcher.js).
+     Lines, Lines 3, Mark and Prototype are hidden from it for now; their pages still work by URL. -->
+<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a">2a</a><span class="phase">Phase 3</span><a href="/phase-3/" title="Phase 3 · Home">Home</a><a href="/phase-3/home-2/" title="Phase 3 · Home 2">Home 2</a><a href="/phase-3/lines-2/" title="Phase 3 · Lines 2">Lines 2</a><a href="/phase-3/story/" title="Phase 3 · Story">Story</a><a href="/phase-3/product/" title="Phase 3 · Platform">Platform</a><span class="phase">Type</span><a data-f="geist" title="Geist">Aa</a><a data-f="instrument" title="Instrument Sans">Aa</a><a data-f="inter" title="Inter (as in 2a)">Aa</a></nav>
+
+<script type="module" src="/src/phase-3/prototype-page.js"></script>
+</body>
+</html>

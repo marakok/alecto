@@ -1,24 +1,36 @@
-import './home.js'; // the phase 3 home as it is: light, thread, writing, statements, demo
+import './icons.js'; // first: the icon sprite has to be in the page before anything uses it
+import { initTheme } from '../js/theme.js';
+import { initMotion } from '../js/motion.js';
 import { prefersReducedMotion } from '../js/palette.js';
+import { initRadius } from '../phase-2/concept-2/radius.js';
+import { initReveal } from '../phase-2/concept-2/reveal.js';
 import { initFront } from './front.js';
+import { initHeadings } from './headings.js';
+import { initJourney } from './journey.js';
+import { initLight } from './light.js';
 import { initLines } from './lines.js';
+import { initSwitcher } from './switcher.js';
+import { initThemeVideos } from './theme-video.js';
+import { initWords } from './words.js';
 
 /**
- * Phase 3 · Lines: the home page with the square as a system of lines (lines.js, lines.css): the grid draws on
- * load, big tiles in the hero with your tile walking home and data along the lines, one grid through the page.
+ * Phase 3 · Lines, minimal (lines.js, lines.css, minimal.css): the grid and its tiles over the slowed clip in the
+ * hero, one story, the figures as tiles, then the six steps with the person doing each one. No page load, no
+ * travelling square and no line through the page. Lines 2 and Lines 3 build on this.
  */
-initLines({ reduce: prefersReducedMotion() });
-initFront({ reduce: prefersReducedMotion() }); // the front: what the client sees, not the lawyer's platform
-
-// the spark moment draws when it comes into view
-const spark = document.querySelector('.spark-art');
-if (spark) {
-  new IntersectionObserver(([e], io) => {
-    if (!e.isIntersecting) return;
-    spark.classList.add('in');
-    io.disconnect();
-  }, { threshold: 0.4 }).observe(spark);
-}
+const reduce = prefersReducedMotion();
+initRadius();
+initTheme(document.getElementById('theme'));
+initMotion({ reduce, cursor: false });
+initReveal({ reduce });
+initSwitcher();
+initThemeVideos(); // the clips: white in light mode, black in dark mode
+initLight({ reduce });
+initLines({ reduce });
+initJourney({ reduce });
+initWords({ reduce });
+if (!document.body.classList.contains('p3rise')) initHeadings({ reduce }); // titles rise instead where p3rise (rise.js)
+initFront({ reduce }); // Proactive, where a version has it (Lines 3)
 
 // the background clips play slowly: each at its own data-rate (the hero at a sixth), else a third
 document.querySelectorAll('video.hero-video, video.cta-video').forEach((v) => {

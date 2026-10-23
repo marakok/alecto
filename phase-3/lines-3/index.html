@@ -18,17 +18,15 @@
        travels; html.veiled: the page waits behind the load screen). Phase 3 builds on 2a (data-v="a"). */
     (function () {
       var d = document.documentElement;
-      try { var t = localStorage.getItem('alecto-theme'); if (t) d.setAttribute('data-theme', t); } catch (e) {}
+      d.setAttribute('data-theme', 'light'); d.setAttribute('data-theme-lock', ''); /* dark mode hidden for now */
       var q = new URLSearchParams(location.search);
       var F = /^(geist|instrument|inter)$/, f = q.get('f');
       d.setAttribute('data-f', F.test(f) ? f : 'geist'); /* Lines is Geist; ?f= still tries the others */
-      var l = /^(grid|write|drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'grid'; /* the grid draws, then the square writes the headline */
+      var l = /^(write|drop|curtain|count|wordmark)$/.test(q.get('l')) ? q.get('l') : 'write';
       d.setAttribute('data-v', 'a');
       d.setAttribute('data-l', l);
-      var reduce = window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches;
-      if (!reduce) d.classList.add('jl', 'veiled'); /* journey-live: the square travels */
-      /* safety: show the page even if the intro script never runs */
-      if (!reduce) setTimeout(function () { d.classList.add('hero-go'); d.classList.remove('veiled'); }, 5000);
+      /* Minimal: no page load and no travelling square. html.jl only turns on the journey's pinned steps. */
+      if (!(window.matchMedia && matchMedia('(prefers-reduced-motion: reduce)').matches)) d.classList.add('jl', 'hero-go');
     })();
   </script>
   <link rel="stylesheet" href="/src/styles/tokens.css">
@@ -45,8 +43,10 @@
   <link rel="stylesheet" href="/src/phase-3/video-hero.css">
   <link rel="stylesheet" href="/src/phase-3/lines.css">
   <link rel="stylesheet" href="/src/phase-3/lines3.css">
+  <link rel="stylesheet" href="/src/phase-3/story.css">
+  <link rel="stylesheet" href="/src/phase-3/minimal.css">
 </head>
-<body class="c2 p3 p3c p3l3">
+<body class="c2 p3 p3c p3l3 p3min">
 <a class="skip" href="#main">Skip to content</a>
 <!-- The wordmark letters, true Switzer outlines from the brand kit (svg/alecto-paper.svg). The dot is an
      HTML element next to them, so the travelling square can take its place. -->
@@ -69,7 +69,7 @@
 <div class="wrap">
   <nav aria-label="Main">
     <a class="logo" href="/phase-3/lines-3/" aria-label="Alecto home"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><i id="navdot"></i></a>
-    <div class="links"><a href="#journey">How it works</a><a href="/phase-3/product/">Platform</a><a href="#team">Your team</a><a href="#reviews">Reviews</a><a href="/phase-2/concept-2/company/">Company</a><a href="/phase-2/concept-2/careers/">Careers</a></div>
+    <div class="links"><a href="#journey">How it works</a><a href="/phase-3/product/">Platform</a><a href="#reviews">Reviews</a><a href="/phase-2/concept-2/company/">Company</a><a href="/phase-2/concept-2/careers/">Careers</a></div>
     <div class="actions">
       <button class="icon-btn" id="theme" aria-label="Switch light or dark theme">
         <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z"/></svg>
@@ -84,40 +84,54 @@
 <div class="actor" id="actor" aria-hidden="true"></div>
 
 <main id="main">
-  <!-- The hero: one rule, taught in a few seconds. Four tiles (your lawyer, you, the people on your move) slide
-       together; the space between their corners is the AI star, and it lights up and starts working: small squares of
-       data run from it along the lines, and each tile quietly fills with what got done (lines3.js). Illustrative. -->
+  <!-- The hero, calm: four tiles (your lawyer, you, the people on your move) slide together and the space between
+       their corners lights up as the AI star (lines3.js). It goes to work further down, in the AI story. -->
   <section class="c2-hero hero-home l3-hero" data-v="a">
-    <div class="grid-art hero-grid" data-grid data-x0="3" data-y0="0.2" data-r=".3" data-tiles="1,0 2,0 1,1 2,1" data-meet data-work aria-hidden="true"></div>
-    <div class="l3-status" aria-hidden="true"></div>
+    <div class="grid-art hero-grid" data-grid data-x0="3" data-y0="0.2" data-r=".3" data-tiles="1,0 2,0 1,1 2,1" data-meet aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1>Law that keeps you <span class="nowrap"><em>moving</em><span class="period" id="k0"></span></span></h1>
         <p class="sub hx">One named conveyancer who explains your options, from offer accepted to moving day.</p>
         <div class="ctas"><a class="btn primary hx" href="#">Get a quote</a><a class="btn ghost hx" href="#journey">How it works</a></div>
-        <!-- Illustrative person: replace with a real Alecto conveyancer. -->
-        <div class="hello hx">
-          <span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span>
-          <div><p class="hello-quote">“I’ll look after your move myself, from offer accepted to keys in hand.”</p><p class="hello-by"><b>Hannah Reid</b> · Senior conveyancer <span class="online mono"><i></i>Online now</span></p></div>
-        </div>
       </div>
     </div>
-    <div class="wrap hero-foot">
-      <!-- The key: the two shapes, everywhere on the page -->
-      <p class="l3-key mono hx"><span><i class="sq" aria-hidden="true"></i>Your lawyer and you</span><span><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg>AI in the background</span></p>
-      <!-- What the AI is doing in the background, right now (thread.js). Illustrative. -->
-      <p class="bg-status mono hx"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><b>In the background</b><span class="tick" data-ticker="Reading the title register · 14 Elm Road|Chasing the seller’s solicitor · 2 enquiries|Checking the lease · Flat 3, Harbour Street|Matching a new move · leasehold purchase|Ordering searches · 8 Mill Lane"></span></p>
+  </section>
+
+  <!-- The story, after the hero: the brand story from Phase 3 · Story, one line per chapter as you scroll (story.js),
+       ending on the calm promise instead of the headline (the hero has that). -->
+  <section class="story story-in" aria-label="Our story">
+    <div class="story-pin">
+      <!-- Light moving, following the theme (theme-video.js): the white clip in light mode, the black one in dark mode.
+           iStock previews (watermarked): replace with the licensed clips. -->
+      <video class="story-video" data-src-light="/phase-3/light-corner.mp4" data-src-dark="/phase-3/light-wall.mp4" data-rate=".3333" muted loop playsinline preload="auto" aria-hidden="true"></video>
+      <div class="story-field" aria-hidden="true"></div>
+      <!-- Illustrative person: replace with a real Alecto lawyer. -->
+      <div class="story-duo" aria-hidden="true">
+        <figure class="duo-tile duo-lawyer"><img src="/concept-2/hannah.png" alt=""><figcaption class="mono">Hannah · your lawyer</figcaption></figure>
+        <i class="duo-line"></i>
+        <figure class="duo-tile duo-you"><span>You</span><figcaption class="mono">You decide</figcaption></figure>
+      </div>
+      <div class="wrap story-copy">
+        <ol class="story-lines">
+          <li data-ch><p class="story-kick mono"><span lang="grc">Ἀληκτώ</span> · Alēktō</p><p class="sl">Alecto means <strong>“never stops.”</strong></p></li>
+          <li data-ch><p class="sl"><strong>The square is data:</strong> every document, date and detail of your move.</p></li>
+          <li data-ch><p class="sl"><strong>The lines connect it,</strong> step by step.</p></li>
+          <li data-ch><p class="sl"><strong>AI works quietly in the shadows,</strong> bringing light.</p></li>
+          <li data-ch><p class="sl"><strong>It reads every square</strong> so nothing stays hidden.</p></li>
+          <li data-ch><p class="sl"><strong>Our lawyer makes every decision</strong> together with you.</p></li>
+          <li data-ch class="story-end">
+            <h2 class="story-title" aria-label="Moving home should feel calm."><span class="w" aria-hidden="true"><span>Moving</span></span> <span class="w" aria-hidden="true"><span>home</span></span> <span class="w" aria-hidden="true"><span>should</span></span> <span class="w" aria-hidden="true"><span>feel</span></span> <span class="nowrap"><em><span class="w" aria-hidden="true"><span>calm</span></span></em><span class="period"></span></span><i class="story-caret" aria-hidden="true"></i></h2>
+            <p class="sub">One person owns your file from offer to keys, our platform keeps every step moving, and you hear what’s next before you think to ask.</p>
+          </li>
+        </ol>
+        <p class="story-hint mono" aria-hidden="true">Scroll</p>
+        <ol class="story-dots" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
+      </div>
     </div>
   </section>
 
   <section class="proofs" aria-label="Why Alecto">
     <div class="wrap">
-      <div class="proof-row">
-        <!-- Icons instead of the brand squares (feedback round 3): fewer squares, more meaning. -->
-        <div><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-user"/></svg></span><h3>One named conveyancer</h3><p>The same person, from offer accepted to keys in hand.</p></div>
-        <div><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-message"/></svg></span><h3>Plain English</h3><p>What’s happening, what it means, what’s next.</p></div>
-        <div><span class="p-ic"><svg class="icn" aria-hidden="true"><use href="#i-signpost"/></svg></span><h3>Your call</h3><p>We explain the options first. You decide.</p></div>
-      </div>
       <!-- The figures as tiles on the grid; the review is the periwinkle tile. The quote is a dummy. -->
       <div class="grid-band">
         <div class="gb-cell"><b>CLC regulated</b><span>Licence 14351</span></div>
@@ -128,15 +142,10 @@
     </div>
   </section>
 
-  <!-- Statement: one paragraph in two tones, dark lead and lighter rest (feedback round 3: calm, home, movement). -->
-  <section class="statement wrap" aria-label="What Alecto is">
-    <p class="two-tone" data-reveal="fade"><strong>Moving home should feel calm.</strong> One person owns your file from offer to keys, our platform keeps every step moving, and you hear what’s next before you think to ask.</p>
-  </section>
-
   <section class="sec wrap journey" id="journey" aria-label="How a move with Alecto works">
     <div class="sec-head">
-      <div><p class="eyebrow">How it works</p><h2>Six steps, one person</h2></div>
-      <p class="lede">Hannah explains your options before every decision. The moments marked “Your call” are yours.</p>
+      <div><p class="eyebrow">How it works</p><h2>Six steps, real people</h2></div>
+      <p class="lede">Every step has a name: the person doing the work, and a message from them when it’s done.</p>
     </div>
 
     <div class="stage-track" id="track">
@@ -148,26 +157,12 @@
             <p class="ceyebrow mono"><b>01</b> Instruct</p>
             <h3>It starts with a tick</h3>
             <p class="cbody">Offer accepted. Tell us about the move, verify your identity online and sign your terms. Ten minutes, no paperwork in the post.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Checks your ID and the source of your deposit as the documents arrive.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll call you the same day to welcome you and walk you through what happens next.”</p></div>
           </div>
-          <div class="art" data-art="instruct">
-            <svg viewBox="0 0 400 400" role="img" aria-label="A form with three checkboxes being ticked">
-              <rect rx="12" class="ink" x="80" y="40" width="240" height="320"/>
-              <line class="ink bold" x1="110" y1="78" x2="250" y2="78"/>
-              <line class="faint" x1="110" y1="98" x2="200" y2="98"/>
-              <text x="110" y="142">INSTRUCTION FORM</text>
-              <rect rx="1.08" class="ink" x="110" y="171" width="18" height="18"/><text class="lbl" x="142" y="185">Offer accepted</text>
-              <rect rx="1.08" class="ink" x="110" y="216" width="18" height="18"/><text class="lbl" x="142" y="230">ID verified</text>
-              <rect rx="0.6" class="tick" data-tick="0.45" x="114" y="220" width="10" height="10"/>
-              <rect rx="1.08" class="ink" x="110" y="261" width="18" height="18"/><text class="lbl" x="142" y="275">Terms signed</text>
-              <rect rx="0.6" class="tick" data-tick="0.7" x="114" y="265" width="10" height="10"/>
-              <line class="faint" x1="110" y1="330" x2="220" y2="330"/><text x="110" y="346">SIGNATURE</text>
-              <rect rx="1.08" class="anchor" data-k="instruct" x="110" y="171" width="18" height="18"/>
-            </svg>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b>Hannah Reid</b><span>Senior conveyancer</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">Welcome! I’ll be looking after your move. Shall I call you at five to walk you through what happens next?</p><p class="fr-msg out">Perfect, speak then.</p></div>
           </div>
         </div>
-        <p class="yourcall"><svg class="icn" aria-hidden="true"><use href="#i-signpost"/></svg><b class="mono">Your call</b><span>Accept your fixed quote and choose when we start.</span></p>
       </article>
 
       <article class="step">
@@ -176,30 +171,12 @@
             <p class="ceyebrow mono"><b>02</b> Investigate</p>
             <h3>We read every line</h3>
             <p class="cbody">Your conveyancer reviews the title, runs the searches and asks the awkward questions early, so nothing surprises you later.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Reads the searches and the contract pack overnight, and flags anything unusual for Hannah.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I read every page myself and explain anything unusual in plain English.”</p></div>
           </div>
-          <div class="art" data-art="investigate">
-            <svg viewBox="0 0 400 400" role="img" aria-label="A title register being read line by line">
-              <rect rx="12" class="ink" x="80" y="40" width="240" height="320"/>
-              <text x="110" y="80">TITLE REGISTER</text>
-              <text class="lbl" x="110" y="100">14 Elm Road, Bristol</text>
-              <line class="faint rl" data-read="read1" x1="110" y1="140" x2="290" y2="140"/>
-              <line class="faint rl" data-read="read1" x1="110" y1="160" x2="270" y2="160"/>
-              <line class="faint rl" data-read="read1" x1="110" y1="180" x2="284" y2="180"/>
-              <line class="faint rl" data-read="read2" x1="110" y1="210" x2="290" y2="210"/>
-              <line class="faint rl" data-read="read2" x1="110" y1="230" x2="240" y2="230"/>
-              <line class="faint rl" data-read="read2" x1="110" y1="250" x2="276" y2="250"/>
-              <line class="faint rl" data-read="read3" x1="110" y1="280" x2="290" y2="280"/>
-              <line class="faint rl" data-read="read3" x1="110" y1="300" x2="262" y2="300"/>
-              <line class="faint rl" data-read="read3" x1="110" y1="320" x2="210" y2="320"/>
-              <rect rx="0.72" class="anchor" data-k="read1" x="90" y="134" width="12" height="12"/>
-              <rect rx="0.72" class="anchor ghost" data-k="read2" x="90" y="204" width="12" height="12"/>
-              <rect rx="0.72" class="anchor ghost" data-k="read3" x="90" y="274" width="12" height="12"/>
-            </svg>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/tom.png" alt=""></span><p><b>Tom Okafor</b><span>Conveyancer</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">Searches are back, all clear. I’ve asked the seller’s lawyer one lease question: nothing needed from you.</p><p class="fr-msg out">Great, thank you!</p></div>
           </div>
         </div>
-        <p class="yourcall"><svg class="icn" aria-hidden="true"><use href="#i-signpost"/></svg><b class="mono">Your call</b><span>If the searches flag something, we lay out the options. You decide how to proceed.</span></p>
       </article>
 
       <article class="step">
@@ -208,28 +185,12 @@
             <p class="ceyebrow mono"><b>03</b> Exchange</p>
             <h3>Signed, sealed, committed</h3>
             <p class="cbody">Contracts are exchanged and your completion date is set. From this moment, the move is real.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Chases every open enquiry and keeps the chain in step, day and night.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll ring you the moment we exchange. Not an email: a call.”</p></div>
           </div>
-          <div class="art" data-art="exchange">
-            <svg viewBox="0 0 400 400" role="img" aria-label="Two contracts joined by a seal">
-              <g transform="rotate(-5 140 200)">
-                <rect rx="9.6" class="ink" x="60" y="70" width="160" height="240"/>
-                <text x="84" y="104">BUYER</text>
-                <line class="faint" x1="84" y1="130" x2="196" y2="130"/><line class="faint" x1="84" y1="150" x2="180" y2="150"/><line class="faint" x1="84" y1="170" x2="190" y2="170"/>
-                <line class="ink" x1="84" y1="270" x2="160" y2="270"/>
-              </g>
-              <g transform="rotate(5 260 210)">
-                <rect rx="9.6" class="ink" x="180" y="80" width="160" height="240"/>
-                <text x="204" y="114">SELLER</text>
-                <line class="faint" x1="204" y1="140" x2="316" y2="140"/><line class="faint" x1="204" y1="160" x2="300" y2="160"/><line class="faint" x1="204" y1="180" x2="310" y2="180"/>
-                <line class="ink" x1="204" y1="280" x2="280" y2="280"/>
-              </g>
-              <rect rx="2.28" class="anchor" data-k="seal" x="181" y="252" width="38" height="38"/>
-            </svg>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b>Hannah Reid</b><span>Senior conveyancer</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">We’ve exchanged. Your completion date is Friday the 14th.</p><p class="fr-msg out">We’re actually moving!</p></div>
           </div>
         </div>
-        <p class="yourcall"><svg class="icn" aria-hidden="true"><use href="#i-signpost"/></svg><b class="mono">Your call</b><span>You agree the completion date before we exchange.</span></p>
       </article>
 
       <article class="step">
@@ -238,17 +199,10 @@
             <p class="ceyebrow mono"><b>04</b> Complete</p>
             <h3>Keys in hand</h3>
             <p class="cbody">Funds are transferred, completion is confirmed and the keys are released. We tell you the moment it happens.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Tracks the funds and tells Hannah the moment they land.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“When the money lands and the keys are released, you’ll hear it from me first.”</p></div>
           </div>
-          <div class="art" data-art="complete">
-            <svg viewBox="0 0 400 400" role="img" aria-label="A key">
-              <circle class="ink" cx="88" cy="200" r="26"/>
-              <rect rx="6" class="ink" x="100" y="150" width="100" height="100"/>
-              <path class="ink" d="M200 192 H330 V208 H316 V226 H302 V208 H288 V220 H274 V208 H200"/>
-              <text x="100" y="292">KEYS RELEASED · 12:04</text>
-              <rect rx="6" class="anchor" data-k="key" x="100" y="150" width="100" height="100"/>
-            </svg>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/tom.png" alt=""></span><p><b>Tom Okafor</b><span>Conveyancer</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">The money has landed and the keys are released. Congratulations, you’re home.</p><p class="fr-msg out">We’re in. Thank you!</p></div>
           </div>
         </div>
       </article>
@@ -259,22 +213,10 @@
             <p class="ceyebrow mono"><b>05</b> Moving day</p>
             <h3>The lights come on</h3>
             <p class="cbody">The boxes can wait. This part is yours. We were there for every step before it, with the same person from start to finish.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Watches the chain on the day, so nothing surprises you.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“Enjoy your first evening. I’m still a message away if you need me.”</p></div>
           </div>
-          <div class="art" data-art="home">
-            <svg viewBox="0 0 400 400" role="img" aria-label="A house with a lit window">
-              <defs><radialGradient id="glow"><stop offset="0" stop-color="var(--accent)" stop-opacity=".55"/><stop offset="1" stop-color="var(--accent)" stop-opacity="0"/></radialGradient></defs>
-              <circle class="glow" cx="148" cy="232" r="90" fill="url(#glow)"/>
-              <path class="ink" d="M86 192 L200 92 L314 192"/>
-              <path class="ink" d="M262 146 V110 H282 V164"/>
-              <rect rx="9.84" class="ink" x="100" y="180" width="200" height="164"/>
-              <rect rx="2.4" class="ink" x="180" y="264" width="40" height="80"/>
-              <rect rx="2.4" class="ink" x="232" y="212" width="40" height="40"/>
-              <line class="faint" x1="252" y1="212" x2="252" y2="252"/><line class="faint" x1="232" y1="232" x2="272" y2="232"/>
-              <line class="ink" x1="56" y1="344" x2="344" y2="344"/>
-              <rect rx="2.4" class="anchor" data-k="window" x="128" y="212" width="40" height="40"/>
-            </svg>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b>Hannah Reid</b><span>Senior conveyancer</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">Enjoy your first evening. I’m still a message away if you need me.</p><p class="fr-msg out">Kettle’s on. Thank you, Hannah.</p></div>
           </div>
         </div>
       </article>
@@ -285,11 +227,10 @@
             <p class="ceyebrow mono"><b>06</b> Wrap up</p>
             <h3>We tidy up after you</h3>
             <p class="cbody">Stamp Duty return filed, Land Registry updated, final documents sent.</p>
-            <p class="ai-note"><svg class="icn l3-spark" aria-hidden="true"><use href="#i-spark"/></svg><span><b class="mono">AI, in the background</b>Prepares the Stamp Duty and Land Registry forms for Hannah to sign off.</span></p>
-            <div class="helper"><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b class="mono">Hannah, your conveyancer</b>“I’ll file the last forms and send you everything, so it’s properly finished.”</p></div>
           </div>
-          <div class="art art-word" data-art="wrap">
-            <div class="wordmark" role="img" aria-label="alecto"><svg class="wm" viewBox="0 -730 2700 746" aria-hidden="true"><use href="#alecto-letters"/></svg><span class="anchor" data-k="logo"></span></div>
+          <div class="fr-chat st-chat">
+            <header><span class="face-tile"><img src="/concept-2/owen.png" alt=""></span><p><b>Owen Price</b><span>Post-completion</span></p></header>
+            <div class="fr-msgs"><p class="fr-msg in">Stamp Duty filed and the Land Registry updated. Everything is in your documents.</p><p class="fr-msg out">Brilliant, thanks Owen.</p></div>
           </div>
         </div>
       </article>
@@ -299,27 +240,21 @@
     </div>
   </section>
 
-  <!-- Team: illustrative people (dummy). Replace names, roles, lines and portraits with the real Alecto team. -->
-  <section class="team-band" id="team">
-    <div class="sec wrap">
-      <div class="sec-head">
-        <div><p class="eyebrow">Your team</p><h2>A real person at every step</h2></div>
-        <p class="lede">No call centre and no ticket numbers. One conveyancer who knows your file, and a small team behind them who know your name.</p>
-      </div>
-      <div class="team">
-        <figure class="mate"><div class="mate-tile"><img src="/concept-2/hannah.png" alt=""></div><figcaption><b>Hannah Reid</b><small class="mono">Senior conveyancer</small><p>Has moved house six times herself, so she knows the nerves.</p></figcaption></figure>
-        <figure class="mate"><div class="mate-tile"><img src="/concept-2/tom.png" alt=""></div><figcaption><b>Tom Okafor</b><small class="mono">Conveyancer</small><p>Used to be an estate agent. Fluent in chain.</p></figcaption></figure>
-        <figure class="mate"><div class="mate-tile"><img src="/concept-2/owen.png" alt=""></div><figcaption><b>Owen Price</b><small class="mono">Post-completion</small><p>Files your Stamp Duty and Land Registry, quietly and on time.</p></figcaption></figure>
-        <figure class="mate"><div class="mate-tile"><img src="/concept-2/william.png" alt=""></div><figcaption><b>William</b><small class="mono">CEO</small><p>Built Alecto so you always know who has your file.</p></figcaption></figure>
-      </div>
+  <!-- The AI, as a story: what it does while you sleep. Four tiles meet, the star between them works and fills each
+       tile with what got done (lines3.js). Illustrative. -->
+  <section class="sec wrap ai-story" aria-labelledby="ai-h">
+    <div class="ai-copy">
+      <p class="eyebrow"><i></i>In the background</p>
+      <p class="two-tone" id="ai-h"><strong>Our AI never stops.</strong> While you sleep it reads every page, chases every reply and flags what matters, so your lawyer starts every morning ahead and you hear what’s next before you think to ask.</p>
     </div>
+    <div class="ai-art"><div class="grid-art ai-tiles" data-grid data-x0="2" data-y0="0.12" data-r=".3" data-tiles="0,0 1,0 0,1 1,1" data-meet data-work aria-hidden="true"></div></div>
+    <div class="l3-status" aria-hidden="true"></div>
   </section>
 
-  <!-- The front: what you, the client, see (after the client's prototype, in our style). Not the lawyer's platform.
-       Updates, names and times are illustrative (front.js). -->
-  <section class="sec wrap front" id="proactive" aria-labelledby="proactive-h">
+  <!-- Proactive: what you see (front.js; illustrative). On ink, for a change of pace; the AI's updates carry the star. -->
+  <section class="sec wrap front pro-band" id="proactive" aria-labelledby="proactive-h">
     <div class="sec-head">
-      <div><p class="eyebrow">Proactive</p><h2 id="proactive-h">Fast by default. <em><span class="w" aria-hidden="true"><span>Proactive</span></span></em> by nature.</h2></div>
+      <div><p class="eyebrow"><i></i>Proactive</p><h2 id="proactive-h">Fast by default. <em><span class="w" aria-hidden="true"><span>Proactive</span></span></em> by nature.</h2></div>
       <p class="lede">We take responsibility for moving your transaction forward and solve problems before they become delays. If something changes, you hear it from us first.</p>
     </div>
     <div class="fr-proactive" data-front="tabs" data-ai>
@@ -336,23 +271,6 @@
     </div>
   </section>
 
-  <section class="sec wrap front" id="lawyer" aria-labelledby="lawyer-h">
-    <div class="sec-head">
-      <div><p class="eyebrow">Your lawyer</p><p class="two-tone sm" id="lawyer-h"><strong>Meet your lawyer.</strong> One qualified conveyancer who knows your file, answers your calls, and gets you over the line.</p></div>
-    </div>
-    <div class="fr-lawyer" data-front="accordion">
-      <div class="fr-acc">
-        <button class="fr-q" aria-expanded="true" data-k="phone"><b>They pick up the phone.</b><span>Call or message the person actually doing the work. No call centre, no handoffs, no “passed to a colleague”.</span><i aria-hidden="true"></i></button>
-        <button class="fr-q" aria-expanded="false" data-k="first"><b>They move first.</b><span>Enquiries get chased, blockers get spotted early, and you hear about changes from us before you think to ask.</span><i aria-hidden="true"></i></button>
-        <button class="fr-q" aria-expanded="false" data-k="outcome"><b>They own the outcome.</b><span>From offer accepted to keys in hand, one person is responsible for getting you there.</span><i aria-hidden="true"></i></button>
-      </div>
-      <div class="fr-chat" aria-live="polite">
-        <header><span class="face-tile"><img src="/concept-2/hannah.png" alt=""></span><p><b>Hannah</b><span>Your conveyancer</span></p></header>
-        <div class="fr-msgs"></div>
-      </div>
-    </div>
-  </section>
-
   <div class="wrap">
   <!-- Reviews: dummy names and stock photos for now. Replace with real clients' photos, with their permission. -->
   <section class="sec" id="reviews">
@@ -360,9 +278,9 @@
       <div><p class="eyebrow">Reviews</p><h2>Moved without the drama</h2></div>
     </div>
     <div class="reviews">
-      <figure class="review"><img class="rphoto" src="/concept-2/move-1.jpg" alt="Laura unpacking in her new flat"><div class="rbody"><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Clear updates at every stage and always quick to reply. We completed our leasehold purchase in under 8 weeks.”</blockquote></div><figcaption class="by"><span class="rname">Laura Mills</span><small class="mono">Leasehold purchase · Bristol</small></figcaption></figure>
-      <figure class="review"><img class="rphoto" src="/concept-2/move-4.jpg" alt="James and Sofia loading the car on moving day"><div class="rbody"><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“Our chain broke twice and they still got us to completion in 5 weeks. Calm and organised the whole way.”</blockquote></div><figcaption class="by"><span class="rname">James &amp; Sofia Turner</span><small class="mono">Sale and purchase · Leeds</small></figcaption></figure>
-      <figure class="review"><img class="rphoto" src="/concept-2/move-2.jpg" alt="Aisha and Malik holding moving boxes in their first home"><div class="rbody"><div class="rate" aria-label="5 out of 5"><i></i><i></i><i></i><i></i><i></i></div><blockquote>“We never had to chase. We always knew what was happening and what we needed to do next.”</blockquote></div><figcaption class="by"><span class="rname">Aisha &amp; Malik Khan</span><small class="mono">First-time buyers · Manchester</small></figcaption></figure>
+      <figure class="review"><img class="rphoto" src="/concept-2/move-1.jpg" alt="Laura unpacking in her new flat"><div class="rbody"><blockquote>“Clear updates at every stage and always quick to reply. We completed our leasehold purchase in under 8 weeks.”</blockquote></div><figcaption class="by"><span class="rname">Laura Mills</span><small class="mono">Leasehold purchase · Bristol</small></figcaption></figure>
+      <figure class="review"><img class="rphoto" src="/concept-2/move-4.jpg" alt="James and Sofia loading the car on moving day"><div class="rbody"><blockquote>“Our chain broke twice and they still got us to completion in 5 weeks. Calm and organised the whole way.”</blockquote></div><figcaption class="by"><span class="rname">James &amp; Sofia Turner</span><small class="mono">Sale and purchase · Leeds</small></figcaption></figure>
+      <figure class="review"><img class="rphoto" src="/concept-2/move-2.jpg" alt="Aisha and Malik holding moving boxes in their first home"><div class="rbody"><blockquote>“We never had to chase. We always knew what was happening and what we needed to do next.”</blockquote></div><figcaption class="by"><span class="rname">Aisha &amp; Malik Khan</span><small class="mono">First-time buyers · Manchester</small></figcaption></figure>
     </div>
   </section>
 
@@ -385,12 +303,6 @@
   </section>
 
   <!-- CTA: dummy photos -->
-  <!-- The name: Alēktō, "unceasing". The idea behind the light that keeps moving, before evening falls. -->
-  <section class="statement name-note" aria-label="Our name">
-    <p class="name-word mono"><span lang="grc">Ἀληκτώ</span> · Alēktō · unceasing</p>
-    <p class="two-tone"><strong>Our name means unceasing.</strong> While you sleep, our AI keeps working in the background: reading, checking, chasing, day and night. Your conveyancer starts every morning ahead. Then, one evening, you’re home.</p>
-  </section>
-
   <section class="cta c2-cta">
     <div class="cta-copy">
       <p class="hero-time mono"><b>19:30</b> · Keys in hand</p>
@@ -420,8 +332,9 @@
 </footer>
 
 
-<!-- Concept switcher (review builds only): phase 2 · 2a, the phase 3 pages and the type options (switcher.js). -->
-<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a">2a</a><span class="phase">Phase 3</span><a href="/phase-3/" title="Phase 3 · Home">Home</a><a href="/phase-3/lines/" title="Phase 3 · Lines">Lines</a><a href="/phase-3/lines-2/" title="Phase 3 · Lines 2">Lines 2</a><a href="/phase-3/lines-3/" title="Phase 3 · Lines 3" aria-current="page">Lines 3</a><a href="/phase-3/story/" title="Phase 3 · Story">Story</a><a href="/phase-3/mark/" title="Phase 3 · Mark">Mark</a><a href="/phase-3/product/" title="Phase 3 · Platform">Platform</a><span class="phase">Type</span><a data-f="geist" title="Geist">Aa</a><a data-f="instrument" title="Instrument Sans">Aa</a><a data-f="inter" title="Inter (as in 2a)">Aa</a></nav>
+<!-- Concept switcher (review builds only): phase 2 · 2a, the phase 3 pages and the type options (switcher.js).
+     Lines, Lines 3, Mark and Prototype are hidden from it for now; their pages still work by URL. -->
+<nav class="concepts" aria-label="Design concepts"><span>Phase 2</span><a href="/phase-2/concept-2/?v=a" title="Phase 2 · 2a">2a</a><span class="phase">Phase 3</span><a href="/phase-3/" title="Phase 3 · Home">Home</a><a href="/phase-3/home-2/" title="Phase 3 · Home 2">Home 2</a><a href="/phase-3/lines-2/" title="Phase 3 · Lines 2">Lines 2</a><a href="/phase-3/story/" title="Phase 3 · Story">Story</a><a href="/phase-3/product/" title="Phase 3 · Platform">Platform</a><span class="phase">Type</span><a data-f="geist" title="Geist">Aa</a><a data-f="instrument" title="Instrument Sans">Aa</a><a data-f="inter" title="Inter (as in 2a)">Aa</a></nav>
 
 <script type="module" src="/src/phase-3/lines-3-page.js"></script>
 </body>

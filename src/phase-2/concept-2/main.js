@@ -1,5 +1,6 @@
 import { initTheme } from '../../js/theme.js';
 import { initMotion } from '../../js/motion.js';
+import { tuckSwitcher } from '../../js/versions.js';
 import { clamp, prefersReducedMotion } from '../../js/palette.js';
 import { keepFlavor } from './flavor.js';
 import { prepareHero } from './hero-intro.js';
@@ -24,6 +25,7 @@ const root = document.documentElement;
 const flavor = root.dataset.v;
 document.querySelectorAll('.c2-hero[data-v]').forEach((h) => { if (h.dataset.v !== flavor) h.remove(); });
 keepFlavor();
+tuckSwitcher(); // the concept switcher, behind a button in the header
 initRadius();
 
 const reduce = prefersReducedMotion();

@@ -14,11 +14,13 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 2 · 2a–2c | `/phase-2/concept-2/?v=a` … `?v=c` | Concept 2 in three flavors: the hero and portraits vary, the one square stays. 2a leads |
 | Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
-| Phase 3 · Home | `/phase-3/` | 2a with lighter type, icons instead of most squares, two-tone statements and a section on the platform with a living demo |
+| Phase 3 · Home | `/phase-3/` | Minimal and strict: the light with the leaves, one story, the figures, six steps each with a real person and their message, reviews, FAQ |
+| Phase 3 · Home 2 | `/phase-3/home-2/` | Home, with titles that rise in on scroll instead of being written by the dot, a sheer curtain clip in the hero and warm window light in the story (`home-2-page.js`, `home2.css`, `rise.js`, `rise.css`; Lines 2 has the rising titles and the curtain too) |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
 | Phase 3 · Lines 2 | `/phase-3/lines-2/` | Lines, with the hero clip shown only through a few of the grid's tiles, like windows in a wall; one slowly closes as another opens |
 | Phase 3 · Lines 3 | `/phase-3/lines-3/` | Lines with one rule: squares are people and your move, the star appears only where squares meet, and that is the AI. Only the star is periwinkle |
+| Phase 3 · Prototype | `/phase-3/prototype/` | Everything from the client's own prototype (sections, copy and order), built in the Lines 3 language |
 | Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
 | Phase 3 · Platform | `/phase-3/product/` | The product page: product screens, feature tabs, the living case allocation demo, AI and people, trust |
 
@@ -40,10 +42,44 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 
 ## Phase 3: the tech behind the people
 
+On the concept switcher for now (tucked into the header behind a small button, `src/js/versions.js`): Home, Home 2, Lines 2,
+Story and Platform. Lines, Lines 3, Mark and Prototype are hidden from
+it (feedback round 6) but still work by their URL.
+
 `phase-3/index.html` (Home) and `phase-3/product/index.html` (Platform), with their code in `src/phase-3/`. Built on 2a:
 they load the phase 2 styles and scripts, and add `phase3.css` and `platform.css` on top. Feedback round 3 (Bas, Will):
 lighter type, fewer squares, start showing the AI behind the people and the product, calm, home and movement.
 
+- **Minimal, on every version** (feedback round 6, `minimal.css`, `<body class="… p3min">`): Home is the base, and
+  every version now has the same order: hero, one story, the figures, the six steps with real people, reviews, FAQ,
+  the evening. The team band, the front blocks, the name note, the icon row, the line through the page (thread.js,
+  removed) and the review stars are gone everywhere; Lines no longer builds on the old home (`home.js`, removed) and
+  has no page load or travelling square. Each version keeps only its own idea: Lines the grid of tiles, Lines 2 the
+  windows, Lines 3 the star (without the notes at every step), Story its story, Mark the corner and the four squares,
+  Prototype their content (without the every step/cost/update cards). Purple only for the dot (and the AI star).
+  The headline always sits on two lines ("Law that keeps / you moving."), on a phone too. A smaller type scale
+  throughout ("modern sites set smaller type"): display sizes about three quarters (the headline 80px at most),
+  text a step down (16px, small print 14px).
+  **Dark mode is hidden for now:** every phase 3 page sets `data-theme="light"` and `data-theme-lock` in `<head>`, which
+  hides the toggle (phase3.css).
+- **Home and Lines 3, feedback round 6 checked point by point:** a calm header (purple only for the full stop; no
+  lines: the window cross is gone from the light, and Lines 3 shows only its tiles and the star; no interactive line:
+  Hannah's hello and the Lines 3 key are gone). The drawn light with the leaves won over the clips (no watermark,
+  and it moves more now: a wider, quicker sway, a soft flutter, a faster drift). Then the brand story from the
+  Story page, told chapter by chapter as you scroll (`.story-in`, ending on "Moving home should feel calm." instead of
+  the headline, which the hero has), the figures, the
+  steps (no "Your call" bars), the AI as a story (`.ai-story`: the words beside the four tiles, whose star fills them
+  with what got done overnight), Proactive on ink (`.pro-band`) for a change of pace, reviews, FAQ, the evening.
+- **Home, minimal** (feedback round 6: "strip everything, minimal and strict"; `home-page.js`, `minimal.css`):
+  - Out: the line through the page with its times (thread.js), the hero clip (back to the light with the leaves,
+    light.js), the icon row, the team band, the platform demo, the name note, the page load and the travelling
+    square, the journey's drawings and its closing wordmark, and the review stars.
+  - Order: hero, one story (the two-tone statement), the figures in the midday light, the six steps, reviews, FAQ,
+    the evening.
+  - **The steps, with real people:** each step shows who does it (Hannah, Tom, Owen) and their message to you, in
+    the chat from the front blocks; your replies in ink.
+  - **Less purple:** buttons, the news bar, chat replies, step numbers and small marks in ink; purple only for the
+    logo dot and the headline's full stop.
 - **One element, the square of light** (`light.js`, `light.css`; feedback round 4, after the client's own prototype
   with curtains and leaf shadows). The square is the brand's one element: the logo dot, the cursor that writes the
   headlines, the full stop, and, big, a square of sunlight on a wall at home with leaf shadows and a sheer curtain
@@ -116,6 +152,19 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   - **The star as a mark in the UI:** each journey step says what the AI did beside what Hannah does; the "Your move"
     panel (`data-ai`, front.js) shows the AI's work with the star and Hannah's with her square.
   - **The evening:** four tiles come home and meet round one last star.
+- **Prototype** (`/phase-3/prototype/`, `prototype.js`, `prototype.css`): the client's own prototype, section for
+  section and in their words (lawyer Jemima, their figures, reviews and FAQ), rebuilt in the Lines 3 language:
+  - **Hero:** "Law, made to keep you moving." with the Lines 3 tiles meeting round the AI star; their promise and the key below.
+  - **Proactive by default** (two-tone statement), then **the figures** as tiles, the quote on ink.
+  - **The usual way, then the lights on** (pinned, `data-lights`): in the dark the cards hang crooked and say
+    nothing useful; as you scroll the room lights up, the headline turns to "With Alecto, you see everything" and
+    every card turns over to the Alecto way and squares up to the grid.
+  - **Every step, every cost, every update** as three tiles (the step you're on is the purple square).
+  - **The front blocks** (Proactive, Meet your lawyer) with Jemima (`data-lawyer` in `front.js`).
+  - **For moves that should just happen** on an ink panel with the four tiles and the star, and the kinds of move.
+  - **Your move, your price** (Buying and Selling), **Moves we've seen through** (their quotes on purple and ink,
+    their stories in a row with arrows), **FAQ** and their **footer**: the wordmark, big, behind the ink card.
+  Their curtain, leaf and plant footage is left out: the grid and the star carry the page.
 - **Mark, an extra iteration** (`/phase-3/mark/`, `mark.js`, `mark.css`), after Verve's Miro rebrand: they took one
   piece of geometry from the logo (the slanted strokes of the M) and made it the whole visual language, cropped huge,
   in flat colour pairs, one movement at a time. Alecto's DNA is the dot, a rounded square. Flat periwinkle and ink on
@@ -346,6 +395,8 @@ Add `?intro` to the URL to force it, for example `http://localhost:5173/concept-
 With reduced motion enabled the loader and build-up are skipped and the finished skyline is shown.
 
 ## Placeholder content to replace before launch
+
+- `public/phase-3/curtain.mp4` and `window-sweep.mp4` (Home 2) are watermarked iStock previews: replace with licensed clips.
 
 - Live activity in the hero (`EVENTS`, `CITIES`, the counters) is illustrative. To make it real, feed it anonymised case events from Alecto's case system.
 - Dashboard mockup data (Hannah Reid, 14 Elm Road, dates) is invented.
