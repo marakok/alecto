@@ -12,7 +12,6 @@ html.motion .p3rise :is(h2[data-split], .rise).in .w > span { transform: none; o
 /* the full stop settles last */
 html.motion .p3rise .rise .period { opacity: 0; scale: .4; transition: opacity .5s ease, scale .7s cubic-bezier(.34, 1.5, .64, 1); transition-delay: calc(var(--n, 6) * 45ms + 250ms); }
 html.motion .p3rise .rise.in .period { opacity: 1; scale: 1; }
-.p3rise .story-caret { display: none; }
 .p3rise .hero-home h1:not(.in) #k0 { opacity: 0; } /* no lone dot before the words arrive */
 html.rise-still .p3rise .hero-home h1 #k0 { opacity: 1; }
 html.rise-still .p3rise .rise .w > span { transform: none; opacity: 1; filter: none; }

@@ -43,7 +43,6 @@
   <link rel="stylesheet" href="/src/phase-3/front.css">
   <link rel="stylesheet" href="/src/phase-3/lines.css">
   <link rel="stylesheet" href="/src/phase-3/lines3.css">
-  <link rel="stylesheet" href="/src/phase-3/story.css">
   <link rel="stylesheet" href="/src/phase-3/minimal.css">
 </head>
 <body class="c2 p3 p3min">
@@ -97,53 +96,7 @@
     </div>
   </section>
 
-
-  <!-- The story, after the hero: the brand story from Phase 3 · Story, one line per chapter as you scroll (story.js),
-       ending on the calm promise instead of the headline (the hero has that). -->
-  <section class="story story-in" aria-label="Our story">
-    <div class="story-pin">
-      <!-- Light moving, following the theme (theme-video.js): the white clip in light mode, the black one in dark mode.
-           iStock previews (watermarked): replace with the licensed clips. -->
-      <video class="story-video" data-src-light="/phase-3/light-corner.mp4" data-src-dark="/phase-3/light-wall.mp4" data-rate=".3333" muted loop playsinline preload="auto" aria-hidden="true"></video>
-      <div class="story-field" aria-hidden="true"></div>
-      <!-- Illustrative person: replace with a real Alecto lawyer. -->
-      <div class="story-duo" aria-hidden="true">
-        <figure class="duo-tile duo-lawyer"><img src="/concept-2/hannah.png" alt=""><figcaption class="mono">Hannah · your lawyer</figcaption></figure>
-        <i class="duo-line"></i>
-        <figure class="duo-tile duo-you"><span>You</span><figcaption class="mono">You decide</figcaption></figure>
-      </div>
-      <div class="wrap story-copy">
-        <ol class="story-lines">
-          <li data-ch><p class="story-kick mono"><span lang="grc">Ἀληκτώ</span> · Alēktō</p><p class="sl">Alecto means <strong>“never stops.”</strong></p></li>
-          <li data-ch><p class="sl"><strong>The square is data:</strong> every document, date and detail of your move.</p></li>
-          <li data-ch><p class="sl"><strong>The lines connect it,</strong> step by step.</p></li>
-          <li data-ch><p class="sl"><strong>AI works quietly in the shadows,</strong> bringing light.</p></li>
-          <li data-ch><p class="sl"><strong>It reads every square</strong> so nothing stays hidden.</p></li>
-          <li data-ch><p class="sl"><strong>Our lawyer makes every decision</strong> together with you.</p></li>
-          <li data-ch class="story-end">
-            <h2 class="story-title" aria-label="Moving home should feel calm."><span class="w" aria-hidden="true"><span>Moving</span></span> <span class="w" aria-hidden="true"><span>home</span></span> <span class="w" aria-hidden="true"><span>should</span></span> <span class="w" aria-hidden="true"><span>feel</span></span> <span class="nowrap"><em><span class="w" aria-hidden="true"><span>calm</span></span></em><span class="period"></span></span><i class="story-caret" aria-hidden="true"></i></h2>
-            <p class="sub">One person owns your file from offer to keys, our platform keeps every step moving, and you hear what’s next before you think to ask.</p>
-          </li>
-        </ol>
-        <p class="story-hint mono" aria-hidden="true">Scroll</p>
-        <ol class="story-dots" aria-hidden="true"><li></li><li></li><li></li><li></li><li></li><li></li><li></li></ol>
-      </div>
-    </div>
-  </section>
-
-  <!-- The figures, on a wall in the midday sun. The quote is a dummy (paraphrased from the reviews). -->
-  <section class="wrap numbers" aria-label="Alecto in numbers">
-    <div class="shade-panel">
-      <div class="light" data-light="noon" aria-hidden="true"></div>
-      <div class="facts">
-        <div><b>CLC regulated</b><span>Licence 14351</span></div>
-        <div><b>2,000+</b><span>homeowners moved with Alecto</span></div>
-        <div><b>£600m+</b><span>in property transactions</span></div>
-        <div class="quote"><p>“We never had to chase. We always knew what was happening and what we needed to do next.”</p><span>Aisha &amp; Malik Khan · First-time buyers</span></div>
-      </div>
-    </div>
-  </section>
-
+  <!-- After the hero: how it works, six steps with the person doing each one (journey.js). -->
   <section class="sec wrap journey" id="journey" aria-label="How a move with Alecto works">
     <div class="sec-head">
       <div><p class="eyebrow">How it works</p><h2>Six steps, real people</h2></div>
@@ -239,6 +192,20 @@
     </div>
     <div class="jmeta" aria-hidden="true"><span id="jcount">01 / 06</span><span class="jtrack"><i id="jbar"></i></span></div>
     </div>
+    </div>
+  </section>
+
+
+  <!-- The figures, on a wall in the midday sun. The quote is a dummy (paraphrased from the reviews). -->
+  <section class="wrap numbers" aria-label="Alecto in numbers">
+    <div class="shade-panel">
+      <div class="light" data-light="noon" aria-hidden="true"></div>
+      <div class="facts">
+        <div><b>CLC regulated</b><span>Licence 14351</span></div>
+        <div><b>2,000+</b><span>homeowners moved with Alecto</span></div>
+        <div><b>£600m+</b><span>in property transactions</span></div>
+        <div class="quote"><p>“We never had to chase. We always knew what was happening and what we needed to do next.”</p><span>Aisha &amp; Malik Khan · First-time buyers</span></div>
+      </div>
     </div>
   </section>
 

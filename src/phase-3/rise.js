@@ -3,7 +3,6 @@
  * each word comes up out of its own mask, from a soft blur into focus, a few hundredths of a second after the one before (rise.css).
  *  - the hero headline: on load
  *  - section headings (h2, split into words by motion.js): as they scroll into view (motion.js adds .in)
- *  - the story's last line: when its chapter arrives (story.js with { write: false })
  * Reduced motion: everything is simply there.
  */
 function split(el) {
@@ -31,8 +30,6 @@ function split(el) {
 }
 
 export function initRise({ reduce }) {
-  document.querySelectorAll('.story-title .w > span').forEach((s, i) => s.style.setProperty('--i', i));
-  document.querySelectorAll('.story-title').forEach((t) => t.classList.add('rise'));
   if (reduce) { document.documentElement.classList.add('rise-still'); return; }
   const h1 = document.querySelector('.hero-home h1');
   if (!h1) return;
