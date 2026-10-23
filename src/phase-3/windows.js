@@ -1,9 +1,10 @@
 /**
- * Phase 3 · Lines 2: the hero's clip shows only through a few of the grid's tiles, like windows in a wall
+ * Phase 3 · Lines 2: a section's clip shows only through a few of the grid's tiles, like windows in a wall
  * (<div data-grid data-windows="c,r …" data-open="c,r …">, cells as in lines.js). The video and its smoothed canvas
  * are clipped to rounded squares that sit just inside those tiles' lines. Every few seconds one window closes
  * (shrinks to its middle) while another opens somewhere else: one slow movement at a time. Windows never open
- * behind the words: tiles that overlap the headline, the buttons or Hannah's line stay plain.
+ * behind the words: tiles that overlap the headline, the buttons or Hannah's line stay plain. Any number of these per
+ * page (the header and the closing section), each with its own clip.
  * Reduced motion: the first windows, open and still.
  */
 const NS = 'http://www.w3.org/2000/svg';
@@ -11,17 +12,21 @@ const cells = (s) => (s || '').trim().split(/\s+/).filter(Boolean);
 const ease = (t) => (t < 0.5 ? 4 * t * t * t : 1 - Math.pow(-2 * t + 2, 3) / 2);
 
 export function initWindows({ reduce }) {
-  const grid = document.querySelector('[data-grid][data-windows]');
-  const hero = grid?.closest('section');
-  if (!grid || !hero) return;
+  document.querySelectorAll('[data-grid][data-windows]').forEach((grid, n) => windows(grid, n, reduce));
+}
+
+function windows(grid, n, reduce) {
+  const hero = grid.closest('section');
+  if (!hero) return;
 
   const svg = document.createElementNS(NS, 'svg');
   svg.setAttribute('class', 'lw-defs');
   svg.setAttribute('aria-hidden', 'true');
-  svg.innerHTML = '<clipPath id="lw-clip" clipPathUnits="userSpaceOnUse"></clipPath>';
+  svg.innerHTML = `<clipPath id="lw-clip-${n}" clipPathUnits="userSpaceOnUse"></clipPath>`;
   hero.prepend(svg);
   const clip = svg.firstChild;
   hero.classList.add('lw');
+  hero.style.setProperty('--lw-clip', `url(#lw-clip-${n})`);
 
   // every candidate window, with how open it is (0 to 1)
   const open = new Set(cells(grid.dataset.open));
@@ -32,7 +37,7 @@ export function initWindows({ reduce }) {
     return { k, rect, v, from: v, to: v };
   });
 
-  const words = [...hero.querySelectorAll('h1, .sub, .ctas, .hello')];
+  const words = [...hero.querySelectorAll('h1, h2, .sub, .hero-time, .cta-copy > p, .ctas, .hello')];
   const pad = 16;
   let settled = false;
 
@@ -40,7 +45,7 @@ export function initWindows({ reduce }) {
     const g = grid._geo; // set by lines.js once the grid is drawn
     if (!g) return false;
     const gr = grid.getBoundingClientRect();
-    const hr = hero.getBoundingClientRect();
+    const hr = (hero.querySelector('.hero-video, .cta-video') || hero).getBoundingClientRect(); // the clip's own box
     const ox = gr.left - hr.left;
     const oy = gr.top - hr.top;
     const inset = 3; // just inside the tile's line
@@ -110,5 +115,5 @@ export function initWindows({ reduce }) {
     };
     requestAnimationFrame(step);
   };
-  setInterval(() => { if (!document.hidden) swap(); }, 6500);
+  setTimeout(() => setInterval(() => { if (!document.hidden) swap(); }, 6500), n * 2600); // two grids don't swap at once
 }

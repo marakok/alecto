@@ -1,5 +1,5 @@
 /* Phase 3 · Lines 2 (windows.js): the hero's clip only inside a few of the grid's tiles, like windows in a wall.
    Elsewhere the hero is its plain ground. */
 .lw-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
-.hero-home.lw .hero-video { clip-path: url(#lw-clip); } /* the video and its smoothed canvas (smooth-video.js) */
+.lw :is(.hero-video, .cta-video) { clip-path: var(--lw-clip); } /* the video and its smoothed canvas (smooth-video.js) */
 .hero-home.lw::before { display: none; } /* no shade needed: the words already stand on plain ground */
