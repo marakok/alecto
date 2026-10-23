@@ -74,12 +74,18 @@ html.jl .p3min #k0 { visibility: visible; }
 @keyframes sway-more { from { rotate: -2.6deg; translate: -7px -2px; } to { rotate: 2.8deg; translate: 9px 4px; } }
 .p3min .l3-hero .gl { display: none; } /* Lines 3: the tiles and the star, without the lines */
 
+/* ---------- the clips in the page's own colours: the curtains are olive green-grey; this grade takes out the green
+   and warms them to the cream of the drawn light (wall #E7DFD3, sun #FFFAF0 to #FCE3BE), softer and a touch lighter.
+   On every clip: Home 2's header, the windows in the Lines headers, the closing sections. ---------- */
+.p3min { --cream-grade: grayscale(1) sepia(.38) saturate(1.15) brightness(1.08) contrast(.9); }
+.p3min .hero-home.on-video { --h-video: var(--cream-grade); }
+
 /* ---------- the closing section on the curtains: light, like the header, instead of the dark evening ---------- */
 .p3min .cta-curtain {
   --inv-fg: #141416; --inv-muted: rgb(20 20 22 / .62); --inv-line: rgb(20 20 22 / .18); --inv-surface: rgb(255 255 255 / .55); --inv-bg: #F4F1EC;
   background: #EFEAE3; color: var(--inv-fg);
 }
-.p3min .cta-curtain .cta-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; filter: saturate(.85) brightness(1.04); }
+.p3min .cta-curtain .cta-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; filter: var(--cream-grade); }
 .p3min .cta-curtain .cta-art::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgb(244 240 234 / .85) 0%, rgb(244 240 234 / .5) 45%, rgb(244 240 234 / .06) 80%); }
 .p3min .cta-curtain .btn.accent { background: #141416; color: #FFFFFF; }
 .p3min .cta-curtain .btn.ghost { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
