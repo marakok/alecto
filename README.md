@@ -107,7 +107,8 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   your move; the star only appears where squares meet, and that is where the AI works. No clips; ink lines on paper.
   Periwinkle is kept for the brand's own square (the logo dot, the full stop, the announcement bar) and the star, and
   only the star glows; buttons, avatars, review ratings and the "Your call" strip are ink.
-  - **The hero** teaches the rule: four tiles slide together (`data-meet`), the gap between their corners lights up as
+  - **The hero** teaches the rule: the grid draws, four tiles slide together (`data-meet`) and the long lines fade
+    away slowly, so the words stand on calm ground. The gap between their corners lights up as
     a big star (`data-r=".3"` on the grid: rounder corners, a bigger star), then it works (`data-work`): a small square
     of data runs from it along the line between two tiles, and that tile fills with what got done ("AI · 02:14,
     Searches ordered"), clockwise, one at a time, without end. On narrow screens the tiles sit below the words.
