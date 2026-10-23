@@ -65,6 +65,9 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   card beside the text. The person is one small line (round photo, name, role, time), the messages short bubbles
   (light with a hairline for them, ink for you, one sharper corner on the speaker's side). When a step comes up:
   typing dots, then the bubbles pop in one by one with a small overshoot, your reply, and "Seen".
+- **The clips in the page's own colours** (`--cream-grade` in minimal.css): the curtains are olive green-grey, so a CSS
+  grade takes out the green and warms them to the cream of the drawn light (greyscale, a little sepia, a touch
+  lighter and softer). It runs on every clip: Home 2's header, the windows in the Lines headers, the closing sections.
 - **The closing section on the curtains** (Home, Home 2, Lines 2; `.cta-curtain` in minimal.css): the curtain clip
   from the header instead of the dark evening light, in light colours (ink text and button, a soft fade on the left),
   so the page ends in the same light it starts in.
