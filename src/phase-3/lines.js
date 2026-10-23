@@ -40,7 +40,7 @@ function draw(el, reduce) {
   const xr = right - left; // the content's right edge, in this element
   const x0 = xr - Number(el.dataset.x0 || 3) * C;
   const y0 = Math.round(H * Number(el.dataset.y0 || 0.2));
-  const R = Math.round(C * 0.16);
+  const R = Math.round(C * Number(el.dataset.r || 0.16)); // data-r: rounder corners make a bigger star
 
   const xs = [];
   for (let x = xr - Math.ceil(xr / C) * C; x <= W + C; x += C) xs.push(Math.round(x));
