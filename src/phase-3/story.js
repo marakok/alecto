@@ -14,7 +14,6 @@ import { writeAt } from '../js/write.js';
  *  6  Law that keeps you moving.             the dot writes the headline as you scroll; the buttons follow
  *
  * Only one thing happens at a time, and only as you scroll. Reduced motion: the chapters as a plain list.
- * With { write: false } (Home 2) the dot doesn't write the last line: its words rise into place (rise.css) instead.
  */
 const NS = 'http://www.w3.org/2000/svg';
 const COLS = 9;
@@ -27,7 +26,7 @@ const PATH = [[4, 3], [4, 2], [3, 2], [2, 2], [2, 1], [1, 1], [1, 2], [1, 3], [1
 const ease = (t) => (t < 0.5 ? 2 * t * t : 1 - Math.pow(-2 * t + 2, 2) / 2);
 const seg = (t, a, b) => clamp((t - a) / (b - a), 0, 1);
 
-export function initStory({ reduce, write: dotWrites = true }) {
+export function initStory({ reduce }) {
   const story = document.querySelector('.story');
   if (!story) return;
   const field = story.querySelector('.story-field');
@@ -125,12 +124,6 @@ export function initStory({ reduce, write: dotWrites = true }) {
 
     // 6: the dot writes the headline as you scroll
     const write = ch < 6 ? 0 : ease(seg(t, 0.05, 0.75));
-    if (!dotWrites) { // the words rise in as the last chapter arrives
-      title.classList.toggle('in', ch === 6);
-      story.classList.toggle('written', ch === 6);
-      story.classList.toggle('ctas-on', ch === 6 && t > 0.3);
-      return;
-    }
     story.classList.toggle('writing', ch === 6);
     if (ch === 6) {
       const sr = stop.getBoundingClientRect();

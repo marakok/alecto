@@ -15,7 +15,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
 | Phase 3 · Home | `/phase-3/` | Minimal and strict: the light with the leaves, one story, the figures, six steps each with a real person and their message, reviews, FAQ |
-| Phase 3 · Home 2 | `/phase-3/home-2/` | Home, with titles that rise in on scroll instead of being written by the dot, a sheer curtain clip in the hero and warm window light in the story (`home-2-page.js`, `home2.css`, `rise.js`, `rise.css`; Lines 2 has the rising titles and the curtain too) |
+| Phase 3 · Home 2 | `/phase-3/home-2/` | Home, with titles that rise in on scroll instead of being written by the dot, and a sheer curtain clip in the hero (`home-2-page.js`, `home2.css`, `rise.js`, `rise.css`; Lines 2 has the rising titles and the curtain too) |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
 | Phase 3 · Lines 2 | `/phase-3/lines-2/` | Lines, with the hero clip shown only through a few of the grid's tiles, like windows in a wall; one slowly closes as another opens |
@@ -65,11 +65,10 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
 - **Home and Lines 3, feedback round 6 checked point by point:** a calm header (purple only for the full stop; no
   lines: the window cross is gone from the light, and Lines 3 shows only its tiles and the star; no interactive line:
   Hannah's hello and the Lines 3 key are gone). The drawn light with the leaves won over the clips (no watermark,
-  and it moves more now: a wider, quicker sway, a soft flutter, a faster drift). Then the brand story from the
-  Story page, told chapter by chapter as you scroll (`.story-in`, ending on "Moving home should feel calm." instead of
-  the headline, which the hero has), the figures, the
-  steps (no "Your call" bars), the AI as a story (`.ai-story`: the words beside the four tiles, whose star fills them
-  with what got done overnight), Proactive on ink (`.pro-band`) for a change of pace, reviews, FAQ, the evening.
+  and it moves more now: a wider, quicker sway, a soft flutter, a faster drift). Then how it works, right after the
+  hero (the six steps without "Your call" bars; no storytelling any more, feedback round 7, also on Home 2), the
+  figures, the AI as a story (`.ai-story`: the words beside the four tiles, whose star fills them with what got done
+  overnight), Proactive on ink (`.pro-band`) for a change of pace, reviews, FAQ, the evening.
 - **Home, minimal** (feedback round 6: "strip everything, minimal and strict"; `home-page.js`, `minimal.css`):
   - Out: the line through the page with its times (thread.js), the hero clip (back to the light with the leaves,
     light.js), the icon row, the team band, the platform demo, the name note, the page load and the travelling
@@ -396,7 +395,7 @@ With reduced motion enabled the loader and build-up are skipped and the finished
 
 ## Placeholder content to replace before launch
 
-- `public/phase-3/curtain.mp4` and `window-sweep.mp4` (Home 2) are watermarked iStock previews: replace with licensed clips.
+- `public/phase-3/curtain.mp4` (Home 2, Lines 2) is a watermarked iStock preview: replace with the licensed clip.
 
 - Live activity in the hero (`EVENTS`, `CITIES`, the counters) is illustrative. To make it real, feed it anonymised case events from Alecto's case system.
 - Dashboard mockup data (Hannah Reid, 14 Elm Road, dates) is invented.

@@ -49,9 +49,6 @@ html.jl .p3min #k0 { visibility: visible; }
 @keyframes sway-more { from { rotate: -2.6deg; translate: -7px -2px; } to { rotate: 2.8deg; translate: 9px 4px; } }
 .p3min .l3-hero .gl { display: none; } /* Lines 3: the tiles and the star, without the lines */
 
-/* the brand story after the hero (story.js): a little shorter than on the Story page */
-.p3min .story-in { height: 620vh; }
-
 /* ---------- the AI, as a story: the words on the left, the four tiles and the star at work on the right ---------- */
 .p3min .ai-story { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
 .p3min .ai-copy .eyebrow { margin-bottom: 22px; }
