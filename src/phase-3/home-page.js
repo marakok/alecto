@@ -5,7 +5,6 @@ import { prefersReducedMotion } from '../js/palette.js';
 import { initRadius } from '../phase-2/concept-2/radius.js';
 import { initReveal } from '../phase-2/concept-2/reveal.js';
 import { initFront } from './front.js';
-import { initHeadings } from './headings.js';
 import { initJourney } from './journey.js';
 import { initLight } from './light.js';
 import { initMeet } from './meet.js';
@@ -13,6 +12,7 @@ import { initSwitcher } from './switcher.js';
 import { initThemeVideos } from './theme-video.js';
 import { initWords } from './words.js';
 import { initStops } from './stops.js';
+import { initRise } from './rise.js';
 
 /**
  * Phase 3 · Home, minimal (minimal.css): a calm hero (the light with the leaves, moving), how it works (the six steps,
@@ -24,6 +24,7 @@ initRadius();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
 initStops(); // every title ends on the purple square
+initRise({ reduce }); // titles rise in word by word; the full stop lands last
 initReveal({ reduce });
 initSwitcher();
 initThemeVideos(); // the curtains in the closing section
@@ -32,4 +33,3 @@ initJourney({ reduce });
 initMeet({ reduce }); // the AI: four line squares meet, the star lights
 initFront({ reduce });
 initWords({ reduce });
-initHeadings({ reduce });

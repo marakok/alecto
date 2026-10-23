@@ -42,8 +42,9 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 
 ## Phase 3: the tech behind the people
 
-The concept switcher (tucked into the header behind a small button, `src/js/versions.js`) lists every phase 3
-page: Home, Home 2, Lines, Lines 2, Lines 3, Story, Mark, Prototype and Platform.
+The concept switcher (tucked into the header behind a small button, `src/js/versions.js`) shows Option 1 (Home 2,
+`/phase-3/home-2/`), Option 2 (Lines 2, `/phase-3/lines-2/`) and Platform. Home, Lines, Lines 3, Story, Mark and
+Prototype are hidden from it for now but still work by their URL.
 
 `phase-3/index.html` (Home) and `phase-3/product/index.html` (Platform), with their code in `src/phase-3/`. Built on 2a:
 they load the phase 2 styles and scripts, and add `phase3.css` and `platform.css` on top. Feedback round 3 (Bas, Will):
@@ -71,9 +72,10 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
 - **The closing section on the curtains** (Home, Home 2, Lines 2; `.cta-curtain` in minimal.css): the curtain clip
   from the header instead of the dark evening light, in light colours (ink text and button, a soft fade on the left),
   so the page ends in the same light it starts in.
-- **Every title ends on the purple square** (`stops.js`): each section title gets the brand's full stop, as the
-  headline has; a title ending in "." gives it up for the square. It sits in the last word, so it rises or is
-  written with it.
+- **No dot writes the text any more** (`headings.js` removed; `rise.js`, `rise.css` on every phase 3 page): the hero
+  headline, the section titles and Story's last line rise in word by word, out of a mask and a soft blur. Every
+  title ends on the purple square (`stops.js`, also on Platform), which lands last: small, soft, with a little give.
+  A title ending in "." gives it up for the square. (Platform's page load still writes its hero headline.)
 - **The AI, where our people meet** (`meet.js`, `meet.css`; Home, Home 2, Lines 2): Mark's moment in line squares.
   Pinned: four outlined squares come in from the corners as you scroll and meet, the space between their corners
   lights up as the AI star, the "+" marks appear where the lines cross, then "Where our people meet, our AI works."
