@@ -88,7 +88,7 @@ function meet(el, reduce) {
     svg.append(bit);
     const d = g.C * 0.55;
     const at = (k) => `translate(${x - 4 + dx * d * k}px, ${y - 4 + dy * d * k}px)`;
-    const a = bit.animate([{ transform: at(0), opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.8 }, { transform: at(1), opacity: 0 }], { duration: 1500, easing: 'cubic-bezier(.45, 0, .2, 1)' });
+    const a = bit.animate([{ transform: at(0), opacity: 0 }, { opacity: 1, offset: 0.15 }, { opacity: 1, offset: 0.8 }, { transform: at(1), opacity: 0 }], { duration: 850, easing: 'cubic-bezier(.45, 0, .2, 1)' });
     a.onfinish = () => { bit.remove(); res(); };
   });
 
@@ -97,21 +97,21 @@ function meet(el, reduce) {
       for (let i = 0; i < routes.length; i++) {
         await send(i);
         show(set, i, true);
-        await sleep(1300);
+        await sleep(550);
       }
-      await sleep(6000); // a moment with everything done
+      await sleep(3200); // a moment with everything done
       routes.forEach((_, i) => show(set, i, false));
-      await sleep(1600);
+      await sleep(900);
     }
   };
 
   // once lines.js has drawn the grid: the tiles meet, the star lights, and (in the hero) it starts working
   const start = async () => {
-    await sleep(1500);
+    await sleep(400);
     el.classList.add('met');
-    await sleep(1700);
+    await sleep(1100);
     el.classList.add('lit');
-    if (box) { await sleep(1400); work(); }
+    if (box) { await sleep(600); work(); }
   };
   if (el.classList.contains('drawn')) start();
   else {

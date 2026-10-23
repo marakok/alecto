@@ -43,7 +43,7 @@ html[data-l="grid"] .hero-grid .gl { stroke-dasharray: none; stroke-dashoffset: 
 
 /* ---------- one grid, one paper, through the whole page ---------- */
 .p3c :is(.proofs, .team-band, .ai-band, #reviews) { background: transparent; }
-.p3c .c2-hero { z-index: 0; }
+.p3c .c2-hero, .c2-hero.p3c { z-index: 0; }
 /* every section starts on a full-width line, with a "+" on each column */
 .p3c main .sec-head { position: relative; padding-top: 44px; }
 .p3c main .sec-head::before {

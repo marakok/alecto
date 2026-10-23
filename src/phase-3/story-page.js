@@ -12,6 +12,7 @@ import { initStory } from './story.js';
 import { initSwitcher } from './switcher.js';
 import { initThemeVideos } from './theme-video.js';
 import { initWords } from './words.js';
+import { initStops } from './stops.js';
 
 /**
  * Phase 3 · Story: the brand story told by the brand's elements, one line per chapter, at your own pace
@@ -22,6 +23,7 @@ const reduce = prefersReducedMotion();
 initRadius();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
+initStops(); // every title ends on the purple square
 initReveal({ reduce });
 initSwitcher();
 initThemeVideos(); // the white clip in light mode, the black one in dark mode

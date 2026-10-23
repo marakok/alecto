@@ -1,0 +1,37 @@
+/* Phase 3 · the AI, where our people meet (meet.js): Mark's moment in line squares. Four outlined squares come in
+   from the corners and meet; the space between their corners (30% corners make the star) lights up as the AI. */
+
+.ai-meet { --m: 0; position: relative; height: 230vh; }
+.am-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
+.am-copy { grid-column: 1; grid-row: 1; width: 100%; }
+.am-copy > * { max-width: min(520px, 44vw); }
+.am-copy .eyebrow { margin-bottom: 22px; }
+.am-copy .two-tone { opacity: clamp(0, calc((var(--m) - .55) * 2.6), 1); translate: 0 calc((1 - var(--m)) * 18px); }
+.am-copy .eyebrow { opacity: clamp(0, calc((var(--m) - .45) * 2.6), 1); }
+
+.am-four { grid-column: 2; grid-row: 1; justify-self: center; width: min(34vw, 460px); aspect-ratio: 1; }
+.am-four svg { display: block; width: 100%; height: 100%; overflow: visible; }
+/* the squares: lines, coming in from the corners (in the drawing's own units: the box is 200) */
+.am-tile {
+  fill: color-mix(in srgb, var(--fg) 2%, transparent); stroke: color-mix(in srgb, var(--fg) 48%, transparent);
+  stroke-width: 1.4; vector-effect: non-scaling-stroke;
+  transform: translate(calc(var(--dx) * (1 - var(--m)) * 90px), calc(var(--dy) * (1 - var(--m)) * 90px));
+  opacity: calc(.25 + var(--m) * .75);
+}
+/* the star: exactly the gap between the four corners, lit once they meet */
+.am-star { fill: #5E6AD2; transform-box: fill-box; transform-origin: center; scale: 0; transition: scale 1.1s cubic-bezier(.34, 1.45, .64, 1), filter 1.2s ease; }
+.ai-meet.met .am-star { scale: 1; filter: drop-shadow(0 0 7px rgb(94 106 210 / .75)); }
+/* the marks where the lines cross, once they're in place */
+.am-plus { fill: none; stroke: color-mix(in srgb, #5E6AD2 70%, transparent); stroke-width: 1.2; vector-effect: non-scaling-stroke; opacity: 0; transition: opacity .8s ease .2s; }
+.ai-meet.met .am-plus { opacity: 1; }
+
+.ai-meet.still { height: auto; }
+.ai-meet.still .am-pin { position: relative; height: auto; padding-block: 120px; }
+.ai-meet.still .am-star { transition: none; }
+
+@media (max-width: 900px) {
+  .am-pin { grid-template-columns: minmax(0, 1fr); align-content: center; gap: 40px; }
+  .am-four { grid-column: 1; grid-row: 1; width: min(68vw, 360px); }
+  .am-copy { grid-row: 2; }
+  .am-copy > * { max-width: 100%; }
+}
