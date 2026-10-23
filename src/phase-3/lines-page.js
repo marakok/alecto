@@ -12,6 +12,7 @@ import { initLines } from './lines.js';
 import { initSwitcher } from './switcher.js';
 import { initThemeVideos } from './theme-video.js';
 import { initWords } from './words.js';
+import { initStops } from './stops.js';
 
 /**
  * Phase 3 · Lines, minimal (lines.js, lines.css, minimal.css): the grid and its tiles over the slowed clip in the
@@ -22,6 +23,7 @@ const reduce = prefersReducedMotion();
 initRadius();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
+initStops(); // every title ends on the purple square
 initReveal({ reduce });
 initSwitcher();
 initThemeVideos(); // the clips: white in light mode, black in dark mode

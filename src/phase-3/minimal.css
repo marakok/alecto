@@ -21,6 +21,9 @@ html[data-v] .p3min.c2 .announce-tag { color: var(--bg); border-color: color-mix
 .p3min .hero-home h1 { text-wrap: balance; }
 .p3min .story-end .story-title { max-width: 6.8em; width: max-content; } /* Story: the same two lines */
 
+/* every title ends on the brand's square (stops.js), as the headline does */
+.stop { display: inline-block; width: .15em; height: .15em; margin-left: .05em; border-radius: 6%; background: var(--accent); vertical-align: baseline; }
+
 /* no travelling square here, so the headline keeps its own full stop: the purple one */
 html.jl .p3min #k0 { visibility: visible; }
 
@@ -30,32 +33,64 @@ html.jl .p3min #k0 { visibility: visible; }
 
 /* the six steps: no card, no drawing; the step on the left, the person and their message on the right */
 .p3min .step-card { background: transparent; border: 0; box-shadow: inset 0 0 0 1px var(--line); }
-.p3min .st-chat { flex: 1; max-width: 460px; margin: 0; min-height: 0; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); }
-.p3min .st-chat header .face-tile { width: 40px; }
 .p3min .fr-msg.out { background: var(--fg); color: var(--bg); } /* your replies in ink, not purple */
-.p3min .st-chat .fr-msgs { display: grid; gap: 8px; }
+/* the step's conversation: no frame of its own, straight on the card. The person as one small line, short bubbles
+   (light for them, ink for you, one sharper corner on the speaker's side), typing dots, then "Seen" (journey.js) */
+.p3min .step-card { align-items: center; gap: clamp(28px, 4vw, 56px); }
+.p3min .st-chat { flex: 1; max-width: 440px; min-height: 0; margin: 0; padding: 0; gap: 12px; background: none; box-shadow: none; border-radius: 0; }
+.p3min .st-chat header { gap: 9px; }
+.p3min .st-chat header .face-tile { flex: none; width: 26px; height: 26px; border-radius: 50%; overflow: hidden; }
+.p3min .st-chat header p { display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 6px; font-size: 13px; }
+.p3min .st-chat header b { font-size: 13px; font-weight: 500; }
+.p3min .st-chat header :is(span, time) { font-size: 13px; color: var(--muted); }
+.p3min .st-chat header :is(span, time)::before { content: "· "; }
+.p3min .st-chat .fr-msgs { display: grid; gap: 6px; }
+.p3min .st-chat .fr-msg { max-width: 86%; padding: 10px 14px; font-size: 14px; line-height: 1.4; }
+.p3min .st-chat .fr-msg.in { background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); border-radius: 18px 18px 18px 6px; transform-origin: 0 100%; }
+.p3min .st-chat .fr-msg.out { margin-top: 6px; border-radius: 18px 18px 6px 18px; transform-origin: 100% 100%; }
+.st-typing { justify-self: start; display: flex; gap: 4px; padding: 13px 14px; background: var(--surface); box-shadow: inset 0 0 0 1px var(--line); border-radius: 18px 18px 18px 6px; }
+.st-typing[hidden] { display: none; }
+.st-typing i { width: 6px; height: 6px; border-radius: 50%; background: var(--muted); animation: st-dot 1s ease-in-out infinite; }
+.st-typing i:nth-child(2) { animation-delay: .15s; }
+.st-typing i:nth-child(3) { animation-delay: .3s; }
+@keyframes st-dot { 0%, 60%, 100% { transform: none; opacity: .45; } 30% { transform: translateY(-3px); opacity: 1; } }
+.st-seen { justify-self: end; margin-top: -2px; font: 500 11px/1.2 var(--mono); letter-spacing: .04em; color: var(--muted); opacity: 0; transition: opacity .4s ease; }
+/* popping in: a small rise with a little overshoot, one after another */
+.st-chat.anim .fr-msg { opacity: 0; transform: translateY(8px) scale(.96); transition: opacity .35s ease, transform .5s cubic-bezier(.34, 1.45, .64, 1); }
+.st-chat.anim .fr-msg.shown { opacity: 1; transform: none; }
+.st-seen.shown { opacity: 1; }
 
 /* reviews: no stars, just the words */
 .p3min .review .rbody { padding-top: 24px; }
 
 /* ---------- the hero, calm (feedback: no purple distraction, no lines, no interactive line; enough movement) ---------- */
 .p3min { --star: #5E6AD2; }
-.p3min .hero-light .bar { display: none; } /* no window cross: no lines */
-/* the leaves move more: a wider, quicker sway and a soft flutter, the sun drifting a little further */
-.p3min .hero-light .br { animation: sway-more 9s ease-in-out var(--bd, 0s) infinite alternate; }
-.p3min .hero-light .lf { animation: flutter 4.5s ease-in-out var(--fd, 0s) infinite alternate; }
-.p3min .hero-light .sun { animation-duration: 26s; }
-.p3min .hero-light .sheer { animation-duration: 18s; }
+.p3min .light .bar { display: none; } /* no window cross: no lines */
+/* every light plays, like footage: the leaves sway wider and quicker and flutter, the sun and the curtain drift */
+.p3min .light .br { animation: sway-more 9s ease-in-out var(--bd, 0s) infinite alternate; }
+.p3min .light .lf { animation: flutter 4.5s ease-in-out var(--fd, 0s) infinite alternate; }
+.p3min .light .sun { animation-duration: 26s; }
+.p3min .light .sheer { animation-duration: 18s; }
 @keyframes sway-more { from { rotate: -2.6deg; translate: -7px -2px; } to { rotate: 2.8deg; translate: 9px 4px; } }
 .p3min .l3-hero .gl { display: none; } /* Lines 3: the tiles and the star, without the lines */
 
-/* ---------- the AI, as a story: the words on the left, the four tiles and the star at work on the right ---------- */
-.p3min .ai-story { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: 48px; align-items: center; }
-.p3min .ai-copy .eyebrow { margin-bottom: 22px; }
+/* ---------- the closing section on the curtains: light, like the header, instead of the dark evening ---------- */
+.p3min .cta-curtain {
+  --inv-fg: #141416; --inv-muted: rgb(20 20 22 / .62); --inv-line: rgb(20 20 22 / .18); --inv-surface: rgb(255 255 255 / .55); --inv-bg: #F4F1EC;
+  background: #EFEAE3; color: var(--inv-fg);
+}
+.p3min .cta-curtain .cta-video { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; border-radius: inherit; filter: saturate(.85) brightness(1.04); }
+.p3min .cta-curtain .cta-art::after { content: ""; position: absolute; inset: 0; border-radius: inherit; background: linear-gradient(90deg, rgb(244 240 234 / .85) 0%, rgb(244 240 234 / .5) 45%, rgb(244 240 234 / .06) 80%); }
+.p3min .cta-curtain .btn.accent { background: #141416; color: #FFFFFF; }
+.p3min .cta-curtain .btn.ghost { -webkit-backdrop-filter: blur(8px); backdrop-filter: blur(8px); }
+
+/* ---------- the AI, without words: the four tiles, centred, and the star at work ---------- */
+.p3min .ai-story { position: relative; }
 .p3min .ai-art { position: relative; height: calc(clamp(150px, 14.2vw, 210px) * 2.35); }
 .p3min .ai-tiles .gl { transition: opacity 4s ease 1.2s; }
 .p3min .ai-tiles.met .gl { opacity: 0; } /* once the tiles meet, only they and the star stay */
 .p3min .ai-tiles { -webkit-mask-image: none; mask-image: none; }
+.p3min .ai-tiles .tile[data-cell]:not(.done) { stroke: color-mix(in srgb, var(--fg) 40%, transparent); stroke-width: 1.4; } /* the empty tiles stay visible */
 
 /* ---------- Proactive, on ink: a change of pace ---------- */
 .p3min .pro-band {
@@ -93,12 +128,10 @@ body.p3min .announce { font-size: 13px; padding-block: 9px; }
   body.p3min .pr-hero h1 { font-size: 8.6vw; max-width: none; }
 }
 @media (max-width: 900px) {
-  .p3min .ai-story { grid-template-columns: minmax(0, 1fr); gap: 24px; }
   .p3min .ai-art { height: calc(100vw / 3.2 * 2.35); }
   .p3min .step-card { flex-direction: column; align-items: stretch; } /* the step first, then the person */
-  .p3min .st-chat { max-width: none; padding: 14px; gap: 10px; }
-  .p3min .st-chat header .face-tile { width: 32px; }
-  .p3min .st-chat .fr-msg { max-width: 88%; padding: 9px 12px; font-size: 14px; }
+  .p3min .st-chat { max-width: none; }
+  .p3min .st-chat .fr-msg { max-width: 90%; padding: 9px 12px; }
   html.jl .p3min .step-card .cbody { font-size: 15px; }
 }
 

@@ -13,8 +13,9 @@ import { afterIntro } from '../phase-2/concept-2/reveal.js';
  *  - Where four tiles meet, the gap between their corners is a four-pointed star: the AI sparkle, made by the
  *    squares themselves. Faint at every crossing; the four round your tile light up as it walks.
  *  - Hover (mouse only): the tile under the pointer and its four stars light up, then fade slowly behind you.
+ *    data-hover="off" leaves a grid still under the pointer.
  *  data-accent: tiles drawn in periwinkle. Cells are "col,row": col from data-x0 (that many cells left of the content's right edge), row from data-y0
- *  (a fraction of the height). Reduced motion: drawn, still, the periwinkle tile at the end of its path.
+ *  (a fraction of the height). data-center: the tiles centred in the element instead, the lines running from them. Reduced motion: drawn, still, the periwinkle tile at the end of its path.
  */
 const NS = 'http://www.w3.org/2000/svg';
 
@@ -38,12 +39,14 @@ function draw(el, reduce) {
   const { cell: C, right } = measures(pageW);
   const left = el.getBoundingClientRect().left;
   const xr = right - left; // the content's right edge, in this element
-  const x0 = xr - Number(el.dataset.x0 || 3) * C;
+  const cols = new Set(cells(el.dataset.tiles).map(([c]) => c)).size || 1;
+  const x0 = el.dataset.center !== undefined ? Math.round((W - cols * C) / 2) : xr - Number(el.dataset.x0 || 3) * C;
+  const anchor = el.dataset.center !== undefined ? x0 : xr; // the lines run from here
   const y0 = Math.round(H * Number(el.dataset.y0 || 0.2));
   const R = Math.round(C * Number(el.dataset.r || 0.16)); // data-r: rounder corners make a bigger star
 
   const xs = [];
-  for (let x = xr - Math.ceil(xr / C) * C; x <= W + C; x += C) xs.push(Math.round(x));
+  for (let x = anchor - Math.ceil(anchor / C) * C; x <= W + C; x += C) xs.push(Math.round(x));
   const ys = [];
   for (let y = y0 - Math.ceil(y0 / C) * C; y <= H + C; y += C) ys.push(Math.round(y));
 
@@ -138,7 +141,7 @@ export function initLines({ reduce }) {
 
 // hover: the tile under the pointer lights up with the stars at its corners, and fades slowly after you
 function hover(el) {
-  if (!matchMedia('(hover: hover) and (pointer: fine)').matches) return;
+  if (el.dataset.hover === 'off' || !matchMedia('(hover: hover) and (pointer: fine)').matches) return;
   const area = el.closest('section') || el.parentElement;
   let last = '';
   area.addEventListener('pointermove', (e) => {

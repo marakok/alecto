@@ -11,6 +11,7 @@ import { initLines3 } from './lines3.js';
 import { initPrototype } from './prototype.js';
 import { initSwitcher } from './switcher.js';
 import { initWords } from './words.js';
+import { initStops } from './stops.js';
 
 /**
  * Phase 3 · Prototype: everything from the client's own prototype (its sections, copy and order), built in the
@@ -20,6 +21,7 @@ const reduce = prefersReducedMotion();
 initRadius();
 initTheme(document.getElementById('theme'));
 initMotion({ reduce, cursor: false });
+initStops(); // every title ends on the purple square
 initReveal({ reduce });
 initSwitcher();
 initLines({ reduce });

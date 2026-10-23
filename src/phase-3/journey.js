@@ -5,11 +5,64 @@ import { clamp } from '../js/palette.js';
  * swap one by one as you scroll, the line drawings draw themselves, the ticks, read lines and the lit window
  * come on as you pass them, and the 01 / 06 counter and bar run along. The drawings keep their own squares
  * (story.css). Needs html.jl, set in <head> when motion is allowed. Used by Phase 3 · Story.
+ * The steps' conversations (.st-chat) play when their step comes up: typing dots, then the person's bubbles pop in
+ * one after another, then your reply, then "Seen". Where the steps don't pin, when the chat scrolls into view.
  */
+const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+function initChats(reduce) {
+  const chats = [...document.querySelectorAll('.st-chat')];
+  chats.forEach((chat) => {
+    const list = chat.querySelector('.fr-msgs');
+    if (!list || reduce) return;
+    const typing = document.createElement('div');
+    typing.className = 'st-typing';
+    typing.setAttribute('aria-hidden', 'true');
+    typing.innerHTML = '<i></i><i></i><i></i>';
+    typing.hidden = true;
+    list.prepend(typing);
+    const seen = document.createElement('span');
+    seen.className = 'st-seen';
+    seen.setAttribute('aria-hidden', 'true');
+    seen.textContent = 'Seen';
+    list.append(seen);
+    chat.classList.add('anim');
+    let run = 0;
+    chat.play = async () => {
+      const id = ++run;
+      const msgs = [...list.querySelectorAll('.fr-msg')];
+      msgs.forEach((m) => m.classList.remove('shown'));
+      seen.classList.remove('shown');
+      typing.hidden = false;
+      await sleep(750);
+      if (id !== run) return;
+      typing.hidden = true;
+      for (const m of msgs) {
+        if (id !== run) return;
+        if (m.classList.contains('out')) await sleep(650);
+        m.classList.add('shown');
+        await sleep(420);
+      }
+      if (id === run) seen.classList.add('shown');
+    };
+  });
+  return chats.filter((c) => c.play);
+}
+
 export function initJourney({ reduce }) {
+  const chats = initChats(reduce);
   const journey = document.getElementById('journey');
   const track = document.getElementById('track');
-  if (reduce || !journey || !track || !document.documentElement.classList.contains('jl')) return;
+  if (reduce || !journey || !track || !document.documentElement.classList.contains('jl')) {
+    // not pinned: each conversation plays once it scrolls into view
+    const io = new IntersectionObserver((entries) => entries.forEach((e) => {
+      if (!e.isIntersecting) return;
+      io.unobserve(e.target);
+      e.target.play();
+    }), { threshold: 0.6 });
+    chats.forEach((c) => io.observe(c));
+    return;
+  }
   const steps = [...journey.querySelectorAll('.step')];
   const arts = [...journey.querySelectorAll('.art')];
   const count = document.getElementById('jcount');
@@ -43,6 +96,7 @@ export function initJourney({ reduce }) {
     if (ch !== active) {
       active = ch;
       steps.forEach((s, i) => s.classList.toggle('on', i === ch));
+      steps[ch].querySelector('.st-chat')?.play?.(); // the step's conversation plays as it comes up
       arts.forEach((a, i) => a.classList.toggle('on', i === ch));
       count.textContent = `${pad(ch + 1)} / ${pad(N)}`;
     }

@@ -15,10 +15,10 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 2 · Company | `/phase-2/concept-2/company/` | About Alecto, in the same family as 2a–2c |
 | Phase 2 · Careers | `/phase-2/concept-2/careers/` | Careers, in the same family as 2a–2c |
 | Phase 3 · Home | `/phase-3/` | Minimal and strict: the light with the leaves, one story, the figures, six steps each with a real person and their message, reviews, FAQ |
-| Phase 3 · Home 2 | `/phase-3/home-2/` | Home, with titles that rise in on scroll instead of being written by the dot, and a sheer curtain clip in the hero (`home-2-page.js`, `home2.css`, `rise.js`, `rise.css`; Lines 2 has the rising titles and the curtain too) |
+| Phase 3 · Home 2 | `/phase-3/home-2/` | The pair with Lines 2: the same page, only the header differs (here a sheer curtain clip). Header, the promise, the figures, the six steps, the AI (no words), Proactive, reviews, FAQ, the evening; titles rise in on scroll (`home-2-page.js`, `home2.css`, `rise.js`, `rise.css`) |
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
-| Phase 3 · Lines 2 | `/phase-3/lines-2/` | Lines, with the hero clip shown only through a few of the grid's tiles, like windows in a wall; one slowly closes as another opens |
+| Phase 3 · Lines 2 | `/phase-3/lines-2/` | Home 2's page with its own header: the grid of tiles (no hover) with the curtain clip through a few of them; one slowly closes as another opens. The lines styles (`.p3c`) are scoped to that header |
 | Phase 3 · Lines 3 | `/phase-3/lines-3/` | Lines with one rule: squares are people and your move, the star appears only where squares meet, and that is the AI. Only the star is periwinkle |
 | Phase 3 · Prototype | `/phase-3/prototype/` | Everything from the client's own prototype (sections, copy and order), built in the Lines 3 language |
 | Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
@@ -42,9 +42,8 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 
 ## Phase 3: the tech behind the people
 
-On the concept switcher for now (tucked into the header behind a small button, `src/js/versions.js`): Home, Home 2, Lines 2,
-Story and Platform. Lines, Lines 3, Mark and Prototype are hidden from
-it (feedback round 6) but still work by their URL.
+The concept switcher (tucked into the header behind a small button, `src/js/versions.js`) lists every phase 3
+page: Home, Home 2, Lines, Lines 2, Lines 3, Story, Mark, Prototype and Platform.
 
 `phase-3/index.html` (Home) and `phase-3/product/index.html` (Platform), with their code in `src/phase-3/`. Built on 2a:
 they load the phase 2 styles and scripts, and add `phase3.css` and `platform.css` on top. Feedback round 3 (Bas, Will):
@@ -62,6 +61,26 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
   text a step down (16px, small print 14px).
   **Dark mode is hidden for now:** every phase 3 page sets `data-theme="light"` and `data-theme-lock` in `<head>`, which
   hides the toggle (phase3.css).
+- **The steps' conversations, cleaner** (minimal.css, journey.js): no frame of their own any more, straight on the step
+  card beside the text. The person is one small line (round photo, name, role, time), the messages short bubbles
+  (light with a hairline for them, ink for you, one sharper corner on the speaker's side). When a step comes up:
+  typing dots, then the bubbles pop in one by one with a small overshoot, your reply, and "Seen".
+- **The closing section on the curtains** (Home, Home 2, Lines 2; `.cta-curtain` in minimal.css): the curtain clip
+  from the header instead of the dark evening light, in light colours (ink text and button, a soft fade on the left),
+  so the page ends in the same light it starts in.
+- **Every title ends on the purple square** (`stops.js`): each section title gets the brand's full stop, as the
+  headline has; a title ending in "." gives it up for the square. It sits in the last word, so it rises or is
+  written with it.
+- **The AI, where our people meet** (`meet.js`, `meet.css`; Home, Home 2, Lines 2): Mark's moment in line squares.
+  Pinned: four outlined squares come in from the corners as you scroll and meet, the space between their corners
+  lights up as the AI star, the "+" marks appear where the lines cross, then "Where our people meet, our AI works."
+  fills in beside them. The squares follow the scroll eased (every frame a step towards it), so it glides.
+- **Feedback round 8 (Bas):** Home 2 and Lines 2 are one page with two headers, in the order from the huddle:
+  header, the promise ("Moving home should feel calm."), the figures, the six steps, the AI, Proactive, reviews, FAQ,
+  the evening. The Lines header has no hover (`data-hover="off"`). The AI component (on Lines 3: tiles centred with
+  `data-center` in lines.js) has no words and moves about twice as fast; on Home, Home 2 and Lines 2 it is now the
+  meeting squares below. Every drawn light (the figures, the evening)
+  now moves like the hero's, so all the "video" components play.
 - **Home and Lines 3, feedback round 6 checked point by point:** a calm header (purple only for the full stop; no
   lines: the window cross is gone from the light, and Lines 3 shows only its tiles and the star; no interactive line:
   Hannah's hello and the Lines 3 key are gone). The drawn light with the leaves won over the clips (no watermark,
@@ -395,7 +414,7 @@ With reduced motion enabled the loader and build-up are skipped and the finished
 
 ## Placeholder content to replace before launch
 
-- `public/phase-3/curtain.mp4` (Home 2, Lines 2) is a watermarked iStock preview: replace with the licensed clip.
+- `public/phase-3/curtain.mp4` (Home 2's and Lines 2's header, the closing section on Home, Home 2 and Lines 2) is a watermarked iStock preview: replace with the licensed clip.
 
 - Live activity in the hero (`EVENTS`, `CITIES`, the counters) is illustrative. To make it real, feed it anonymised case events from Alecto's case system.
 - Dashboard mockup data (Hannah Reid, 14 Elm Road, dates) is invented.
