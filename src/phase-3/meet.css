@@ -2,14 +2,16 @@
    from the corners and meet; the space between their corners (30% corners make the star) lights up as the AI. */
 
 .ai-meet { --m: 0; position: relative; height: 230vh; }
-.am-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; }
-.am-copy { grid-column: 1; grid-row: 1; width: 100%; }
-.am-copy > * { max-width: min(520px, 44vw); }
+.am-pin { position: sticky; top: 0; height: 100svh; overflow: hidden; display: grid; align-items: center; }
+/* inside the page's own width, like every other section: the words on its left edge, the squares on its right */
+.am-inner { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); align-items: center; gap: 48px; width: 100%; }
+.am-copy { grid-column: 1; grid-row: 1; }
+.am-copy > * { max-width: 520px; }
 .am-copy .eyebrow { margin-bottom: 22px; }
 .am-copy .two-tone { opacity: clamp(0, calc((var(--m) - .55) * 2.6), 1); translate: 0 calc((1 - var(--m)) * 18px); }
 .am-copy .eyebrow { opacity: clamp(0, calc((var(--m) - .45) * 2.6), 1); }
 
-.am-four { grid-column: 2; grid-row: 1; justify-self: center; width: min(34vw, 460px); aspect-ratio: 1; }
+.am-four { grid-column: 2; grid-row: 1; justify-self: end; width: min(34vw, 440px); aspect-ratio: 1; }
 .am-four svg { display: block; width: 100%; height: 100%; overflow: visible; }
 /* the squares: lines, coming in from the corners (in the drawing's own units: the box is 200) */
 .am-tile {
@@ -30,8 +32,8 @@
 .ai-meet.still .am-star { transition: none; }
 
 @media (max-width: 900px) {
-  .am-pin { grid-template-columns: minmax(0, 1fr); align-content: center; gap: 40px; }
-  .am-four { grid-column: 1; grid-row: 1; width: min(68vw, 360px); }
+  .am-inner { grid-template-columns: minmax(0, 1fr); align-content: center; gap: 40px; }
+  .am-four { grid-column: 1; grid-row: 1; justify-self: center; width: min(68vw, 360px); }
   .am-copy { grid-row: 2; }
   .am-copy > * { max-width: 100%; }
 }
