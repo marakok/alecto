@@ -19,6 +19,7 @@ phase 2 · 2a, the phase 3 Home and Platform pages, and on phase 3 the three typ
 | Phase 3 · Lines | `/phase-3/lines/` | Home as an extra iteration: the square as a system of lines. A grid that draws on load, big tiles with your tile walking home, one grid through the page |
 | Phase 3 · Story | `/phase-3/story/` | Home as an extra iteration: the brand story told by the brand's elements, one line per chapter, at your own pace |
 | Phase 3 · Lines 2 | `/phase-3/lines-2/` | Home 2's page with its own header: the grid of tiles (no hover) with the curtain clip through a few of them; one slowly closes as another opens. The lines styles (`.p3c`) are scoped to that header |
+| Phase 3 · Home 3 | `/phase-3/home-3/` | Option 3, between Options 1 and 2: the curtain clip full, as in Home 2, with the grid of tiles laid quietly over it (hairlines, faint tile outlines, white stars, no windows). Header and closing section (`home-3-page.js`, `home3.css`) |
 | Phase 3 · Lines 3 | `/phase-3/lines-3/` | Lines with one rule: squares are people and your move, the star appears only where squares meet, and that is the AI. Only the star is periwinkle |
 | Phase 3 · Prototype | `/phase-3/prototype/` | Everything from the client's own prototype (sections, copy and order), built in the Lines 3 language |
 | Phase 3 · Mark | `/phase-3/mark/` | Home as an extra iteration: the logo's own geometry (the dot) as the whole visual language, as Verve did for Miro. A giant cropped corner that zooms out to "alecto.", four squares that meet around the AI star, figures on solid squares |
@@ -43,7 +44,7 @@ Design: Figma file "Alecto-web", page **Voorstel 2 — Live** (light and dark fr
 ## Phase 3: the tech behind the people
 
 The concept switcher (tucked into the header behind a small button, `src/js/versions.js`) shows Option 1 (Home 2,
-`/phase-3/home-2/`), Option 2 (Lines 2, `/phase-3/lines-2/`) and Platform. Home, Lines, Lines 3, Story, Mark and
+`/phase-3/home-2/`), Option 2 (Lines 2, `/phase-3/lines-2/`), Option 3 (Home 3, `/phase-3/home-3/`) and Platform. Home, Lines, Lines 3, Story, Mark and
 Prototype are hidden from it for now but still work by their URL.
 
 `phase-3/index.html` (Home) and `phase-3/product/index.html` (Platform), with their code in `src/phase-3/`. Built on 2a:
@@ -69,6 +70,13 @@ lighter type, fewer squares, start showing the AI behind the people and the prod
 - **The clips in the page's own colours** (`--cream-grade` in minimal.css): the curtains are olive green-grey, so a CSS
   grade takes out the green and warms them to the cream of the drawn light (greyscale, a little sepia, a touch
   lighter and softer). It runs on every clip: Home 2's header, the windows in the Lines headers, the closing sections.
+- **Option 3 (Home 3), after the header vote:** the full picture of Option 1 with the lines of Option 2 laid over it,
+  quietly: hairline grid, tile outlines at a fifth of the ink, the "+" marks and white stars where tiles meet. The words
+  stand on the clip's own soft shade, not on Option 2's halo.
+- **Option 2's curtain reads as a curtain** (`data-frame`, `data-cluster` in windows.js): the clip is fitted to the
+  tiles' field instead of the whole header, so the panes show the whole curtain (folds, the sun behind it) rather than a
+  strip; four windows open side by side, one window with the grid's lines as its panes, and a swap moves it a pane at a
+  time. Through the panes the grade keeps more light and shadow.
 - **Calm ground around Option 2's header text:** each text block hugs its text and carries a soft halo in the header's
   own colour, so the lines and tiles fade out behind the words instead of running through them.
 - **Option 2's closing section with its header's brand elements** (Lines 2 only): the grid of tiles, the lines and the

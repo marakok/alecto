@@ -16,6 +16,7 @@ export default defineConfig({
         phase2careers: resolve(import.meta.dirname, 'phase-2/concept-2/careers/index.html'),
         phase3home: resolve(import.meta.dirname, 'phase-3/index.html'),
         phase3home2: resolve(import.meta.dirname, 'phase-3/home-2/index.html'),
+        phase3home3: resolve(import.meta.dirname, 'phase-3/home-3/index.html'),
         phase3product: resolve(import.meta.dirname, 'phase-3/product/index.html'),
         phase3lines: resolve(import.meta.dirname, 'phase-3/lines/index.html'),
         phase3lines2: resolve(import.meta.dirname, 'phase-3/lines-2/index.html'),

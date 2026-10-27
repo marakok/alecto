@@ -3,3 +3,6 @@
 .lw-defs { position: absolute; width: 0; height: 0; overflow: hidden; }
 .lw :is(.hero-video, .cta-video) { clip-path: var(--lw-clip); } /* the video and its smoothed canvas (smooth-video.js) */
 .hero-home.lw::before { display: none; } /* no shade needed: the words already stand on plain ground */
+.lw.lw-frame :is(.hero-video, .cta-video) { object-position: 50% 50%; } /* placed over the windows' field (data-frame) */
+/* through the panes the curtain keeps its folds: the cream grade, with the light and shadow left in */
+.lw.lw-frame :is(.hero-video, .cta-video) { filter: grayscale(1) sepia(.34) saturate(1.1) brightness(.92) contrast(1.22); }
