@@ -6,6 +6,14 @@
 .p3h3 .hero-home { --h-curtain: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); } }
 :root[data-theme="dark"] .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); }
+/* the invitation to hold: quiet, bottom right where the window is, gone once used */
+.p3h3 .curtain-hint { margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--h-muted); pointer-events: none; transition: opacity 1.2s ease; }
+.p3h3 .curtain-hint i { width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor; position: relative; }
+.p3h3 .curtain-hint i::after { content: ""; position: absolute; inset: 7px; border-radius: 50%; background: currentColor; animation: curtain-hold 3.2s ease-in-out infinite; }
+.p3h3 .curtain-hint.is-used { opacity: 0; }
+@keyframes curtain-hold { 0%, 100% { transform: scale(.6); opacity: .5; } 50% { transform: scale(1.4); opacity: .9; } }
+@media (prefers-reduced-motion: reduce) { .p3h3 .curtain-hint i::after { animation: none; } }
+@media (hover: none) { .p3h3 .curtain-hint { display: none; } }
 /* no WebGL2: a still of the same light */
 .p3h3 .hero-curtain.curtain--fallback { background: linear-gradient(90deg, #8E8174 0%, #CDB9A0 22%, #F6E9D4 55%, #FFF6E6 68%, #DCC7AB 100%); }
 /* the words stand on the clip's own soft shade (video-hero.css), not on Option 2's halo */
