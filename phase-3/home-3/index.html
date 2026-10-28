@@ -91,6 +91,9 @@
   <section class="c2-hero hero-home on-video p3c" data-v="a" id="hero">
     <!-- Background: the curtain, drawn live (WebGL2) over a small cloth simulation. No clip, so no watermark. -->
     <canvas class="hero-curtain" data-curtain aria-hidden="true"></canvas>
+    <!-- The Lines hero's grid (lines.js), not shown itself: the curtain reads it and draws it behind the fabric, a
+         soft shadow on the light through the sheer, sharp where the curtain is held open. -->
+    <div class="grid-art hero-grid" data-grid data-x0="3" data-y0="0.18" data-tiles="1,0 2,0 0,1 1,1 -1,2 0,2" data-hover="off" aria-hidden="true"></div>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1>Law that keeps you <span class="nowrap"><em>moving</em><span class="period" id="k0"></span></span></h1>
