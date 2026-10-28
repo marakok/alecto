@@ -6,8 +6,8 @@
  *
  *   mountCurtain(canvas, { target: heroSection, hint: hintElement, grid: linesGridElement })
  *
- * grid: a [data-grid] element drawn by lines.js. Its lines, tiles and stars are read into a texture and drawn behind
- * the fabric: soft shadows on the light coming through, sharp in the gap when the curtain is held open.
+ * grid: a [data-grid] element drawn by lines.js. Its lines, tiles and stars are read into a texture and drawn outside,
+ * behind the curtain: hidden by the fabric, seen only in the gap when the curtain is held open.
  *
  * Options: wind (breathing, 0..2), response (how hard the cursor pushes, 0..2), light (the window, 0.6..1.4),
  * quality (render scale, 0.4..1). Without WebGL2 the canvas gets .curtain--fallback (a still gradient in home3.css).
@@ -82,12 +82,7 @@ void main(){
   // left, and the fold edges glowing against the window
   float thick = 1.0 / max(n.z, 0.25);
   float T = exp(-0.95 * thick);
-  // the grid behind it: blurred by the fabric, a shadow on the light through it, faded under the words as in Lines
-  vec2 guv = vec2(uv.x, yt);
-  float gFade = smoothstep(0.30, 0.58, uv.x) * uGridIn;
-  vec3 gSoft = textureLod(uGrid, guv, 1.0).rgb;
-  float through = B * T * (1.0 + 0.12 * gSoft.g * gFade);   // frosted panes, a touch lighter
-  float gShadow = gSoft.r * gFade * clamp(T * 2.6, 0.5, 1.2);   // its ink, as a shadow, deeper where the sheer is thin (applied after the tone curve)
+  float through = B * T;
   float scatter = B * 0.30 * (1.0 - T);
   float room = 0.20 + 0.30 * max(dot(n, normalize(vec3(-0.55, 0.35, 0.75))), 0.0);
   room *= 1.0 - 0.5 * smoothstep(0.2, 1.0, uv.x);
@@ -99,8 +94,6 @@ void main(){
   vec3 roomC = vec3(0.92, 0.91, 0.90);
   vec3 cloth = vec3(1.00, 0.93, 0.84);
   vec3 col = cloth * (room * roomC + (through + scatter) * sunC) * ao + (rim + crest) * sunC;
-  vec3 starC = vec3(0.86, 0.88, 1.0);
-  col += starC * gSoft.b * gFade * T * B * 0.5;                    // the stars, light through the sheer
 
   // where the panels overlap, a soft shadow; once parted, their edges catch the light coming in
   col *= 1.0 - 0.22 * exp(-abs(uv.x - gx) / 0.006) * (1.0 - smoothstep(0.0, 0.2, uOpen)) * (left ? 1.0 : 0.0);
@@ -108,7 +101,11 @@ void main(){
 
   // the gap: the day outside, overexposed and warm
   vec3 outside = sunC * (1.25 + 2.2 * halo + 3.0 * core) * uLight * mix(0.45, 1.0, uIntro) + vec3(0.18, 0.2, 0.22) * (1.0 - yt);
+  // the grid stands outside, behind the curtain: seen only where it parts, faded under the words as in Lines
+  vec2 guv = vec2(uv.x, yt);
+  float gFade = smoothstep(0.30, 0.58, uv.x) * uGridIn;
   vec3 gSharp = textureLod(uGrid, guv, 0.3).rgb;
+  vec3 starC = vec3(0.86, 0.88, 1.0);
   outside *= (1.0 - 0.45 * gSharp.r * gFade) * (1.0 - 0.04 * gSharp.g * gFade);
   outside += starC * gSharp.b * gFade * 0.8;
   float inGap = smoothstep(0.004, -0.004, edgeD) * smoothstep(0.0, 0.01, w);   // closed: no gap, not even a seam
@@ -145,7 +142,6 @@ void main(){
   col = aces(col);
   col *= 1.0 - 0.14 * pow(length((uv - vec2(0.62, 0.5)) * vec2(1.0, 1.25)), 2.0);
   col = pow(col, vec3(0.92));
-  col *= 1.0 - 0.55 * gShadow * (1.0 - inGap) * (1.0 - m * 0.85);
   col += (hash(gl_FragCoord.xy + fract(t * 7.0) * 113.0) - 0.5) * 0.018;
 
   outColor = vec4(col, 1.0);

@@ -6,9 +6,9 @@
 .p3h3 .hero-home { --h-curtain: none; }
 @media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); } }
 :root[data-theme="dark"] .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); }
-/* the Lines grid is drawn by the curtain, behind the fabric (curtain.js); the SVG itself only gives it its shape */
+/* the Lines grid is drawn by the curtain, behind it, seen only when it is held open (curtain.js); the SVG itself only
+   gives it its shape */
 .p3h3 .hero-home .hero-grid { opacity: 0; pointer-events: none; }
-.p3h3 .hero-home .hero-curtain.curtain--fallback ~ .hero-grid { opacity: .35; }
 /* the invitation to hold: quiet, bottom right where the window is, gone once used */
 .p3h3 .curtain-hint { margin: 0; display: inline-flex; align-items: center; gap: 10px; font-size: 11px; letter-spacing: .08em; text-transform: uppercase; color: var(--h-muted); pointer-events: none; transition: opacity 1.2s ease; }
 .p3h3 .curtain-hint i { width: 22px; height: 22px; border-radius: 50%; border: 1px solid currentColor; position: relative; }
