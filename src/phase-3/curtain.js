@@ -4,7 +4,10 @@
  * glowing edges, the room's own light from the left), a band of morning light that crosses it slowly, dust in the
  * beam. It breathes on its own, the cursor nudges it, and pressing and holding opens it to let the light in.
  *
- *   mountCurtain(canvas, { target: heroSection, hint: hintElement })
+ *   mountCurtain(canvas, { target: heroSection, hint: hintElement, grid: linesGridElement })
+ *
+ * grid: a [data-grid] element drawn by lines.js. Its lines, tiles and stars are read into a texture and drawn outside,
+ * behind the curtain: hidden by the fabric, seen only in the gap when the curtain is held open.
  *
  * Options: wind (breathing, 0..2), response (how hard the cursor pushes, 0..2), light (the window, 0.6..1.4),
  * quality (render scale, 0.4..1). Without WebGL2 the canvas gets .curtain--fallback (a still gradient in home3.css).
@@ -24,6 +27,8 @@ uniform float uOpen;     // 0 closed .. 1 held open
 uniform float uIntro;    // 0 .. 1, the light coming up on load
 uniform vec2 uTexel;
 uniform sampler2D uField;
+uniform sampler2D uGrid;  // the brand's grid behind the curtain: r its ink (Lines' own weights), g the tiles' fill, b stars
+uniform float uGridIn;   // 0 .. 1, the grid coming up after the light
 out vec4 outColor;
 
 const float PI = 3.14159265;
@@ -96,6 +101,13 @@ void main(){
 
   // the gap: the day outside, overexposed and warm
   vec3 outside = sunC * (1.25 + 2.2 * halo + 3.0 * core) * uLight * mix(0.45, 1.0, uIntro) + vec3(0.18, 0.2, 0.22) * (1.0 - yt);
+  // the grid stands outside, behind the curtain: seen only where it parts, faded under the words as in Lines
+  vec2 guv = vec2(uv.x, yt);
+  float gFade = smoothstep(0.30, 0.58, uv.x) * uGridIn;
+  vec3 gSharp = textureLod(uGrid, guv, 0.3).rgb;
+  vec3 starC = vec3(0.86, 0.88, 1.0);
+  outside *= (1.0 - 0.45 * gSharp.r * gFade) * (1.0 - 0.04 * gSharp.g * gFade);
+  outside += starC * gSharp.b * gFade * 0.8;
   float inGap = smoothstep(0.004, -0.004, edgeD) * smoothstep(0.0, 0.01, w);   // closed: no gap, not even a seam
   col = mix(col, outside, inGap);
 
@@ -171,7 +183,7 @@ export function mountCurtain(canvas, opts = {}) {
   gl.vertexAttribPointer(loc, 2, gl.FLOAT, false, 0, 0);
 
   const U = {};
-  for (const n of ['uRes', 'uTime', 'uLight', 'uOpen', 'uIntro', 'uTexel', 'uField']) U[n] = gl.getUniformLocation(prog, n);
+  for (const n of ['uRes', 'uTime', 'uLight', 'uOpen', 'uIntro', 'uTexel', 'uField', 'uGrid', 'uGridIn']) U[n] = gl.getUniformLocation(prog, n);
 
   const u = new Float32Array(GW * GH);
   const v = new Float32Array(GW * GH);
@@ -185,6 +197,61 @@ export function mountCurtain(canvas, opts = {}) {
   gl.texImage2D(gl.TEXTURE_2D, 0, gl.R16F, GW, GH, 0, gl.RED, gl.FLOAT, u);
   gl.uniform1i(U.uField, 0);
   gl.uniform2f(U.uTexel, 1 / GW, 1 / GH);
+
+  // ---- the grid behind the curtain: lines.js draws it as SVG; it is painted here into a mask with the weights of
+  // lines.css (hairlines 13%, "+" 38%, tile outlines 50%; red), the tiles' fill (green) and the stars (blue), and kept
+  // as a mipmapped texture, so the shader can read it blurred or sharp
+  const gridTex = gl.createTexture();
+  gl.activeTexture(gl.TEXTURE1);
+  gl.bindTexture(gl.TEXTURE_2D, gridTex);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, 1, 1, 0, gl.RGBA, gl.UNSIGNED_BYTE, new Uint8Array(4));
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.activeTexture(gl.TEXTURE0);
+  gl.uniform1i(U.uGrid, 1);
+  let gridAt = -1;
+  const paintGrid = () => {
+    const svg = o.grid?.querySelector('svg');
+    if (!svg) return;
+    const cr = canvas.getBoundingClientRect(), gr = o.grid.getBoundingClientRect();
+    const c2 = document.createElement('canvas');
+    c2.width = Math.max(1, Math.round(cr.width)); c2.height = Math.max(1, Math.round(cr.height));
+    const g = c2.getContext('2d');
+    // opaque on black, the weights in the colour itself (an upload would un-premultiply a translucent stroke to full)
+    g.fillStyle = '#000'; g.fillRect(0, 0, c2.width, c2.height);
+    g.globalCompositeOperation = 'lighter';
+    g.translate(gr.left - cr.left, gr.top - cr.top);
+    g.lineWidth = 1;
+    g.strokeStyle = 'rgb(33 0 0)';
+    svg.querySelectorAll('line.gl').forEach((l) => {
+      const a = (k) => Number(l.getAttribute(k));
+      g.beginPath(); g.moveTo(a('x1'), a('y1')); g.lineTo(a('x2'), a('y2')); g.stroke();
+    });
+    const plus = svg.querySelector('.g-plus')?.getAttribute('d');
+    g.strokeStyle = 'rgb(97 0 0)';
+    if (plus) g.stroke(new Path2D(plus));
+    g.lineWidth = 1.2;
+    svg.querySelectorAll('rect.tile[data-cell]').forEach((r) => {
+      const a = (k) => Number(r.getAttribute(k));
+      g.beginPath(); g.roundRect(a('x'), a('y'), a('width'), a('height'), a('rx'));
+      g.fillStyle = '#0f0'; g.fill();
+      g.strokeStyle = 'rgb(128 0 0)'; g.stroke();
+    });
+    g.fillStyle = '#00f';
+    svg.querySelectorAll('.star').forEach((st) => g.fill(new Path2D(st.getAttribute('d'))));
+    gl.activeTexture(gl.TEXTURE1);
+    gl.bindTexture(gl.TEXTURE_2D, gridTex);
+    gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, c2);
+    gl.generateMipmap(gl.TEXTURE_2D);
+    gl.activeTexture(gl.TEXTURE0);
+    if (gridAt < 0) gridAt = performance.now();
+  };
+  const mo = o.grid ? new MutationObserver(paintGrid) : null;
+  mo?.observe(o.grid, { childList: true });
+  paintGrid();
 
   // ---- pointer -> a breeze: how far and which way it moved, gathered here and let out slowly in step()
   const hand = { x: 0, y: 0, tx: 0, ty: 0, push: 0, on: false };
@@ -298,6 +365,9 @@ export function mountCurtain(canvas, opts = {}) {
     gl.uniform1f(U.uLight, o.light);
     gl.uniform1f(U.uOpen, open * open * (3 - 2 * open));
     gl.uniform1f(U.uIntro, intro);
+    // the grid comes up after the light, over two and a half seconds
+    const gi = gridAt < 0 ? 0 : reduced ? 1 : Math.min(1, Math.max(0, (now - Math.max(gridAt, t0 + 1400)) / 2500));
+    gl.uniform1f(U.uGridIn, gi * gi * (3 - 2 * gi));
     gl.drawArrays(gl.TRIANGLES, 0, 3);
     schedule();
   }
@@ -315,7 +385,7 @@ export function mountCurtain(canvas, opts = {}) {
     set(key, value) { o[key] = value; if (key === 'quality') resize(); },
     destroy() {
       cancelAnimationFrame(raf); raf = 0;
-      ro.disconnect(); io.disconnect();
+      ro.disconnect(); io.disconnect(); mo?.disconnect();
       document.removeEventListener('visibilitychange', onVis);
       target.removeEventListener('pointermove', onMove);
       target.removeEventListener('pointerleave', onLeave);
