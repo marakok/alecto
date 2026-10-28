@@ -85,15 +85,12 @@
 <div class="actor" id="actor" aria-hidden="true"></div>
 
 <main id="main">
-  <!-- Phase 3 · Home 3 (Option 3): the same page as Home 2 and Lines 2, with a header between the two: the curtain clip
-       full, as in Option 1, and the brand's lines laid quietly over it, as in Option 2 (home3.css). -->
-  <section class="c2-hero hero-home on-video p3c" data-v="a">
-    <!-- Background: a sheer curtain with the sun behind it, the whole frame (iStock preview, watermarked: replace with
-         the licensed clip). -->
-    <video class="hero-video" data-src-light="/phase-3/curtain.mp4" data-src-dark="/phase-3/curtain.mp4" data-rate=".6" autoplay muted loop playsinline preload="auto" aria-hidden="true"></video>
-    <!-- The grid over it, quiet: hairlines, the tiles' outlines and the "+" marks, no windows and no hover (lines.js).
-         Where four tiles meet, the star. -->
-    <div class="grid-art hero-grid" data-grid data-x0="3" data-y0="0.18" data-tiles="1,0 2,0 0,1 1,1 2,1 -1,2 0,2 1,2" data-hover="off" aria-hidden="true"></div>
+  <!-- Phase 3 · Home 3 (Option 3): the same page as Home 2 and Lines 2, with its own header: the curtain made instead
+       of filmed (curtain.js). A sheer with the sun behind it that sways on its own and moves where the cursor pushes
+       it; no lines over it. -->
+  <section class="c2-hero hero-home on-video p3c" data-v="a" id="hero">
+    <!-- Background: the curtain, drawn live (WebGL2) over a small cloth simulation. No clip, so no watermark. -->
+    <canvas class="hero-curtain" data-curtain aria-hidden="true"></canvas>
     <div class="wrap hero-inner">
       <div class="hero-copy">
         <h1>Law that keeps you <span class="nowrap"><em>moving</em><span class="period" id="k0"></span></span></h1>

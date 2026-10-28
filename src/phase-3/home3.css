@@ -1,14 +1,13 @@
-/* Phase 3 · Home 3 (Option 3, home-3-page.js): the curtain clip full, as in Option 1, with the brand's lines laid
-   quietly over it, as in Option 2. The picture leads; the lines are a hairline you notice second. */
+/* Phase 3 · Home 3 (Option 3, home-3-page.js): the curtain made instead of filmed in the header (curtain.js), no
+   lines over it; the closing section keeps the clip under quiet tiles. */
 
-/* ---------- the header: the whole clip, the grid as a watermark over it ---------- */
-.p3h3 .hero-home.on-video {
-  --h-line: rgb(20 20 22 / .07); --h-tile: rgb(20 20 22 / .2);
-}
-.p3h3 .hero-home .hero-grid .gl { stroke-width: .8; }
-.p3h3 .hero-home .hero-grid .tile:not(.you) { stroke: var(--h-tile); stroke-width: 1; fill: rgb(255 255 255 / .05); }
-.p3h3 .hero-home .hero-grid .g-plus { stroke: rgb(20 20 22 / .32); }
-.p3h3 .hero-home .hero-grid .star { fill: rgb(255 255 255 / .55); }
+/* ---------- the header: the curtain, made instead of filmed (curtain.js), no lines over it ---------- */
+.p3h3 .hero-home .hero-curtain { position: absolute; inset: 0; z-index: -2; width: 100%; height: 100%; display: block; touch-action: pan-y; filter: var(--h-curtain, none); }
+.p3h3 .hero-home { --h-curtain: none; }
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); } }
+:root[data-theme="dark"] .p3h3 .hero-home { --h-curtain: brightness(.5) saturate(.8) contrast(1.1); }
+/* no WebGL2: a still of the same light */
+.p3h3 .hero-curtain.curtain--fallback { background: linear-gradient(90deg, #8E8174 0%, #CDB9A0 22%, #F6E9D4 55%, #FFF6E6 68%, #DCC7AB 100%); }
 /* the words stand on the clip's own soft shade (video-hero.css), not on Option 2's halo */
 .p3h3 .c2-hero.p3c .hero-copy > :is(h1, .sub, .ctas, .hello) { background: none; box-shadow: none; }
 
