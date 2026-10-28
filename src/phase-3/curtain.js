@@ -27,7 +27,7 @@ uniform float uOpen;     // 0 closed .. 1 held open
 uniform float uIntro;    // 0 .. 1, the light coming up on load
 uniform vec2 uTexel;
 uniform sampler2D uField;
-uniform sampler2D uGrid;  // the brand's grid behind the curtain: r lines and "+", g tiles, b stars
+uniform sampler2D uGrid;  // the brand's grid behind the curtain: r its ink (Lines' own weights), g the tiles' fill, b stars
 uniform float uGridIn;   // 0 .. 1, the grid coming up after the light
 out vec4 outColor;
 
@@ -85,9 +85,9 @@ void main(){
   // the grid behind it: blurred by the fabric, a shadow on the light through it, faded under the words as in Lines
   vec2 guv = vec2(uv.x, yt);
   float gFade = smoothstep(0.30, 0.58, uv.x) * uGridIn;
-  vec3 gSoft = textureLod(uGrid, guv, 2.4).rgb;
-  float gShade = clamp(gSoft.r * 2.6 + gSoft.g * 3.0, 0.0, 1.0) * gFade;
-  float through = B * T * (1.0 - 0.5 * gShade);
+  vec3 gSoft = textureLod(uGrid, guv, 1.0).rgb;
+  float through = B * T * (1.0 + 0.12 * gSoft.g * gFade);   // frosted panes, a touch lighter
+  float gShadow = gSoft.r * gFade * clamp(T * 2.6, 0.5, 1.2);   // its ink, as a shadow, deeper where the sheer is thin (applied after the tone curve)
   float scatter = B * 0.30 * (1.0 - T);
   float room = 0.20 + 0.30 * max(dot(n, normalize(vec3(-0.55, 0.35, 0.75))), 0.0);
   room *= 1.0 - 0.5 * smoothstep(0.2, 1.0, uv.x);
@@ -100,7 +100,7 @@ void main(){
   vec3 cloth = vec3(1.00, 0.93, 0.84);
   vec3 col = cloth * (room * roomC + (through + scatter) * sunC) * ao + (rim + crest) * sunC;
   vec3 starC = vec3(0.86, 0.88, 1.0);
-  col += starC * gSoft.b * gFade * T * B * 0.9;                    // the stars, light through the sheer
+  col += starC * gSoft.b * gFade * T * B * 0.5;                    // the stars, light through the sheer
 
   // where the panels overlap, a soft shadow; once parted, their edges catch the light coming in
   col *= 1.0 - 0.22 * exp(-abs(uv.x - gx) / 0.006) * (1.0 - smoothstep(0.0, 0.2, uOpen)) * (left ? 1.0 : 0.0);
@@ -109,8 +109,8 @@ void main(){
   // the gap: the day outside, overexposed and warm
   vec3 outside = sunC * (1.25 + 2.2 * halo + 3.0 * core) * uLight * mix(0.45, 1.0, uIntro) + vec3(0.18, 0.2, 0.22) * (1.0 - yt);
   vec3 gSharp = textureLod(uGrid, guv, 0.3).rgb;
-  outside *= 1.0 - 0.6 * clamp(gSharp.r * 1.4 + gSharp.g * 1.6, 0.0, 1.0) * gFade;
-  outside += starC * gSharp.b * gFade * 1.4;
+  outside *= (1.0 - 0.45 * gSharp.r * gFade) * (1.0 - 0.04 * gSharp.g * gFade);
+  outside += starC * gSharp.b * gFade * 0.8;
   float inGap = smoothstep(0.004, -0.004, edgeD) * smoothstep(0.0, 0.01, w);   // closed: no gap, not even a seam
   col = mix(col, outside, inGap);
 
@@ -145,6 +145,7 @@ void main(){
   col = aces(col);
   col *= 1.0 - 0.14 * pow(length((uv - vec2(0.62, 0.5)) * vec2(1.0, 1.25)), 2.0);
   col = pow(col, vec3(0.92));
+  col *= 1.0 - 0.55 * gShadow * (1.0 - inGap) * (1.0 - m * 0.85);
   col += (hash(gl_FragCoord.xy + fract(t * 7.0) * 113.0) - 0.5) * 0.018;
 
   outColor = vec4(col, 1.0);
@@ -201,8 +202,9 @@ export function mountCurtain(canvas, opts = {}) {
   gl.uniform1i(U.uField, 0);
   gl.uniform2f(U.uTexel, 1 / GW, 1 / GH);
 
-  // ---- the grid behind the curtain: lines.js draws it as SVG; it is painted here into a mask (one channel per kind
-  // of mark, added) and kept as a mipmapped texture, so the shader can read it blurred or sharp
+  // ---- the grid behind the curtain: lines.js draws it as SVG; it is painted here into a mask with the weights of
+  // lines.css (hairlines 13%, "+" 38%, tile outlines 50%; red), the tiles' fill (green) and the stars (blue), and kept
+  // as a mipmapped texture, so the shader can read it blurred or sharp
   const gridTex = gl.createTexture();
   gl.activeTexture(gl.TEXTURE1);
   gl.bindTexture(gl.TEXTURE_2D, gridTex);
@@ -222,20 +224,25 @@ export function mountCurtain(canvas, opts = {}) {
     const c2 = document.createElement('canvas');
     c2.width = Math.max(1, Math.round(cr.width)); c2.height = Math.max(1, Math.round(cr.height));
     const g = c2.getContext('2d');
+    // opaque on black, the weights in the colour itself (an upload would un-premultiply a translucent stroke to full)
+    g.fillStyle = '#000'; g.fillRect(0, 0, c2.width, c2.height);
     g.globalCompositeOperation = 'lighter';
     g.translate(gr.left - cr.left, gr.top - cr.top);
-    g.lineWidth = 1.5;
-    g.strokeStyle = '#f00';
+    g.lineWidth = 1;
+    g.strokeStyle = 'rgb(33 0 0)';
     svg.querySelectorAll('line.gl').forEach((l) => {
       const a = (k) => Number(l.getAttribute(k));
       g.beginPath(); g.moveTo(a('x1'), a('y1')); g.lineTo(a('x2'), a('y2')); g.stroke();
     });
     const plus = svg.querySelector('.g-plus')?.getAttribute('d');
+    g.strokeStyle = 'rgb(97 0 0)';
     if (plus) g.stroke(new Path2D(plus));
-    g.strokeStyle = '#0f0';
+    g.lineWidth = 1.2;
     svg.querySelectorAll('rect.tile[data-cell]').forEach((r) => {
       const a = (k) => Number(r.getAttribute(k));
-      g.beginPath(); g.roundRect(a('x'), a('y'), a('width'), a('height'), a('rx')); g.stroke();
+      g.beginPath(); g.roundRect(a('x'), a('y'), a('width'), a('height'), a('rx'));
+      g.fillStyle = '#0f0'; g.fill();
+      g.strokeStyle = 'rgb(128 0 0)'; g.stroke();
     });
     g.fillStyle = '#00f';
     svg.querySelectorAll('.star').forEach((st) => g.fill(new Path2D(st.getAttribute('d'))));
