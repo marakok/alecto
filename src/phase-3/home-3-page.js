@@ -9,5 +9,5 @@ import { mountCurtain } from './curtain.js';
  * keeps the clip under quiet tiles.
  */
 const curtain = document.querySelector('canvas[data-curtain]');
-if (curtain) mountCurtain(curtain, { target: curtain.closest('section') });
+if (curtain) mountCurtain(curtain, { target: curtain.closest('section'), hint: document.querySelector('[data-curtain-hint]') });
 initMeet({ reduce: prefersReducedMotion() }); // the AI: four line squares meet, the star lights
