@@ -96,7 +96,7 @@ void main(){
 
   // the gap: the day outside, overexposed and warm
   vec3 outside = sunC * (1.25 + 2.2 * halo + 3.0 * core) * uLight * mix(0.45, 1.0, uIntro) + vec3(0.18, 0.2, 0.22) * (1.0 - yt);
-  float inGap = smoothstep(0.004, -0.004, edgeD);
+  float inGap = smoothstep(0.004, -0.004, edgeD) * smoothstep(0.0, 0.01, w);   // closed: no gap, not even a seam
   col = mix(col, outside, inGap);
 
   // the near curtain, out of focus, along the left edge: a soft, darker fold the words sit in front of
@@ -186,7 +186,7 @@ export function mountCurtain(canvas, opts = {}) {
   gl.uniform1i(U.uField, 0);
   gl.uniform2f(U.uTexel, 1 / GW, 1 / GH);
 
-  // ---- pointer -> forces, softened: the cloth follows a lagging hand, and the push is let out over a few frames
+  // ---- pointer -> a breeze: how far and which way it moved, gathered here and let out slowly in step()
   const hand = { x: 0, y: 0, tx: 0, ty: 0, push: 0, on: false };
   let last = null;
   const onMove = (e) => {
@@ -221,20 +221,23 @@ export function mountCurtain(canvas, opts = {}) {
   let simT = 0;
   function step() {
     simT += 1 / 60;
-    // the cursor pushes the cloth sideways, more freely lower down
+    // the cursor as a breeze, not a hand: a wide, soft gust that trails behind it, let out over a second or two and
+    // felt down the whole drop of the fabric (most at the hem), so the cloth sways instead of dimpling
     if (hand.on) {
-      hand.x += (hand.tx - hand.x) * 0.08; hand.y += (hand.ty - hand.y) * 0.08;
-      const out = hand.push * 0.12;
+      hand.x += (hand.tx - hand.x) * 0.035; hand.y += (hand.ty - hand.y) * 0.035;
+      hand.push = Math.max(-30, Math.min(30, hand.push));
+      const out = hand.push * 0.035;
       hand.push -= out;
-      const push = Math.max(-1.2, Math.min(1.2, out)) * 0.16 * o.response;
-      if (Math.abs(push) > 1e-4) {
-        const cx = hand.x * GW, cy = hand.y * GH;
-        const x0 = Math.max(0, Math.floor(cx - R * 2)), x1 = Math.min(GW - 1, Math.ceil(cx + R * 2));
-        const y0 = Math.max(1, Math.floor(cy - R * 2)), y1 = Math.min(GH - 1, Math.ceil(cy + R * 2));
-        for (let y = y0; y <= y1; y++) for (let x = x0; x <= x1; x++) {
-          const dx = x - cx, dy = (y - cy) * 0.7;
-          const g = Math.exp(-(dx * dx + dy * dy) / (R * R));
-          v[y * GW + x] += push * g * (0.25 + 0.75 * y / GH);
+      const push = Math.max(-0.5, Math.min(0.5, out)) * 0.05 * o.response;
+      if (Math.abs(push) > 1e-5) {
+        const cx = hand.x * GW, cy = hand.y * GH, RX = R * 2.4, RY = GH * 0.7;
+        const x0 = Math.max(0, Math.floor(cx - RX * 2)), x1 = Math.min(GW - 1, Math.ceil(cx + RX * 2));
+        for (let y = 1; y < GH; y++) {
+          const dy = y - cy, gy = 0.45 + 0.55 * Math.exp(-(dy * dy) / (RY * RY));
+          for (let x = x0; x <= x1; x++) {
+            const dx = x - cx;
+            v[y * GW + x] += push * Math.exp(-(dx * dx) / (RX * RX)) * gy * (0.2 + 0.8 * y / GH);
+          }
         }
       }
     }
