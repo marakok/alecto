@@ -432,7 +432,7 @@ With reduced motion enabled the loader and build-up are skipped and the finished
 
 ## Placeholder content to replace before launch
 
-- `public/phase-3/curtain.mp4` (Home 2's and Lines 2's header, the closing section on Home, Home 2 and Lines 2) is a watermarked iStock preview: replace with the licensed clip.
+- `public/phase-3/curtain.mp4` (Home 2's and Lines 2's header, the closing section on Home, Home 2 and Lines 2) is the licensed iStock clip (1816735180), encoded from the 4K ProRes master to 1920×1080 H.264 (CRF 24, no audio, ~1.5 MB).
 
 - Live activity in the hero (`EVENTS`, `CITIES`, the counters) is illustrative. To make it real, feed it anonymised case events from Alecto's case system.
 - Dashboard mockup data (Hannah Reid, 14 Elm Road, dates) is invented.
